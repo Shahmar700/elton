@@ -3,9 +3,11 @@
     <div id="top-header" class="top-header">
       <div class="container">
         <div class="contact-info">
-          <span><Icon name="mdi:phone" size="20" /> +994 50 123 45 67</span>
-          <span><Icon name="mdi:map-marker" size="20" /> Bakı şəhəri</span>
-          <span><Icon name="mdi:clock" size="20" /> 09:00 - 18:00</span>
+          <span><Icon name="mdi:phone" size="20" /> +90 552 431 8888</span>
+          <div class="address-link" @click="showMap = true">
+            <span><Icon name="mdi:map-legend" size="20" /> Bayrampaşa Demirkapı Cad. 8/10</span>
+          </div>
+          <span><Icon name="mdi:clock" size="20" /> Pt-Ct 9:00 - 21:00</span>
         </div>
         <div class="social-links">
           <a href="#"><Icon name="mdi:facebook" size="22" /></a>
@@ -33,54 +35,69 @@
     <header class="main-header">
       <div class="container">
         <div class="logo">
-          <img src="../public/assets/logo.png" alt="Logo">
+          <NuxtLink to="/">
+            <img src="../public/assets/logo.png" alt="Logo">
+          </NuxtLink>
         </div>
         <nav class="nav-links">
-          <a 
+          <NuxtLink 
             v-for="link in navLinks" 
-            :key="link.id"
-            :href="link.href"
-            :class="{ active: activeSection === link.id }"
-            @click="scrollToSection(link.id)"
+            :key="link.href"
+            :to="link.href"
+            :class="{ active: $route.path === link.href }"
           >
             {{ link.text }}
-          </a>
+          </NuxtLink>
         </nav>
         <button class="mobile-menu-btn" @click="toggleSidebar">
           <Icon name="mdi:menu" size="28" />
         </button>
       </div>
     </header>
-    <main>
-      <slot />
-    </main>
+    <div class="main-content">
+      <main class="page-content">
+        <slot />
+      </main>
+      <ServiceVideos />
+    </div>
 
     <!-- Sidebar -->
-    <div class="sidebar-overlay" :class="{ 'active': isSidebarOpen }" @click="closeSidebar"></div>
+    <div 
+      class="sidebar-overlay" 
+      :class="{ 'active': isSidebarOpen }" 
+      @click="closeSidebar"
+    />
     <div class="sidebar" :class="{ 'active': isSidebarOpen }">
       <button class="close-btn" @click="closeSidebar">
         <Icon name="mdi:close" size="28" />
       </button>
       <nav class="sidebar-nav">
-        <a 
+        <NuxtLink 
           v-for="link in navLinks" 
-          :key="link.id"
-          :href="link.href"
-          :class="{ active: activeSection === link.id }"
-          @click="scrollToSection(link.id)"
+          :key="link.href"
+          :to="link.href"
+          :class="{ active: $route.path === link.href }"
+          @click="closeSidebar"
         >
           {{ link.text }}
-        </a>
+        </NuxtLink>
       </nav>
     </div>
+
+    <!-- Map Modal -->
+    <MapModal v-model:isOpen="showMap" />
   </div>
 </template>
 
 <script setup>
+import { ref, onMounted } from 'vue'
+import ServiceVideos from '~/components/ServiceVideos.vue'
+import MapModal from '~/components/MapModal.vue'
+
 const isSidebarOpen = ref(false)
-const activeSection = ref('anasayfa')
 const isLanguageDropdownOpen = ref(false)
 const currentLanguage = ref('TR')
+const showMap = ref(false)
 
 const languages = [
   { code: 'TR', name: 'Türkçe' },
@@ -89,11 +106,11 @@ const languages = [
 ]
 
 const navLinks = [
-  { id: 'anasayfa', text: 'Ana Səhifə', href: '#' },
-  { id: 'markalar', text: 'Markalar', href: '#markalar' },
-  { id: 'hizmetler', text: 'Xidmətlər', href: '#hizmetler' },
-  { id: 'sss', text: 'S.S.S', href: '#sss' },
-  { id: 'iletisim', text: 'Əlaqə', href: '#iletisim' }
+  { text: 'Anasayfa', href: '/' },
+  { text: 'Markalar', href: '/markalar' },
+  { text: 'Hizmetler', href: '/hizmetler' },
+  { text: 'S.S.S', href: '/sss' },
+  { text: 'İletişim', href: '/iletisim' }
 ]
 
 const toggleSidebar = () => {
@@ -102,22 +119,6 @@ const toggleSidebar = () => {
 
 const closeSidebar = () => {
   isSidebarOpen.value = false
-}
-
-const scrollToSection = (sectionId, event) => {
-  if (event) {
-    event.preventDefault()
-  }
-  
-  if (sectionId === 'anasayfa') {
-    document.documentElement.scrollIntoView({ behavior: 'smooth' })
-  } else {
-    const section = document.getElementById(sectionId)
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
-  closeSidebar()
 }
 
 const toggleLanguageDropdown = () => {
@@ -130,23 +131,6 @@ const selectLanguage = (langCode) => {
 }
 
 onMounted(() => {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        activeSection.value = entry.target.id
-      }
-    })
-  }, {
-    threshold: 0.5
-  })
-
-  navLinks.forEach(link => {
-    const section = document.getElementById(link.id)
-    if (section) {
-      observer.observe(section)
-    }
-  })
-
   document.addEventListener('click', (e) => {
     const languageSelector = document.querySelector('.language-selector')
     if (languageSelector && !languageSelector.contains(e.target)) {
@@ -163,6 +147,12 @@ onMounted(() => {
   display: flex;
   align-items: center;
   gap: 5px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.contact-info span:hover {
+  color: var(--primary-color);
+  transform: scale(1.02);
 }
 
 .mobile-menu-btn {
@@ -240,6 +230,7 @@ onMounted(() => {
   transition: all 0.3s ease;
   position: relative;
 }
+
 .nav-links a::after,
 .sidebar-nav a::after {
   width: 0;
@@ -251,6 +242,7 @@ onMounted(() => {
   left: 0;
   transition: all 0.3s ease;
 }
+
 .nav-links a:hover::after,
 .sidebar-nav a:hover::after {
   width: 100%;
@@ -258,11 +250,21 @@ onMounted(() => {
 
 .nav-links a.active,
 .sidebar-nav a.active {
-  background-color: var(--primary-color);
+  background-color: #1AA54D;
   color: white;
-  border-radius: 7px;
-  border-bottom-left-radius: 0;
-  transition: all 0.3s ease;
+  border-radius: 5px;
+  border-bottom-left-radius: 0px;
+}
+
+.nav-links a.active:hover,
+.sidebar-nav a.active:hover {
+  background-color: #1AA54D;
+  color: white;
+}
+
+.nav-links a.active::after,
+.sidebar-nav a.active::after {
+  display: none;
 }
 
 @media (max-width: 768px) {
@@ -389,5 +391,63 @@ onMounted(() => {
 
 .language-dropdown li.active {
   background-color: var(--primary-color);
+}
+
+.main-content {
+  display: flex;
+  align-items: start;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.page-content {
+  flex: 1;
+  min-width: 0; /* Prevents flex item from overflowing */
+}
+
+@media (max-width: 1024px) {
+  .main-content {
+    flex-direction: column;
+  }
+}
+
+a {
+  color: #333;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  color: #1AA54D;
+}
+
+a.active {
+  background-color: #1AA54D;
+  color: white;
+  box-shadow: 0 2px 8px rgba(26, 165, 77, 0.3);
+}
+
+a.active:hover {
+  background-color: #189044;
+  color: white;
+}
+
+.address-link {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.address-link:hover span {
+  color: var(--primary-color);
+  transform: scale(1.02);
+}
+
+.address-link:hover span :deep(Icon) {
+  color: var(--primary-color);
+  transform: scale(1.2);
 }
 </style> 
