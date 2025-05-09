@@ -109,7 +109,7 @@ const navLinks = [
   { text: 'Anasayfa', href: '/' },
   { text: 'Markalar', href: '/markalar' },
   { text: 'Hizmetler', href: '/hizmetler' },
-  { text: 'S.S.S', href: '/sss' },
+  { text: 'S.S.S', href: '/sik-sorulan-sorular' },
   { text: 'İletişim', href: '/iletisim' }
 ]
 
