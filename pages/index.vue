@@ -230,55 +230,6 @@ section h1 {
   animation: lineAnimation 1s ease forwards;
 }
 
-.phone-and-address {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-  margin-top: 2rem;
-}
-
-.phone-numbers {
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-  width: 100%;
-  justify-content: center;
-}
-
-.phone-link, .address-link {
-  text-decoration: none;
-  display: inline-block;
-  transition: transform 0.3s ease;
-  cursor: pointer;
-}
-
-.phone-link:hover, .address-link:hover {
-  transform: scale(1.05);
-}
-
-.phone-and-address p {
-  font-size: 1.2rem;
-  font-weight: 600;
-  background-color: #1AA54D;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 10px;
-  text-align: center;
-  white-space: nowrap;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-  margin: 0;
-}
-
-.phone-and-address p:hover {
-  background-color: #189044;
-  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
-}
-
 .customer-testimonial {
   width: 100%;
   max-width: 100%;
