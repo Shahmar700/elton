@@ -1,0 +1,17 @@
+{
+    "languageName": {
+        "en": "İngilis",
+        "tr": "Türkçe",
+        "ru": "Rusça" 
+    },
+    "nav": {
+        "home": "Anasayfa",
+        "brands": "Markalar", 
+        "services": "Hizmetler",
+        "faq": "S.S.S",
+        "contact": "İletişim"
+    },
+    "welcomeTitle": "Elton Teknik Servis'e Hoş Geldiniz",
+    "mainSubtitle": "Elton Teknik Servis: Bilgisayar, Telefon ve Tablet Tamiri",
+    "mainDescription": "Yenidoğan Mah. Demirkapı Cad. Özaltın İş Merkezi'nde yer alan Elton Teknik Servis, uzun yıllara dayanan tecrübesi ve alanında uzmanlaşmış kadrosu ile bilgisayar, telefon ve tablet tamiri alanında hizmet vermektedir. Müşterilerine kaliteli ve güvenilir bir teknik servis deneyimi sunan Elton Teknik Servis, her zaman en son teknolojileri kullanarak, hızlı ve etkili çözümler sunmaktadır. Profesyonel ekibimiz ve geniş yedek parça stokumuzla, her türlü teknik soruna karşı hazırız."
+}

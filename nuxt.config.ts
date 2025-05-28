@@ -2,7 +2,20 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
-    '@nuxt/icon'
+    '@nuxt/icon',
+    [
+      '@nuxtjs/i18n',
+      {
+        langDir: 'locales/',
+        lazy: true,
+        defaultLocale: 'tr',
+        locales: [
+          { code: 'tr', name: 'Türkçe', file: 'tr.json' },
+          { code: 'en', name: 'English', file: 'en.json' },
+          { code: 'ru', name: 'Русский', file: 'ru.json' },
+        ]
+      }
+    ]
   ],
 
   imports: {

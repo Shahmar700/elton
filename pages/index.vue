@@ -1,14 +1,14 @@
 <template>
   <div>
     <section>
-      <h1 class="gradient-text">Elton Teknik Servis'e Hoş Geldiniz</h1>
+      <h1 class="gradient-text">{{ $t('welcomeTitle') }}</h1>
       <div class="main-image-container" data-aos="fade-up" data-aos-duration="1000">
         <img src="/assets/images/office.jpg" alt="Office" class="main-image">
       </div>
       <div class="info-text" data-aos="fade-up" data-aos-duration="1000">
-        <h2>Elton Teknik Servis: Bilgisayar, Telefon ve Tablet Tamiri</h2>
+        <h2>{{ $t('mainSubtitle') }}</h2>
         <p>
-          Yenidoğan Mah. Demirkapı Cad. Özaltın İş Merkezi'nde yer alan Elton Teknik Servis, uzun yıllara dayanan tecrübesi ve alanında uzmanlaşmış kadrosu ile bilgisayar, telefon ve tablet tamiri alanında hizmet vermektedir. Müşterilerine kaliteli ve güvenilir bir teknik servis deneyimi sunan Elton Teknik Servis, her zaman en son teknolojileri kullanarak, hızlı ve etkili çözümler sunmaktadır. Profesyonel ekibimiz ve geniş yedek parça stokumuzla, her türlü teknik soruna karşı hazırız.
+          {{ $t('mainDescription') }}
         </p>
       </div>
       <!-- phone and adress   -->
@@ -626,4 +626,4 @@ section h1 {
     transform: translateY(0);
   }
 }
-</style> 
+</style>

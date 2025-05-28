@@ -1,0 +1,17 @@
+{
+  "languageName": {
+    "en": "English",
+    "tr": "Turkish",
+    "ru": "Russian"
+  },
+  "nav": {
+    "home": "Home",
+    "brands": "Brands",
+    "services": "Services", 
+    "faq": "F.A.Q",
+    "contact": "Contact"
+  },
+  "welcomeTitle": "Welcome to Elton Technical Service",
+  "mainSubtitle": "Elton Technical Service: Computer, Phone and Tablet Repair",
+  "mainDescription": "Located in Özaltın Business Center on Demirkapı Street, Elton Technical Service offers services in computer, phone, and tablet repair with years of experience and a specialized team. Providing customers with a high-quality and reliable technical service experience, Elton Technical Service always uses the latest technologies to offer fast and effective solutions. With our professional team and wide spare parts stock, we are ready for any technical problem."
+}

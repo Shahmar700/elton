@@ -10,22 +10,22 @@
           <span><Icon name="mdi:clock" size="20" /> Pt-Ct 9:00 - 21:00</span>
         </div>
         <div class="social-links">
-          <a href="#"><Icon name="mdi:facebook" size="22" /></a>
-          <a href="#"><Icon name="mdi:instagram" size="22" /></a>
-          <a href="#"><Icon name="mdi:whatsapp" size="22" /></a>
+          <a href="https://www.facebook.com/eltonteknikservis" target="_blank"><Icon name="mdi:facebook" size="22" /></a>
+          <a href="https://www.instagram.com/eltonteknikservis" target="_blank" ><Icon name="mdi:instagram" size="22" /></a>
+          <a href="https://wa.me/905524318888" target="_blank" ><Icon name="mdi:whatsapp" size="22" /></a>
           <div class="language-selector">
             <button class="language-btn" @click="toggleLanguageDropdown">
-              {{ currentLanguage }}
+              {{ locale }}
               <Icon :name="isLanguageDropdownOpen ? 'mdi:chevron-up' : 'mdi:chevron-down'" size="20" />
             </button>
             <ul class="language-dropdown" :class="{ 'active': isLanguageDropdownOpen }">
               <li 
-                v-for="lang in languages" 
+                v-for="lang in locales" 
                 :key="lang.code"
-                :class="{ active: currentLanguage === lang.code }"
+                :class="{ active: locale === lang.code }"
                 @click="selectLanguage(lang.code)"
               >
-                {{ lang.name }}
+                {{ t('languageName.' + lang.code) }}
               </li>
             </ul>
           </div>
@@ -42,11 +42,11 @@
         <nav class="nav-links">
           <NuxtLink 
             v-for="link in navLinks" 
-            :key="link.href"
+            :key="link.key"
             :to="link.href"
-            :class="{ active: $route.path === link.href }"
+            :class="{ active: isLinkActive(link.href) }"
           >
-            {{ link.text }}
+            {{ t(link.textKey) }}
           </NuxtLink>
         </nav>
         <button class="mobile-menu-btn" @click="toggleSidebar">
@@ -74,12 +74,12 @@
       <nav class="sidebar-nav">
         <NuxtLink 
           v-for="link in navLinks" 
-          :key="link.href"
+          :key="link.key"
           :to="link.href"
-          :class="{ active: $route.path === link.href }"
+          :class="{ active: isLinkActive(link.href) }"
           @click="closeSidebar"
         >
-          {{ link.text }}
+          {{ t(link.textKey) }}
         </NuxtLink>
       </nav>
     </div>
@@ -90,28 +90,33 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 import ServiceVideos from '~/components/ServiceVideos.vue'
 import MapModal from '~/components/MapModal.vue'
 
 const isSidebarOpen = ref(false)
 const isLanguageDropdownOpen = ref(false)
-const currentLanguage = ref('TR')
 const showMap = ref(false)
 
-const languages = [
-  { code: 'TR', name: 'Türkçe' },
-  { code: 'EN', name: 'English' },
-  { code: 'RU', name: 'Русский' }
-]
+const { locales, locale, setLocale, t } = useI18n()
+const $route = useRoute()
 
-const navLinks = [
-  { text: 'Anasayfa', href: '/' },
-  { text: 'Markalar', href: '/markalar' },
-  { text: 'Hizmetler', href: '/hizmetler' },
-  { text: 'S.S.S', href: '/sik-sorulan-sorular' },
-  { text: 'İletişim', href: '/iletisim' }
-]
+const navLinks = computed(() => [
+  { key: 'home', textKey: 'nav.home', href: '/' },
+  { key: 'brands', textKey: 'nav.brands', href: '/markalar' },
+  { key: 'services', textKey: 'nav.services', href: '/hizmetler' },
+  { key: 'faq', textKey: 'nav.faq', href: '/sik-sorulan-sorular' },
+  { key: 'contact', textKey: 'nav.contact', href: '/iletisim' }
+])
+
+// Function to check if a link is active
+const isLinkActive = (href) => {
+  const currentPath = $route.path
+  const currentPathWithoutLocale = currentPath.replace(/^\/(en|tr|ru)/, '') || '/'
+  return currentPathWithoutLocale === href
+}
 
 const toggleSidebar = () => {
   isSidebarOpen.value = !isSidebarOpen.value
@@ -126,7 +131,7 @@ const toggleLanguageDropdown = () => {
 }
 
 const selectLanguage = (langCode) => {
-  currentLanguage.value = langCode
+  setLocale(langCode)
   isLanguageDropdownOpen.value = false
 }
 
@@ -450,4 +455,4 @@ a.active:hover {
   color: var(--primary-color);
   transform: scale(1.2);
 }
-</style> 
+</style>
