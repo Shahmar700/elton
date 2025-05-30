@@ -3,13 +3,15 @@
     "en": "English",
     "tr": "Turkish",
     "ru": "Russian"
-  },
-  "nav": {
+  },  "nav": {
     "home": "Home",
     "brands": "Brands",
     "services": "Services", 
     "faq": "F.A.Q",
     "contact": "Contact"
+  },
+  "contact": {
+    "contactInfo": "Contact Info"
   },
   "welcomeTitle": "Welcome to Elton Technical Service",
   "mainSubtitle": "Elton Technical Service: Computer, Phone and Tablet Repair",

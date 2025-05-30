@@ -1,14 +1,23 @@
 <template>
   <div>
-    <div id="top-header" class="top-header">
+    <div id="top-header" class="top-header">      
       <div class="container">
         <div class="contact-and-social">
-          <div class="contact-info">
-            <span><Icon name="mdi:phone" size="20" /> +90 552 431 8888</span>
-            <div class="address-link" @click="showMap = true">
-              <span><Icon name="mdi:map-legend" size="20" /> Bayrampaşa Demirkapı Cad. 8/10</span>
+          <div class="contact-info flex items-center">
+            <!-- Mobile contact toggle button -->
+            <div class="mobile-contact-toggle" @click="toggleContactInfo">
+              <span>{{ t('contact.contactInfo') }}</span>
+              <Icon :name="isContactInfoOpen ? 'mdi:chevron-up' : 'mdi:chevron-down'" size="20" />
             </div>
-            <span><Icon name="mdi:clock" size="20" /> Pt-Ct 9:00 - 21:00</span>
+            
+            <!-- Contact info items -->
+            <div class="contact-items shadow-2xl border border-[#1AA54D] !z-[999] min-w-[280px]" :class="{ 'active': isContactInfoOpen }">
+              <span><Icon name="mdi:phone" size="20" /> +90 552 431 8888</span>
+              <div class="address-link" @click="showMap = true">
+                <span><Icon name="mdi:map-legend" size="20" /> Bayrampaşa Demirkapı Cad. 8/10</span>
+              </div>
+              <span><Icon name="mdi:clock" size="20" /> Pt-Ct 9:00 - 21:00</span>
+            </div>
           </div>
         <div class="social-links">
           <a href="https://www.facebook.com/eltonteknikservis" target="_blank"><Icon name="mdi:facebook" size="22" /></a>
@@ -36,7 +45,7 @@
     </div>
     <header class="main-header">
       <div class="container">
-        <div class="logo">
+        <div class="logo flex items-center">
           <NuxtLink to="/">
             <img src="../public/assets/logo.png" alt="Logo">
           </NuxtLink>
@@ -100,6 +109,7 @@ import MapModal from '~/components/MapModal.vue'
 
 const isSidebarOpen = ref(false)
 const isLanguageDropdownOpen = ref(false)
+const isContactInfoOpen = ref(false)
 const showMap = ref(false)
 
 const { locales, locale, setLocale, t } = useI18n()
@@ -137,11 +147,19 @@ const selectLanguage = (langCode) => {
   isLanguageDropdownOpen.value = false
 }
 
-onMounted(() => {
-  document.addEventListener('click', (e) => {
+const toggleContactInfo = () => {
+  isContactInfoOpen.value = !isContactInfoOpen.value
+}
+
+onMounted(() => {  document.addEventListener('click', (e) => {
     const languageSelector = document.querySelector('.language-selector')
     if (languageSelector && !languageSelector.contains(e.target)) {
       isLanguageDropdownOpen.value = false
+    }
+    
+    const contactInfo = document.querySelector('.contact-info')
+    if (contactInfo && !contactInfo.contains(e.target)) {
+      isContactInfoOpen.value = false
     }
   })
 })
@@ -152,27 +170,85 @@ onMounted(() => {
 
 .contact-and-social{
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   justify-content: space-between;
   width: 100%;
 }
 .contact-info {
   display: flex;
   align-items: center;
+  position: relative;
 }
-.contact-info span {
+
+.mobile-contact-toggle {
+  display: none;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  padding: 5px;
+  transition: all 0.3s ease;
+}
+
+.mobile-contact-toggle:hover {
+  color: var(--primary-color);
+}
+
+.contact-items {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.contact-items span {
   display: flex;
   align-items: center;
   gap: 5px;
   transition: all 0.3s ease;
   cursor: pointer;
 }
-.contact-info span:hover {
+
+.contact-items span:hover {
   color: var(--primary-color);
   transform: scale(1.02);
 }
 
-@media screen and (max-width: 930px) {
+@media screen and (max-width: 768px) {
+  .mobile-contact-toggle {
+    display: flex;
+  }
+  
+  .contact-items {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--secondary-color);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 100;
+  }
+  
+  .contact-items.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  
+  .contact-items span {
+    color: white;
+    font-size: 14px;
+  }
+}
+
+/* @media screen and (max-width: 930px) {
   .contact-info {
     width: 100%;
   }
@@ -183,7 +259,7 @@ onMounted(() => {
   .social-links a {
     padding: 0;
   }
-}
+} */
 
 @media screen and (max-width: 660px) {
   .contact-info {
@@ -324,6 +400,7 @@ onMounted(() => {
 }
 
 .social-links a{
+  padding: 0;
   display: flex;
   align-items: center;
   transition: all 0.3s ease;

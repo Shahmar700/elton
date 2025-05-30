@@ -1,8 +1,8 @@
-<template>
+<template>  
   <div>
     <section>
-      <h1 class="gradient-text">{{ $t('welcomeTitle') }}</h1>
-      <div class="main-image-container" data-aos="fade-up" data-aos-duration="1000">
+      <h1 class="gradient-text text-md mt-10">{{ $t('welcomeTitle') }}</h1>
+      <div class="main-image-container">
         <img src="/assets/images/office.jpg" alt="Office" class="main-image">
       </div>
       <div class="info-text" data-aos="fade-up" data-aos-duration="1000">
@@ -169,7 +169,7 @@ const nextImage = () => {
 section {
   /* background-color: #f5f5f5;  */
   /* min-height: 100vh; */
-  padding: 2rem;
+  /* padding: 2rem; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -179,11 +179,6 @@ section {
 
 section:nth-child(even) {
   background-color: #fff;
-}
-section h1 {
-  font-size: 40px;
-  font-weight: bold;
-  margin-bottom: 1rem;
 }
 .main-image-container {
   width: 100%;
@@ -274,7 +269,6 @@ section h1 {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  font-size: 40px;
   font-weight: 700;
   animation: gradient 3s ease infinite;
   position: relative;
@@ -301,12 +295,12 @@ section h1 {
   margin-top: 2rem;
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .info-text {
     padding: 0px !important;
     margin-top: 1rem !important;
   }
-}
+} */
 
 @media (max-width: 768px) {
   .phone-numbers {
@@ -341,16 +335,6 @@ section h1 {
   }
 }
 
-@media (max-width: 768px) {
-  .gradient-text {
-    font-size: 2rem;
-  }
-  
-  .main-image-container {
-    height: 50vh;
-  }
-}
-
 .info-text {
   margin-top: 2rem;
   width: 100%;
@@ -376,13 +360,21 @@ section h1 {
   padding: 0;
 }
 
+
+@media screen and (min-width: 600px) {
+  .info-text h2 {
+    color: var(--secondary-color);
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+    border: 1px solid red !important;
+  }
+}
+
 @media (max-width: 768px) {
   .info-text {
     padding: 0px !important;
-  }
-  
-  .info-text h2 {
-    font-size: 1.5rem;
   }
   
   .info-text p {
