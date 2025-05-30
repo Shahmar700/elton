@@ -176,6 +176,7 @@ section {
   justify-content: flex-start;
 }
 
+
 section:nth-child(even) {
   background-color: #fff;
 }
@@ -200,6 +201,69 @@ section h1 {
   object-position: center;
 }
 
+@media screen and (max-width: 768px) {
+  .main-image-container {
+    width: 100%;
+    min-height: 300px;
+    position: relative;
+    overflow: hidden;
+    margin-top: 2rem;
+    border-radius: 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .phone-and-address {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 0 1rem;
+  }
+  
+  .address-link {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    cursor: pointer;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  
+  .address-link p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    word-break: break-all;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    padding: 8px 0;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+  .phone-link {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .phone-numbers {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+  
+  .phone-link {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .phone-and-address p {
+    font-size: 0.9rem;
+    padding: 6px 0;
+    width: 100%;
+    max-width: 100%;
+  }
+}
 .gradient-text {
   background: linear-gradient(
     45deg,
@@ -235,6 +299,13 @@ section h1 {
   max-width: 100%;
   padding: 0 2rem;
   margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .info-text {
+    padding: 0px !important;
+    margin-top: 1rem !important;
+  }
 }
 
 @media (max-width: 768px) {
@@ -307,7 +378,7 @@ section h1 {
 
 @media (max-width: 768px) {
   .info-text {
-    padding: 0 1rem;
+    padding: 0px !important;
   }
   
   .info-text h2 {
@@ -317,7 +388,7 @@ section h1 {
   .info-text p {
     font-size: 1rem;
     line-height: 1.6;
-    padding: 0 1rem;
+    padding: 0px !important;
   }
 }
 

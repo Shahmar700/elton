@@ -2,13 +2,14 @@
   <div>
     <div id="top-header" class="top-header">
       <div class="container">
-        <div class="contact-info">
-          <span><Icon name="mdi:phone" size="20" /> +90 552 431 8888</span>
-          <div class="address-link" @click="showMap = true">
-            <span><Icon name="mdi:map-legend" size="20" /> Bayrampaşa Demirkapı Cad. 8/10</span>
+        <div class="contact-and-social">
+          <div class="contact-info">
+            <span><Icon name="mdi:phone" size="20" /> +90 552 431 8888</span>
+            <div class="address-link" @click="showMap = true">
+              <span><Icon name="mdi:map-legend" size="20" /> Bayrampaşa Demirkapı Cad. 8/10</span>
+            </div>
+            <span><Icon name="mdi:clock" size="20" /> Pt-Ct 9:00 - 21:00</span>
           </div>
-          <span><Icon name="mdi:clock" size="20" /> Pt-Ct 9:00 - 21:00</span>
-        </div>
         <div class="social-links">
           <a href="https://www.facebook.com/eltonteknikservis" target="_blank"><Icon name="mdi:facebook" size="22" /></a>
           <a href="https://www.instagram.com/eltonteknikservis" target="_blank" ><Icon name="mdi:instagram" size="22" /></a>
@@ -29,6 +30,7 @@
               </li>
             </ul>
           </div>
+        </div>
         </div>
       </div>
     </div>
@@ -148,6 +150,16 @@ onMounted(() => {
 <style>
 @import '~/assets/css/main.css';
 
+.contact-and-social{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+}
+.contact-info {
+  display: flex;
+  align-items: center;
+}
 .contact-info span {
   display: flex;
   align-items: center;
@@ -158,6 +170,28 @@ onMounted(() => {
 .contact-info span:hover {
   color: var(--primary-color);
   transform: scale(1.02);
+}
+
+@media screen and (max-width: 930px) {
+  .contact-info {
+    width: 100%;
+  }
+  .social-links{
+    width: 100%;
+    justify-content: end;
+  }
+  .social-links a {
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 660px) {
+  .contact-info {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
 }
 
 .mobile-menu-btn {
@@ -339,6 +373,7 @@ onMounted(() => {
 
 .language-selector {
   position: relative;
+  margin-top: 5px;
 }
 
 .language-btn {

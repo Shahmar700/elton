@@ -120,6 +120,21 @@ section {
   }
 } 
 
+/* @media screen and (max-width: 768px) {
+  section {
+    padding: 1rem !important;
+  }
+  .gradient-text {
+    border: 1px solid red;
+    font-size: 20px
+  }
+  .info-text h2 {
+    border: 1px solid red;
+    font-size: 30px
+}
+
+} */
+
 /* ====== Phone And Adress (Home and Contact) ======  */
 .phone-and-address {
   display: flex;
