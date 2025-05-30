@@ -11,7 +11,7 @@
             </div>
             
             <!-- Contact info items -->
-            <div class="contact-items shadow-2xl border border-[#1AA54D] !z-[999] min-w-[280px]" :class="{ 'active': isContactInfoOpen }">
+            <div class="contact-items shadow-2xl border border-[#1AA54D] md:border-0 !z-[999] min-w-[280px]" :class="{ 'active': isContactInfoOpen }">
               <span><Icon name="mdi:phone" size="20" /> +90 552 431 8888</span>
               <div class="address-link" @click="showMap = true">
                 <span><Icon name="mdi:map-legend" size="20" /> Bayrampaşa Demirkapı Cad. 8/10</span>

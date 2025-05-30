@@ -1,7 +1,7 @@
 <template>  
   <div>
     <section>
-      <h1 class="gradient-text text-md mt-10">{{ $t('welcomeTitle') }}</h1>
+      <h1 class="gradient-text text-md sm:text-2xl mt-10">{{ $t('welcomeTitle') }}</h1>
       <div class="main-image-container">
         <img src="/assets/images/office.jpg" alt="Office" class="main-image">
       </div>
