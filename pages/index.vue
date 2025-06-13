@@ -1,12 +1,12 @@
 <template>  
   <div>
     <section>
-      <h1 class="gradient-text text-md sm:text-2xl mt-10">{{ $t('welcomeTitle') }}</h1>
+      <h1 class="gradient-text text-md 400:text-lg sm:text-2xl md:text-3xl mt-10">{{ $t('welcomeTitle') }}</h1>
       <div class="main-image-container">
         <img src="/assets/images/office.jpg" alt="Office" class="main-image">
       </div>
       <div class="info-text" data-aos="fade-up" data-aos-duration="1000">
-        <h2>{{ $t('mainSubtitle') }}</h2>
+        <h2 class="text-base xs:text-lg sm:text-2xl">{{ $t('mainSubtitle') }}</h2>
         <p>
           {{ $t('mainDescription') }}
         </p>
@@ -213,7 +213,7 @@ section:nth-child(even) {
     max-width: 100%;
     overflow: hidden;
     box-sizing: border-box;
-    padding: 0 1rem;
+    /* padding: 0 1rem; */
   }
   
   .address-link {
@@ -292,7 +292,7 @@ section:nth-child(even) {
   width: 100%;
   max-width: 100%;
   padding: 0 2rem;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 /* @media (max-width: 768px) {
@@ -339,13 +339,11 @@ section:nth-child(even) {
   margin-top: 2rem;
   width: 100%;
   max-width: 100%;
-  padding: 0 2rem;
+  /* padding: 0 2rem; */
 }
 
 .info-text h2 {
   color: var(--secondary-color);
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
   font-weight: 600;
   text-align: center;
 }
@@ -368,7 +366,6 @@ section:nth-child(even) {
     margin-bottom: 1.5rem;
     font-weight: 600;
     text-align: center;
-    border: 1px solid red !important;
   }
 }
 

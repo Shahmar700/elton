@@ -1,26 +1,25 @@
 <template>
   <div>
-    
       <div class="info-text" data-aos="fade-down" data-aos-duration="1000">
-        <h2>Elton Teknik Servis: Bilgisayar, Telefon ve Tablet Tamiri Hizmetleri</h2>
-        <p>Elton Teknik Servis olarak, müşterilerimizin sıkça sorduğu soruları bir araya getirdik ve cevaplarını detaylı bir şekilde açıkladık. İşte en sık karşılaşılan sorular ve bunlara verdiğimiz yanıtlar:</p>
+        <h2 class="text-lg sm:text-2xl md:text-[27px] !leading-relaxed sm:mt-8">Elton Teknik Servis: Bilgisayar, Telefon ve Tablet Tamiri Hizmetleri</h2>
+        <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">Elton Teknik Servis olarak, müşterilerimizin sıkça sorduğu soruları bir araya getirdik ve cevaplarını detaylı bir şekilde açıkladık. İşte en sık karşılaşılan sorular ve bunlara verdiğimiz yanıtlar:</p>
       </div>
       <!-- S.S.S  -->
       <div class="faq-container">
         <div v-for="(item, index) in questions" :key="item.id" class="faq-item" @click="toggleFaq(index)" data-aos="zoom-in">
-          <div class="faq-question">
-            <h3>{{ item.question }}</h3>
+          <div class="faq-question p-2 sm:p-4 lg:p-6">
+            <h3 class="text-base">{{ item.question }}</h3>
             <Icon :name="activeFaqs.includes(index) ? 'material-symbols:expand-less' : 'material-symbols:expand-more'" class="expand-icon" />
             <Icon v-if="index === 0 && showTouchAnimation" name="material-symbols:touch-app" class="touch-icon"  data-aos="zoom-in" data-aos-delay="500"/>
           </div>
           <div class="faq-answer" :class="{ 'active': activeFaqs.includes(index) }">
-            <p>{{ item.answer }}</p>
+            <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">{{ item.answer }}</p>
           </div>
         </div>
       </div>
       <!-- S.S.S END  -->
        <div class="info-text" data-aos="fade-up" data-aos-duration="1000">
-          <p>Elton Teknik Servis olarak, müşteri memnuniyetine büyük önem veriyoruz. Ayrıca, tamir süreci ve hizmet kalitesi hakkında herhangi bir sorunuz veya geri bildiriminiz varsa, müşteri hizmetlerimizle iletişime geçebilirsiniz. Sizin için en iyi hizmeti sunabilmek için her zaman geri bildirimlerinizi dikkate alıyoruz.</p>
+          <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">Elton Teknik Servis olarak, müşteri memnuniyetine büyük önem veriyoruz. Ayrıca, tamir süreci ve hizmet kalitesi hakkında herhangi bir sorunuz veya geri bildiriminiz varsa, müşteri hizmetlerimizle iletişime geçebilirsiniz. Sizin için en iyi hizmeti sunabilmek için her zaman geri bildirimlerinizi dikkate alıyoruz.</p>
        </div>
   </div>
 </template>
@@ -83,7 +82,7 @@ const toggleFaq = (index) => {
   margin-top: 2rem;
   width: 100%;
   max-width: 100%;
-  padding: 0 2rem;
+  /* padding: 0 2rem; */
 }
 
 .info-text h2 {
@@ -96,7 +95,7 @@ const toggleFaq = (index) => {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  font-size: 1.6rem;
+  /* font-size: 1.6rem; */
   font-weight: 700;
   animation: gradient 3s ease infinite;
   position: relative;
@@ -106,7 +105,7 @@ const toggleFaq = (index) => {
 
 .info-text p {
   color: #333;
-  font-size: 1.3rem;
+  /* font-size: 1.3rem; */
   line-height: 1.8;
   text-align: justify;
   max-width: 100%;
@@ -148,7 +147,7 @@ const toggleFaq = (index) => {
   }
 }
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .info-text {
     padding: 0 1rem;
   }
@@ -169,7 +168,7 @@ const toggleFaq = (index) => {
     font-size: 0.9rem;
     line-height: 1.5;
   }
-}
+} */
 
 .faq-container {
   max-width: 900px; 
@@ -185,18 +184,12 @@ const toggleFaq = (index) => {
 }
 
 .faq-question {
-  padding: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: linear-gradient(45deg, #1AA54D, #121D61);
   color: white;
   position: relative;
-}
-
-.faq-question h3 {
-  margin: 0;
-  font-size: 1.2rem;
 }
 
 .expand-icon {
