@@ -3,7 +3,8 @@
         "en": "İngilis",
         "tr": "Türkçe",
         "ru": "Rusça" 
-    },    "nav": {
+    },    
+    "nav": {
         "home": "Anasayfa",
         "brands": "Markalar", 
         "services": "Hizmetler",
@@ -12,6 +13,9 @@
     },
     "contact": {
         "contactInfo": "İletişim Bilgileri"
+    },
+    "footer": {
+        "copyright": "Elton Teknik Servis. Tüm hakları saklıdır."
     },
     "welcomeTitle": "Elton Teknik Servis'e Hoş Geldiniz",
     "mainSubtitle": "Elton Teknik Servis: Bilgisayar, Telefon ve Tablet Tamiri",

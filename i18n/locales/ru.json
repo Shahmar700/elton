@@ -3,7 +3,8 @@
       "en": "Английский",
       "tr": "Турецкий",
       "ru": "Русский"
-    },    "nav": {
+    },    
+    "nav": {
         "home": "Главная",
         "brands": "Бренды",
         "services": "Услуги",
@@ -12,6 +13,9 @@
     },
     "contact": {
         "contactInfo": "Контактная информация"
+    },
+    "footer": {
+        "copyright": "Elton Teknik Servis. Все права защищены."
     },
     "welcomeTitle": "Добро пожаловать в Elton Teknik Servis",
     "mainSubtitle": "Elton Teknik Servis: Ремонт компьютеров, телефонов и планшетов",
