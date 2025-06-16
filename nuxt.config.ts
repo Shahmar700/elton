@@ -26,8 +26,8 @@ export default defineNuxtConfig({
   imports: {
     dirs: ['composables/**']
   },
-
   app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       title: 'Elton',
       meta: [

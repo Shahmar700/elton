@@ -43,6 +43,7 @@
         </div>
       </div>
     </div>
+
     <header class="main-header !py-2 sm:py-4 lg:py-5">
       <div class="container">
         <div class="logo flex items-center">
@@ -94,6 +95,8 @@
         </NuxtLink>
       </nav>
     </div>
+
+    
 
     <!-- Map Modal -->
     <MapModal v-model:isOpen="showMap" />
