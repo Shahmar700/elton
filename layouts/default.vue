@@ -92,12 +92,6 @@
               </NuxtLink>
               <h3>Elton Teknik Servis</h3>
             </div>
-            <div class="flex justify-center items-center mb-5">
-              <p class="copyright-text">
-              © {{ currentYear }} {{ t('footer.copyright') }}
-              </p>
-              <FooterLogo />
-            </div>
             <div class="footer-links">
               <NuxtLink 
                 v-for="link in navLinks" 
@@ -107,6 +101,12 @@
               >
                 {{ t(link.textKey) }}
               </NuxtLink>
+            </div>
+            <div class="copyright-content">
+              <p class="copyright-text">
+              © {{ currentYear }} {{ t('footer.copyright') }}
+              </p>
+              <FooterLogo class="scale-[0.9] md:scale-100" />
             </div>
           </div>
         </div>
@@ -860,7 +860,7 @@ a.active:hover {
 
 .footer-wave .shape-fill {
   fill: rgba(255, 255, 255, 0.1);
-  animation: wave 6s ease-in-out infinite;
+  animation: wave 4s ease-in-out infinite;
 }
 
 @keyframes wave {
@@ -923,18 +923,25 @@ a.active:hover {
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
+.copyright-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  flex-direction: row;
+}
+
 .copyright-text {
-  font-size: 16px;
-  /* margin: 20px 0 30px; */
+  font-size: 17px;
   opacity: 0.9;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
 
 .footer-links {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 30px;
-  flex-wrap: wrap;
 }
 
 .footer-link {
@@ -1015,16 +1022,18 @@ a.active:hover {
     padding: 6px 12px !important;
     font-size: 14px;
   }
+
+  .copyright-content {
+    flex-direction: column;
+  }
   
   .copyright-text {
-    font-size: 14px;
-    margin: 15px 0 25px;
+    font-size: 16px;
   }
 }
 
 @media (max-width: 480px) {
   .footer-links {
-    flex-direction: column;
     align-items: center;
     gap: 10px;
   }
