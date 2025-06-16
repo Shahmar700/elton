@@ -85,15 +85,19 @@
           </svg>
         </div>
         <div class="footer-main">
-          <div class="copyright-section">            <div class="logo-section">
+          <div class="copyright-section">            
+            <div class="logo-section">
               <NuxtLink to="/" class="footer-logo-link" @click="handleLogoClick">
                 <img src="../public/assets/logo.png" alt="Elton Logo" class="footer-logo">
               </NuxtLink>
               <h3>Elton Teknik Servis</h3>
             </div>
-            <p class="copyright-text">
+            <div class="flex justify-center items-center mb-5">
+              <p class="copyright-text">
               © {{ currentYear }} {{ t('footer.copyright') }}
-            </p>
+              </p>
+              <FooterLogo />
+            </div>
             <div class="footer-links">
               <NuxtLink 
                 v-for="link in navLinks" 
@@ -850,7 +854,7 @@ a.active:hover {
 .footer-wave svg {
   position: relative;
   display: block;
-  width: calc(100% + 1.3px);
+  width: calc(110% + 1.3px);
   height: 60px;
 }
 
@@ -921,7 +925,7 @@ a.active:hover {
 
 .copyright-text {
   font-size: 16px;
-  margin: 20px 0 30px;
+  /* margin: 20px 0 30px; */
   opacity: 0.9;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
