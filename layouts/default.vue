@@ -47,7 +47,7 @@
     <header class="main-header !py-2 sm:py-4 lg:py-5">
       <div class="container">
         <div class="logo flex items-center">
-          <NuxtLink to="/" >
+          <NuxtLink to="/" @click="handleLogoClick">
             <img src="../public/assets/logo.png" alt="Logo" class="w-[40px] h-[52px] sm:w-[50px] sm:h-[62px]">
           </NuxtLink>
         </div>

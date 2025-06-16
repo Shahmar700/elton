@@ -1,8 +1,8 @@
 {
   "languageName": {
-    "en": "English",
-    "tr": "Turkish",
-    "ru": "Russian"
+    "En": "English",
+    "Tr": "Turkish",
+    "Ru": "Russian"
   },  
   "nav": {
     "home": "Home",

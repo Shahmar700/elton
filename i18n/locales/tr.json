@@ -1,8 +1,8 @@
 {
     "languageName": {
-        "en": "İngilis",
-        "tr": "Türkçe",
-        "ru": "Rusça" 
+        "En": "İngilis",
+        "Tr": "Türkçe",
+        "Ru": "Rusça" 
     },    
     "nav": {
         "home": "Anasayfa",

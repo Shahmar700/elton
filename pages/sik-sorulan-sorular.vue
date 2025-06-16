@@ -79,7 +79,7 @@ const toggleFaq = (index) => {
 
 <style scoped>
 .info-text {
-  margin-top: 2rem;
+  margin-top: 1rem;
   width: 100%;
   max-width: 100%;
   /* padding: 0 2rem; */
