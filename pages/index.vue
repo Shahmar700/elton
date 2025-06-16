@@ -1,11 +1,11 @@
 <template>  
   <div>
     <section>
-      <h1 class="gradient-text text-md 400:text-lg sm:text-2xl md:text-3xl mt-10">{{ $t('welcomeTitle') }}</h1>
+      <h1 class="gradient-text text-md 400:text-lg sm:text-2xl md:text-3xl mt-5 md:mt-10">{{ $t('welcomeTitle') }}</h1>
       <div class="main-image-container">
         <img src="/assets/images/office.jpg" alt="Office" class="main-image">
       </div>
-      <div class="info-text" data-aos="fade-up" data-aos-duration="1000">
+      <div class="info-text">
         <h2 class="text-base xs:text-lg sm:text-2xl">{{ $t('mainSubtitle') }}</h2>
         <p>
           {{ $t('mainDescription') }}
@@ -15,18 +15,18 @@
       <div class="phone-and-address">
         <div class="phone-numbers">
           <a href="tel:+905524318888" class="phone-link flex items-center gap-2">
-            <p data-aos="fade-up" data-aos-duration="1000">Mobil Tel: 0552 431 8888</p>
+            <p  >Mobil Tel: 0552 431 8888</p>
           </a>
           <a href="tel:+902124318888" class="phone-link">
-            <p data-aos="fade-up" data-aos-duration="1000">Sabit Tel: 0212 431 8888</p>
+            <p  >Sabit Tel: 0212 431 8888</p>
           </a>
         </div>
         <div class="address-link" @click="showMap = true">
-          <p data-aos="fade-up" data-aos-duration="1000">Adres: Yenidogan Mah Demirkapı Cad Özaltın İş Merkezi Bodrum Kat No:10</p>
+          <p  >Adres: Yenidogan Mah Demirkapı Cad Özaltın İş Merkezi Bodrum Kat No:10</p>
         </div>
       </div>
       <!-- customer testimonial  -->
-       <div class="customer-testimonial info-text" data-aos="fade-up" data-aos-duration="1000">
+       <div class="customer-testimonial info-text">
           <p>Elton Teknik Servis, müşteri memnuniyetini ön planda tutan bir anlayışla çalışmaktadır. Müşterilerin cihazlarının tamir süreci boyunca en iyi hizmeti almasını sağlamak için özveriyle çalışan uzman ekip, hızlı ve etkili çözümler sunmaktadır. Bilgisayarlar, telefonlar ve tabletler gibi teknolojik cihazlar üzerinde her türlü sorunla başa çıkabilen Elton Teknik Servis, arızaları giderirken aynı zamanda veri kurtarma ve yedekleme gibi hizmetler de sunmaktadır.</p>
           <p>Elton Teknik Servis, müşterilerinin güvenliği ve gizliliği konusunda da hassasiyet göstermektedir. Tamir sürecinde müşteri verilerinin korunmasına özen gösteren servis, bilgilerinizi güvenli bir şekilde saklamakta ve gizlilik politikalarına sıkı sıkıya uymaktadır.</p>
           <p>
@@ -41,10 +41,6 @@
          <div v-for="(part, index) in parts" 
               :key="index" 
               class="part-item"
-              :data-aos="getAnimationEffect(index)"
-              :data-aos-duration="getDuration(index)"
-              :data-aos-delay="index * 100"
-              :data-aos-easing="getEasing(index)"
               @click="openModal(`/assets/images/parts${index + 1}.png`, index)">
            <img :src="`/assets/images/parts${index + 1}.png`" :alt="`Part ${index + 1}`" class="part-image">
          </div>
@@ -89,10 +85,8 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import { useAos } from '../composables/useAos'
 import ImageModal from '~/components/Modal.vue'
 
-useAos()
 const showMap = ref(false)
 const parts = ref(Array(6).fill(null))
 const isModalOpen = ref(false)
@@ -129,20 +123,6 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('scroll', checkScroll)
 })
-
-const getAnimationEffect = (index) => {
-  const effects = ['fade-up', 'fade-down', 'fade-left', 'fade-right', 'zoom-in', 'zoom-out']
-  return effects[index % effects.length]
-}
-
-const getDuration = (index) => {
-  return 500 + (index * 50)
-}
-
-const getEasing = (index) => {
-  const easings = ['ease', 'ease-in', 'ease-out', 'ease-in-out', 'linear']
-  return easings[index % easings.length]
-}
 
 const openModal = (imageSrc, index) => {
   selectedImage.value = imageSrc
@@ -182,7 +162,7 @@ section:nth-child(even) {
 }
 .main-image-container {
   width: 100%;
-  min-height: 550px;
+  /* min-height: 550px;   */
   position: relative;
   overflow: hidden;
   margin-top: 2rem;
@@ -199,11 +179,11 @@ section:nth-child(even) {
 @media screen and (max-width: 768px) {
   .main-image-container {
     width: 100%;
-    min-height: 300px;
+    /* min-height: 300px; */
     position: relative;
     overflow: hidden;
     margin-top: 2rem;
-    border-radius: 20px;
+    border-radius: 10px;
   }
 }
 
@@ -336,7 +316,7 @@ section:nth-child(even) {
 }
 
 .info-text {
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   width: 100%;
   max-width: 100%;
   /* padding: 0 2rem; */
@@ -354,7 +334,7 @@ section:nth-child(even) {
   line-height: 1.8;
   text-align: justify;
   max-width: 100%;
-  margin-top: 20px;
+  margin-top: 10px;
   padding: 0;
 }
 

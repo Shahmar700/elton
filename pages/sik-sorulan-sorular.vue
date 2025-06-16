@@ -1,16 +1,16 @@
 <template>
   <div>
-      <div class="info-text" data-aos="fade-down" data-aos-duration="1000">
+      <div class="info-text">
         <h2 class="text-lg sm:text-2xl md:text-[27px] !leading-relaxed sm:mt-8">Elton Teknik Servis: Bilgisayar, Telefon ve Tablet Tamiri Hizmetleri</h2>
         <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">Elton Teknik Servis olarak, müşterilerimizin sıkça sorduğu soruları bir araya getirdik ve cevaplarını detaylı bir şekilde açıkladık. İşte en sık karşılaşılan sorular ve bunlara verdiğimiz yanıtlar:</p>
       </div>
       <!-- S.S.S  -->
       <div class="faq-container">
-        <div v-for="(item, index) in questions" :key="item.id" class="faq-item" @click="toggleFaq(index)" data-aos="zoom-in">
+        <div v-for="(item, index) in questions" :key="item.id" class="faq-item" @click="toggleFaq(index)">
           <div class="faq-question p-2 sm:p-4 lg:p-6">
             <h3 class="text-base">{{ item.question }}</h3>
             <Icon :name="activeFaqs.includes(index) ? 'material-symbols:expand-less' : 'material-symbols:expand-more'" class="expand-icon" />
-            <Icon v-if="index === 0 && showTouchAnimation" name="material-symbols:touch-app" class="touch-icon"  data-aos="zoom-in" data-aos-delay="500"/>
+            <Icon v-if="index === 0 && showTouchAnimation" name="material-symbols:touch-app" class="touch-icon" />
           </div>
           <div class="faq-answer" :class="{ 'active': activeFaqs.includes(index) }">
             <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">{{ item.answer }}</p>
@@ -18,7 +18,7 @@
         </div>
       </div>
       <!-- S.S.S END  -->
-       <div class="info-text" data-aos="fade-up" data-aos-duration="1000">
+       <div class="info-text">
           <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">Elton Teknik Servis olarak, müşteri memnuniyetine büyük önem veriyoruz. Ayrıca, tamir süreci ve hizmet kalitesi hakkında herhangi bir sorunuz veya geri bildiriminiz varsa, müşteri hizmetlerimizle iletişime geçebilirsiniz. Sizin için en iyi hizmeti sunabilmek için her zaman geri bildirimlerinizi dikkate alıyoruz.</p>
        </div>
   </div>

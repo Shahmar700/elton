@@ -1,7 +1,7 @@
 <template>
   <div>
     <section>
-      <div class="info-text" data-aos="fade-up" data-aos-duration="1000">
+      <div class="info-text" >
         <h2 class="text-lg sm:text-2xl md:text-[27px] !leading-relaxed sm:mt-8">Elton Teknik Servis: Bilgisayar, Telefon ve Tablet Tamiri Hizmetleri</h2>
         <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
           Elton Teknik Servis olarak, bilgisayar, telefon ve tablet tamiri konusunda uzmanlaşmış bir ekip olarak müşterilerimize eşsiz hizmetler sunuyoruz. Geniş marka yelpazemiz ve kapsamlı arıza türleriyle her türlü cihaz sorununu çözme konusunda deneyimliyiz.
@@ -9,7 +9,7 @@
       </div>
       <!-- pc and phone repair  -->
        <div style="width: 100%">
-         <div class="pc-repair-container" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100">
+         <div class="pc-repair-container"  >
              <div class="pc-repair-icon">
                 <Icon name="hugeicons:settings-02" class="icon settings-icon" />
                 <img src="/public/assets/icons/laptop.png" alt="phone" class="icon laptop-icon">
@@ -18,7 +18,7 @@
             <h3 class="text-xl 500:text-2xl md:text-3xl text-[#1AA54D] font-bold">Bilgisayar Tamiri</h3>
          </div>
          <!-- Laptop Repair  -->
-          <div class="info-text" data-aos="fade-up" data-aos-duration="900" data-aos-delay="200">
+          <div class="info-text">
               <div class="repair-heading">
                 <Icon name="hugeicons:repair" class="icon repair-icon" />  
                 <h4 class="text-md 500:text-lg sm:text-2xl md:text-3xl font-bold">Laptop Tamiri</h4>
@@ -27,7 +27,7 @@
           </div>
 
           <!-- Desktop Repair  -->
-          <div class="info-text" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
+          <div class="info-text">
               <div class="repair-heading">
                 <Icon name="hugeicons:repair" class="icon repair-icon" />  
                 <h4 class="text-md 500:text-lg sm:text-2xl md:text-3xl font-bold">Masaüstü Bilgisayarlar Tamiri</h4>
@@ -35,7 +35,7 @@
               <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">Tüm markaların modellerin masaüstü bilgisayarlarının tamirini yapıyoruz. Güç kaynağı değişimi, donanım yükseltme, veri kurtarma ve virüs temizleme gibi hizmetlerle cihazlarınızı yeniden çalışır duruma getiriyoruz.</p>
           </div>
 
-          <div class="pc-repair-container" data-aos="fade-up" data-aos-duration="1000">
+          <div class="pc-repair-container" >
              <div class="pc-repair-icon">
                 <Icon name="hugeicons:settings-02" class="icon settings-icon" />
                  <img src="/public/assets/icons/phone.png" alt="phone" class="icon laptop-icon">
@@ -44,7 +44,7 @@
          </div>
 
          <!-- phone repair  -->
-         <div class="info-text" data-aos="fade-up" data-aos-duration="1000">
+         <div class="info-text" >
               <div class="repair-heading">
                 <Icon name="hugeicons:repair" class="icon repair-icon" />  
                 <h4 class="text-md 500:text-lg sm:text-2xl md:text-3xl font-bold">Telefon Tamiri</h4>
@@ -53,7 +53,7 @@
           </div>
 
           <!-- tablet repair  -->
-          <div class="info-text" data-aos="fade-up" data-aos-duration="1000">
+          <div class="info-text" >
               <div class="repair-heading">
                 <Icon name="hugeicons:repair" class="icon repair-icon" />  
                 <h4 class="text-md 500:text-lg sm:text-2xl md:text-3xl font-bold">Tablet Tamiri</h4>
@@ -61,7 +61,7 @@
               <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">Tüm marka modellerinin ekran değişimi, batarya değişimi, güç düğmesi tamiri, WiFi sorunları gibi hizmetlerini sunuyoruz.</p>
           </div>
 
-          <div class="info-text" data-aos="fade-up" data-aos-duration="1000">
+          <div class="info-text" >
             <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">Bu sadece bir örnek olup, daha fazla marka ve arıza türü için bizimle iletişime geçebilirsiniz. Elton Teknik Servis olarak, uzman teknisyenlerimizle en kaliteli hizmeti sunmayı hedefliyoruz. Her türlü tamir ihtiyacınız için bize güvenebilirsiniz.</p>
           </div>
        </div>
@@ -70,9 +70,7 @@
 </template>
 
 <script setup>
-import { useAos } from '~/composables/useAos'
 
-useAos()
 </script>
 
 <style scoped>

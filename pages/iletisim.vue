@@ -1,10 +1,10 @@
 <template>
   <div>
     <section>
-      <div class="info-text" data-aos="fade-up" data-aos-duration="1000">
+      <div class="info-text" >
         <h2 class="text-lg sm:text-2xl md:text-[27px] !leading-relaxed sm:mt-8">Elton Teknik Servis İletişim Hattı:</h2>
       </div>
-      <div class="info-text" data-aos="fade-up" data-aos-duration="1000">
+      <div class="info-text" >
         <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
           Elton Teknik Servis, müşterilerine sorunsuz iletişim imkanı sağlamak için geniş bir iletişim ağı sunmaktadır. İster mobil telefon, ister sabit hat üzerinden olsun, Elton Teknik Servis’e kolayca ulaşabilir ve cihazlarınızın tamir süreci hakkında detaylı bilgi alabilirsiniz.
         </p>
@@ -14,11 +14,11 @@
         <div class="phone-and-address">
           <div class="phone-numbers">
             <a href="tel:+905524318888" class="phone-link flex items-center gap-2">
-              <p data-aos="fade-up" data-aos-duration="1000">Mobil Tel: 0552 431 8888</p>
+              <p >Mobil Tel: 0552 431 8888</p>
             </a>
           </div>
         </div>
-        <div class="info-text" data-aos="fade-up" data-aos-duration="1000">
+        <div class="info-text" >
           <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
             Elton Teknik Servis, mobil telefon üzerinden ulaşılabilirlik konusunda büyük bir önem vermektedir. Bu nedenle, müşterilerine hızlı ve etkili bir iletişim kanalı sunmaktadır. Mobil telefon hattımız üzerinden ulaşarak, cihazlarınızın tamiri, hizmetlerimiz hakkında bilgi alma veya sorularınızı yanıtlama konusunda bize ulaşabilirsiniz. Müşteri memnuniyeti odaklı yaklaşımımızla, en iyi hizmeti sunmak için sabırsızlıkla bekliyoruz.
           </p>
@@ -29,11 +29,11 @@
         <div class="phone-and-address">
           <div class="phone-numbers">
             <a href="tel:+902124318888" class="phone-link">
-              <p data-aos="fade-up" data-aos-duration="1000">Sabit Tel: 0212 431 8888</p>
+              <p >Sabit Tel: 0212 431 8888</p>
             </a>
           </div>
         </div>
-        <div class="info-text" data-aos="fade-up" data-aos-duration="1000">
+        <div class="info-text" >
           <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">Elton Teknik Servis ayrıca sabit hat üzerinden de müşterilerine hizmet sunmaktadır. Sabit telefon hattımızı kullanarak, detaylı bilgi alabilir, randevu oluşturabilir veya teknik destek taleplerinizi iletebilirsiniz. Alanında uzmanlaşmış müşteri temsilcilerimiz, sizlere en iyi şekilde yardımcı olmak için hazır beklemektedir.
           </p>
         </div>
@@ -42,10 +42,10 @@
       <div class="address">
         <div class="phone-and-address">
           <div class="address-link" @click="showMap = true">
-            <p data-aos="fade-up" data-aos-duration="1000">Adres: Yenidogan Mah Demirkapı Cad Özaltın İş Merkezi Bodrum Kat No:10</p>
+            <p >Adres: Yenidogan Mah Demirkapı Cad Özaltın İş Merkezi Bodrum Kat No:10</p>
           </div>
         </div>
-        <div class="info-text" data-aos="fade-up" data-aos-duration="1000">
+        <div class="info-text" >
             <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">Elton Teknik Servis, Yenidogan Mah Demirkapı Cad Özaltın İş Merkezi’nin Bodrum Katı’nda bulunmaktadır. Bu merkezi konum, müşterilerimize kolay erişim imkanı sağlamaktadır. Cihazlarınızın tamiri için bizi ziyaret etmek veya sorularınızı iletmek için adresimize bekliyoruz.
             </p>
         </div>

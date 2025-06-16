@@ -1,7 +1,7 @@
 <template>
   <div>
     <section>
-      <div class="info-text" data-aos="fade-up" data-aos-duration="1000">
+      <div class="info-text">
         <h2 class="text-lg sm:text-2xl md:text-[27px] !leading-relaxed sm:mt-8">Elton Teknik Servis: Bilgisayar, Telefon ve Tablet Tamiri Alanında Tüm Markaları Kapsayan Eşsiz Hizmet</h2>
         <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
           Elton Teknik Servis, bilgisayar, telefon ve tablet tamiri konusunda uzmanlaşmış bir teknik servis merkezidir. Sunduğumuz eşsiz hizmet anlayışıyla, müşterilerimize tüm markaları kapsayan tamir imkanı sunuyoruz. Teknolojik cihazlarınızda yaşadığınız her türlü sorun için Elton Teknik Servis'e güvenebilirsiniz. Popüler markanın tamirini başarıyla gerçekleştiriyoruz. Ekran değişimi, batarya değişimi, donanım tamiri, yazılım sorunları gibi birçok hizmeti kapsayan geniş bir yelpazede hizmet sunuyoruz.
@@ -24,9 +24,7 @@
 </template>
 
 <script setup>
-import { useAos } from '~/composables/useAos'
 
-useAos()
 </script>
 
 <style scoped>
