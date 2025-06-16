@@ -1,18 +1,19 @@
-{
-    "languageName": {
+{    "languageName": {
       "En": "Английский",
       "Tr": "Турецкий",
       "Ru": "Русский"
-    },    
+    },
     "nav": {
         "home": "Главная",
         "brands": "Бренды",
         "services": "Услуги",
         "faq": "Ч.З.В",
         "contact": "Контакты"
-    },
-    "contact": {
+    },    "contact": {
         "contactInfo": "Контактная информация"
+    },
+    "common": {
+        "language": "Язык"
     },
     "footer": {
         "copyright": "Elton Teknik Servis. Все Права Защищены."

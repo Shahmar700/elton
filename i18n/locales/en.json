@@ -1,18 +1,19 @@
-{
-  "languageName": {
+{  "languageName": {
     "En": "English",
     "Tr": "Turkish",
     "Ru": "Russian"
-  },  
+  },
   "nav": {
     "home": "Home",
     "brands": "Brands",
     "services": "Services", 
     "faq": "F.A.Q",
     "contact": "Contact"
-  },
-  "contact": {
+  },  "contact": {
     "contactInfo": "Contact Info"
+  },
+  "common": {
+    "language": "Language"
   },
   "footer": {
     "copyright": "Elton Technical Service. All Rights Reserved."

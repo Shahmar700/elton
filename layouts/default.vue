@@ -112,29 +112,98 @@
         </div>
       </div>
       <div class="floating-particles" ref="particlesRef"></div>
-    </footer>
-
-    <!-- Sidebar -->
+    </footer>    <!-- Modern Sidebar -->
     <div 
-      class="sidebar-overlay" 
+      class="sidebar-overlay modern-overlay" 
       :class="{ 'active': isSidebarOpen }" 
       @click="closeSidebar"
     />
-    <div class="sidebar" :class="{ 'active': isSidebarOpen }">
-      <button class="close-btn" @click="closeSidebar">
-        <Icon name="mdi:close" size="28" />
-      </button>
-      <nav class="sidebar-nav">
+    <div class="modern-sidebar" :class="{ 'active': isSidebarOpen }">
+      <!-- Background Pattern -->
+      <div class="sidebar-bg-pattern"></div>
+      
+      <!-- Header Section -->
+      <div class="sidebar-header">
+        <div class="sidebar-logo-section">
+          <NuxtLink to="/" @click="handleLogoClick" class="sidebar-logo-link">
+            <img src="../public/assets/logo.png" alt="Elton Logo" class="sidebar-logo">
+          </NuxtLink>
+          <h3 class="sidebar-brand">Elton Teknik Servis</h3>
+        </div>
+        <button class="modern-close-btn" @click="closeSidebar">
+          <Icon name="mdi:close" size="32" />
+        </button>
+      </div>
+
+      <!-- Navigation Section -->
+      <nav class="modern-sidebar-nav">
         <NuxtLink 
-          v-for="link in navLinks" 
+          v-for="(link, index) in navLinks" 
           :key="link.key"
           :to="link.href"
-          :class="{ active: isLinkActive(link.href) }"
+          :class="{ 'active': isLinkActive(link.href) }"
           @click="closeSidebar"
+          class="modern-nav-link"
+          :style="{ '--delay': index * 0.1 + 's' }"
         >
-          {{ t(link.textKey) }}
+          <span class="nav-link-text">{{ t(link.textKey) }}</span>
+          <span class="nav-link-icon">
+            <Icon name="mdi:arrow-right" size="20" />
+          </span>
         </NuxtLink>
       </nav>
+
+      <!-- Language Selector Section -->
+      <div class="sidebar-language-section">
+        <h4 class="language-title">{{ t('common.language') || 'Dil' }}</h4>
+        <div class="sidebar-language-selector">
+          <div 
+            v-for="lang in locales" 
+            :key="lang.code"
+            :class="{ 'active': locale === lang.code }"
+            @click="selectLanguage(lang.code)"
+            class="sidebar-language-option"
+          >
+            <span class="language-flag">{{ getLanguageFlag(lang.code) }}</span>
+            <span class="language-name">{{ t('languageName.' + lang.code) }}</span>
+            <Icon v-if="locale === lang.code" name="mdi:check-circle" size="20" class="language-check" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Info Section -->
+      <div class="sidebar-contact-section">
+        <h4 class="contact-title">{{ t('contact.contactInfo') || 'İletişim' }}</h4>
+        <div class="sidebar-contact-items">
+          <div class="sidebar-contact-item">
+            <Icon name="mdi:phone" size="20" />
+            <span>+90 552 431 8888</span>
+          </div>
+          <div class="sidebar-contact-item address-item" @click="showMap = true; closeSidebar()">
+            <Icon name="mdi:map-marker" size="20" />
+            <span>Bayrampaşa Demirkapı Cad. 8/10</span>
+          </div>
+          <div class="sidebar-contact-item">
+            <Icon name="mdi:clock" size="20" />
+            <span>Pt-Ct 9:00 - 21:00</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social Links Section -->
+      <div class="sidebar-social-section">
+        <div class="sidebar-social-links">
+          <a href="https://www.facebook.com/eltonteknikservis" target="_blank" class="sidebar-social-link facebook">
+            <Icon name="mdi:facebook" size="24" />
+          </a>
+          <a href="https://www.instagram.com/eltonteknikservis" target="_blank" class="sidebar-social-link instagram">
+            <Icon name="mdi:instagram" size="24" />
+          </a>
+          <a href="https://wa.me/905524318888" target="_blank" class="sidebar-social-link whatsapp">
+            <Icon name="mdi:whatsapp" size="24" />
+          </a>
+        </div>
+      </div>
     </div>
 
     
@@ -195,6 +264,15 @@ const toggleLanguageDropdown = () => {
 const selectLanguage = (langCode) => {
   setLocale(langCode)
   isLanguageDropdownOpen.value = false
+}
+
+const getLanguageFlag = (langCode) => {
+  const flags = {
+    'tr': '🇹🇷',
+    'en': '🇺🇸', 
+    'ru': '🇷🇺'
+  }
+  return flags[langCode] || '🌐'
 }
 
 const toggleContactInfo = () => {
@@ -525,57 +603,418 @@ onUnmounted(() => {
   opacity: 1;
 }
 
-.sidebar {
+/* Modern Sidebar Styles */
+.modern-overlay {
+  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.6);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.modern-sidebar {
   position: fixed;
   top: 0;
-  right: -300px;
-  width: 300px;
-  height: 100%;
-  background: white;
-  z-index: 999;
-  transition: right 0.3s ease;
-  padding: 20px;
-  box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+  /* left: 100vw; */
+  transform: scale(0);
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #1AA54D 100%);
+  z-index: 9999;
+  transition: left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
-.sidebar.active {
-  right: 0;
+.modern-sidebar.active {
+  left: 0;
+  transform: scale(1);
 }
 
-.close-btn {
+.sidebar-bg-pattern {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  background: none;
-  border: none;
-  font-size: 24px;
-  color: var(--secondary-color);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(255,255,255,0.05) 0%, transparent 50%);
+  background-size: 200px 200px;
+  animation: backgroundFloat 20s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes backgroundFloat {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(30px, -30px) rotate(1deg); }
+  66% { transform: translate(-20px, 20px) rotate(-1deg); }
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 10;
+}
+
+.sidebar-logo-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sidebar-logo-link {
+  display: inline-block;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.sidebar-logo-link:hover {
+  transform: translateY(-2px) scale(1.05);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar-logo {
+  width: 50px;
+  height: 65px;
+  filter: brightness(1.2) drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+  transition: all 0.3s ease;
+}
+
+.sidebar-brand {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  animation: slideInLeft 0.6s ease-out 0.2s both;
+}
+
+.modern-close-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.modern-close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg) scale(1.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.modern-sidebar-nav {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 10;
+}
+
+.modern-nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  border-radius: 15px;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+  font-size: 1.1rem;
+  font-weight: 500;
+  animation: slideInRight 0.6s ease-out var(--delay) both;
+}
+
+.modern-nav-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  transition: left 0.6s ease;
+}
+
+.modern-nav-link:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateX(10px);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.modern-nav-link:hover::before {
+  left: 100%;
+}
+
+.modern-nav-link:hover .nav-link-icon {
+  transform: translateX(5px);
+}
+
+.modern-nav-link.active {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 25px rgba(26, 165, 77, 0.3);
+  transform: translateX(10px);
+}
+
+.nav-link-text {
+  transition: all 0.3s ease;
+}
+
+.nav-link-icon {
+  transition: all 0.3s ease;
+  opacity: 0.7;
+}
+
+.modern-nav-link:hover .nav-link-icon,
+.modern-nav-link.active .nav-link-icon {
+  opacity: 1;
+}
+
+.sidebar-language-section {
+  padding: 1.5rem 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 10;
+  animation: slideInUp 0.6s ease-out 0.4s both;
+}
+
+.language-title {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.sidebar-language-selector {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.sidebar-language-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  flex: 1;
+  min-width: 80px;
+  justify-content: center;
+}
+
+.sidebar-language-option:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar-language-option.active {
+  background: rgba(26, 165, 77, 0.8);
+  border-color: rgba(26, 165, 77, 1);
+  color: white;
+  box-shadow: 0 4px 15px rgba(26, 165, 77, 0.4);
+}
+
+.language-flag {
+  font-size: 1.2rem;
+}
+
+.language-name {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.language-check {
+  color: #4ade80;
+}
+
+.sidebar-contact-section {
+  padding: 1.5rem 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 10;
+  animation: slideInUp 0.6s ease-out 0.6s both;
+}
+
+.contact-title {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.sidebar-contact-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sidebar-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.sidebar-contact-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateX(5px);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.address-item {
   cursor: pointer;
 }
 
-.sidebar-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin-top: 60px;
+.address-item:hover {
+  background: rgba(26, 165, 77, 0.2);
+  border-color: rgba(26, 165, 77, 0.5);
 }
 
-.sidebar-nav a {
-  color: var(--secondary-color);
+.sidebar-social-section {
+  padding: 1.5rem 2rem 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 10;
+  animation: slideInUp 0.6s ease-out 0.8s both;
+}
+
+.sidebar-social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.sidebar-social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: white;
   text-decoration: none;
-  font-size: 18px;
-  padding: 10px 0;
+  transition: all 0.4s ease;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebar-social-link::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  transition: all 0.4s ease;
+  transform: translate(-50%, -50%);
+}
+
+.sidebar-social-link:hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar-social-link.facebook:hover {
+  background: #1877f2;
+  border-color: #1877f2;
+}
+
+.sidebar-social-link.instagram:hover {
+  background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+  border-color: #e6683c;
+}
+
+.sidebar-social-link.whatsapp:hover {
+  background: #25d366;
+  border-color: #25d366;
+}
+
+/* Animation Keyframes */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .nav-links a,
-.sidebar-nav a {
+.modern-nav-link {
   padding: 4px 14px; 
   transition: all 0.3s ease;
   position: relative;
 }
 
-.nav-links a::after,
-.sidebar-nav a::after {
+.nav-links a::after {
   width: 0;
   height: 2px;
   background-color: var(--primary-color);
@@ -586,27 +1025,23 @@ onUnmounted(() => {
   transition: all 0.3s ease;
 }
 
-.nav-links a:hover::after,
-.sidebar-nav a:hover::after {
+.nav-links a:hover::after {
   width: 100%;
 }
 
-.nav-links a.active,
-.sidebar-nav a.active {
+.nav-links a.active {
   background-color: #1AA54D;
   color: white;
   border-radius: 5px;
   border-bottom-left-radius: 0px;
 }
 
-.nav-links a.active:hover,
-.sidebar-nav a.active:hover {
+.nav-links a.active:hover {
   background-color: #1AA54D;
   color: white;
 }
 
-.nav-links a.active::after,
-.sidebar-nav a.active::after {
+.nav-links a.active::after {
   display: none;
 }
 
@@ -620,8 +1055,47 @@ onUnmounted(() => {
   }
 }
 
+/* Responsive adjustments for modern sidebar */
+@media (max-width: 480px) {
+  .modern-sidebar {
+    width: 100vw;
+  }
+  
+  .sidebar-header {
+    padding: 1.5rem;
+  }
+  
+  .sidebar-brand {
+    font-size: 1.2rem;
+  }
+  
+  .modern-sidebar-nav {
+    padding: 1.5rem;
+  }
+  
+  .modern-nav-link {
+    padding: 0.875rem 1.25rem;
+    font-size: 1rem;
+  }
+  
+  .sidebar-language-section,
+  .sidebar-contact-section,
+  .sidebar-social-section {
+    padding: 1rem 1.5rem;
+  }
+  
+  .sidebar-language-selector {
+    flex-direction: column;
+  }
+  
+  .sidebar-language-option {
+    flex: none;
+    justify-content: flex-start;
+  }
+}
+
 @media (min-width: 1024px) {
-  .sidebar,
+  .modern-sidebar,
   .sidebar-overlay {
     display: none;
   }

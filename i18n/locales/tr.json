@@ -1,18 +1,19 @@
-{
-    "languageName": {
+{    "languageName": {
         "En": "İngilis",
         "Tr": "Türkçe",
         "Ru": "Rusça" 
-    },    
+    },
     "nav": {
         "home": "Anasayfa",
         "brands": "Markalar", 
         "services": "Hizmetler",
         "faq": "S.S.S",
         "contact": "İletişim"
-    },
-    "contact": {
+    },    "contact": {
         "contactInfo": "İletişim Bilgileri"
+    },
+    "common": {
+        "language": "Dil"
     },
     "footer": {
         "copyright": "Elton Teknik Servis. Tüm Hakları Saklıdır."
