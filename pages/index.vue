@@ -432,7 +432,7 @@ section:nth-child(even) {
   flex-direction: column;
   gap: 15px;
   z-index: 1000;
-  align-items: flex-end;
+  align-items: center;
 }
 
 .scroll-top-btn {
@@ -449,7 +449,6 @@ section:nth-child(even) {
   transition: all 0.3s ease;
   position: relative;
   z-index: 1000;
-  margin-right: 5px;
   transform: scale(0);
   opacity: 0;
 }
@@ -493,8 +492,8 @@ section:nth-child(even) {
 }
 
 .icon-link {
-  width: 50px;
-  height: 50px;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -564,8 +563,8 @@ section:nth-child(even) {
   }
 
   .icon-link {
-    width: 45px;
-    height: 45px;
+    width: 55px;
+    height: 55px;
   }
 
   .icon {
@@ -581,8 +580,8 @@ section:nth-child(even) {
   }
 
   .icon-link {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
   }
 
   .icon {
