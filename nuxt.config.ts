@@ -13,11 +13,11 @@ export default defineNuxtConfig({
       {
         langDir: 'locales/',
         lazy: true,
-        defaultLocale: 'Tr',
+        defaultLocale: 'tr',
         locales: [
-          { code: 'Tr', name: 'Türkçe', file: 'tr.json' },
-          { code: 'En', name: 'English', file: 'en.json' },
-          { code: 'Ru', name: 'Русский', file: 'ru.json' },
+          { code: 'tr', name: 'Türkçe', file: 'tr.json' },
+          { code: 'en', name: 'English', file: 'en.json' },
+          { code: 'ru', name: 'Русский', file: 'ru.json' },
         ]
       }
     ]
