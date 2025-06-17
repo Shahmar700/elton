@@ -1128,7 +1128,18 @@ onUnmounted(() => {
 .nav-links a.active::after {
   display: none;
 }
-
+.main-content {
+  display: flex;
+  align-items: start;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.page-content {
+  flex: 1;
+  min-width: 0; /* Prevents flex item from overflowing */
+}
 @media (max-width: 768px) {
   .nav-links {
     display: none;
@@ -1182,6 +1193,12 @@ onUnmounted(() => {
   .modern-sidebar,
   .sidebar-overlay {
     display: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .main-content {
+    flex-direction: column;
   }
 }
 
