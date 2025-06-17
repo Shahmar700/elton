@@ -41,9 +41,9 @@ export default defineNuxtConfig({
         }
       ]
     }
-  },
-  css: [
-    '~/assets/css/main.css'
+  },  css: [
+    '~/assets/css/main.css',
+    'flag-icons/css/flag-icons.min.css'
   ],
 
   compatibilityDate: '2025-04-21'

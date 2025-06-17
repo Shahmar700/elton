@@ -22,10 +22,10 @@
         <div class="social-links">
           <a href="https://www.facebook.com/eltonteknikservis" target="_blank"><Icon name="mdi:facebook" size="22" /></a>
           <a href="https://www.instagram.com/eltonteknikservis" target="_blank" ><Icon name="mdi:instagram" size="22" /></a>
-          <a href="https://wa.me/905524318888" target="_blank" ><Icon name="mdi:whatsapp" size="22" /></a>
-          <div class="language-selector">
+          <a href="https://wa.me/905524318888" target="_blank" ><Icon name="mdi:whatsapp" size="22" /></a>          <div class="language-selector">
             <button class="language-btn" @click="toggleLanguageDropdown">
-              {{ locale }}
+              <span :class="`fi fi-${getLanguageFlag(locale)}`" class="header-flag"></span>
+              <!-- {{ locale }}  -->
               <Icon :name="isLanguageDropdownOpen ? 'mdi:chevron-up' : 'mdi:chevron-down'" size="20" />
             </button>
             <ul class="language-dropdown" :class="{ 'active': isLanguageDropdownOpen }">
@@ -35,7 +35,8 @@
                 :class="{ active: locale === lang.code }"
                 @click="selectLanguage(lang.code)"
               >
-                {{ t('languageName.' + lang.code) }}
+                <span :class="`fi fi-${getLanguageFlag(lang.code)}`" class="dropdown-flag"></span>
+                {{ t('languageName.' + lang.code) }}   
               </li>
             </ul>
           </div>
@@ -156,15 +157,14 @@
       <!-- Language Selector Section -->
       <div class="sidebar-language-section">
         <h4 class="language-title">{{ t('common.language') || 'Dil' }}</h4>
-        <div class="sidebar-language-selector">
-          <div 
+        <div class="sidebar-language-selector">          <div 
             v-for="lang in locales" 
             :key="lang.code"
             :class="{ 'active': locale === lang.code }"
             @click="selectLanguage(lang.code)"
             class="sidebar-language-option"
           >
-            <span class="language-flag">{{ getLanguageFlag(lang.code) }}</span>
+            <span :class="`fi fi-${getLanguageFlag(lang.code)}`" class="language-flag"></span>
             <span class="language-name">{{ t('languageName.' + lang.code) }}</span>
             <Icon v-if="locale === lang.code" name="mdi:check-circle" size="20" class="language-check" />
           </div>
@@ -268,11 +268,14 @@ const selectLanguage = (langCode) => {
 
 const getLanguageFlag = (langCode) => {
   const flags = {
-    'tr': '🇹🇷',
-    'en': '🇺🇸', 
-    'ru': '🇷🇺'
+    'tr': 'tr',
+    'Tr': 'tr',
+    'en': 'gb',
+    'En': 'gb', 
+    'ru': 'ru',
+    'Ru': 'ru'
   }
-  return flags[langCode] || '🌐'
+  return flags[langCode] || 'un'
 }
 
 const toggleContactInfo = () => {
@@ -613,21 +616,21 @@ onUnmounted(() => {
 .modern-sidebar {
   position: fixed;
   top: 0;
-  /* left: 100vw; */
-  transform: scale(0);
+  right: -100vw;
   width: 100vw;
   height: 100vh;
   background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #1AA54D 100%);
   z-index: 9999;
-  transition: left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  opacity: 1;
+  visibility: visible;
 }
 
 .modern-sidebar.active {
-  left: 0;
-  transform: scale(1);
+  right: 0;
 }
 
 .sidebar-bg-pattern {
@@ -659,6 +662,15 @@ onUnmounted(() => {
   backdrop-filter: blur(10px);
   position: relative;
   z-index: 10;
+  transform: translateY(-30px);
+  opacity: 0;
+  transition: all 0.4s ease-out;
+  transition-delay: 0.1s;
+}
+
+.modern-sidebar.active .sidebar-header {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 .sidebar-logo-section {
@@ -703,14 +715,37 @@ onUnmounted(() => {
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+  animation: none;
+}
+
+.modern-sidebar.active .modern-close-btn {
+  animation: spinBounce 0.8s ease-out 2s forwards;
+}
+
+@keyframes spinBounce {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(180deg) scale(1.3);
+  }
+  50% {
+    transform: rotate(360deg) scale(0.9);
+  }
+  75% {
+    transform: rotate(540deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(720deg) scale(1);
+  }
 }
 
 .modern-close-btn:hover {
@@ -727,6 +762,15 @@ onUnmounted(() => {
   gap: 0.5rem;
   position: relative;
   z-index: 10;
+  transform: translateX(-30px);
+  opacity: 0;
+  transition: all 0.4s ease-out;
+  transition-delay: 0.15s;
+}
+
+.modern-sidebar.active .modern-sidebar-nav {
+  transform: translateX(0);
+  opacity: 1;
 }
 
 .modern-nav-link {
@@ -737,14 +781,22 @@ onUnmounted(() => {
   color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
   border-radius: 15px;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition: all 0.3s ease-out;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
   overflow: hidden;
   font-size: 1.1rem;
   font-weight: 500;
-  animation: slideInRight 0.6s ease-out var(--delay) both;
+  transform: translateX(20px);
+  opacity: 0;
+  transition: all 0.3s ease-out;
+  transition-delay: calc(0.2s + var(--delay, 0s));
+}
+
+.modern-sidebar.active .modern-nav-link {
+  transform: translateX(0);
+  opacity: 1;
 }
 
 .modern-nav-link::before {
@@ -800,7 +852,15 @@ onUnmounted(() => {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
   z-index: 10;
-  animation: slideInUp 0.6s ease-out 0.4s both;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.3s ease-out;
+  transition-delay: 0.25s;
+}
+
+.modern-sidebar.active .sidebar-language-section {
+  transform: translateY(0);
+  opacity: 1;
 }
 
 .language-title {
@@ -848,7 +908,18 @@ onUnmounted(() => {
 }
 
 .language-flag {
-  font-size: 1.2rem;
+  width: 36px;
+  height: 24px;
+  border-radius: 4px;
+  overflow: hidden;
+  display: inline-block;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  margin-right: 10px;
+  vertical-align: middle;
+  flex-shrink: 0;
+  line-height: 1;
+  background-size: cover;
+  background-position: center;
 }
 
 .language-name {
@@ -865,7 +936,15 @@ onUnmounted(() => {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
   z-index: 10;
-  animation: slideInUp 0.6s ease-out 0.6s both;
+  transform: translateX(20px);
+  opacity: 0;
+  transition: all 0.3s ease-out;
+  transition-delay: 0.3s;
+}
+
+.modern-sidebar.active .sidebar-contact-section {
+  transform: translateX(0);
+  opacity: 1;
 }
 
 .contact-title {
@@ -915,7 +994,15 @@ onUnmounted(() => {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   position: relative;
   z-index: 10;
-  animation: slideInUp 0.6s ease-out 0.8s both;
+  transform: scale(0.9) translateY(15px);
+  opacity: 0;
+  transition: all 0.3s ease-out;
+  transition-delay: 0.35s;
+}
+
+.modern-sidebar.active .sidebar-social-section {
+  transform: scale(1) translateY(0);
+  opacity: 1;
 }
 
 .sidebar-social-links {
@@ -1173,6 +1260,28 @@ onUnmounted(() => {
   border-color: rgba(255, 255, 255, 0.5);
 }
 
+.header-flag,
+.dropdown-flag {
+  width: 24px;
+  height: 16px;
+  border-radius: 3px;
+  overflow: hidden;
+  display: inline-block;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  vertical-align: middle;
+  line-height: 1;
+  background-size: cover;
+  background-position: center;
+}
+
+.header-flag {
+  margin-right: 6px;
+}
+
+.dropdown-flag {
+  margin-right: 8px;
+}
+
 .language-dropdown {
   position: absolute;
   top: 100%;
@@ -1182,7 +1291,8 @@ onUnmounted(() => {
   border-radius: 4px;
   margin-top: 5px;
   padding: 5px 0;
-  min-width: 120px;
+  min-width: 77px;
+  text-align: center;
   list-style: none;
   opacity: 0;
   visibility: hidden;
@@ -1202,6 +1312,9 @@ onUnmounted(() => {
   color: white;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
 }
 
 .language-dropdown li:hover {
@@ -1210,64 +1323,6 @@ onUnmounted(() => {
 
 .language-dropdown li.active {
   background-color: var(--primary-color);
-}
-
-.main-content {
-  display: flex;
-  align-items: start;
-  gap: 20px;
-  padding: 20px;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.page-content {
-  flex: 1;
-  min-width: 0; /* Prevents flex item from overflowing */
-}
-
-@media (max-width: 1024px) {
-  .main-content {
-    flex-direction: column;
-  }
-}
-
-a {
-  color: #333;
-  text-decoration: none;
-  padding: 8px 16px;
-  border-radius: 20px;
-  transition: all 0.3s ease;
-}
-
-a:hover {
-  color: #1AA54D;
-}
-
-a.active {
-  background-color: #1AA54D;
-  color: white;
-  box-shadow: 0 2px 8px rgba(26, 165, 77, 0.3);
-}
-
-a.active:hover {
-  background-color: #189044;
-  color: white;
-}
-
-.address-link {
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.address-link:hover span {
-  color: var(--primary-color);
-  transform: scale(1.02);
-}
-
-.address-link:hover span :deep(Icon) {
-  color: var(--primary-color);
-  transform: scale(1.2);
 }
 
 /* Interactive Footer Styles */
