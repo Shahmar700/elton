@@ -51,7 +51,8 @@
             <img src="../public/assets/logo.png" alt="Logo" class="w-[40px] h-[52px] sm:w-[50px] sm:h-[62px]">
           </NuxtLink>
         </div>
-        <nav class="nav-links">        <NuxtLink 
+        <nav class="nav-links">        
+        <NuxtLink 
           v-for="link in navLinks" 
           :key="link.key"
           :to="getLocalizedRoute(link.href)"
@@ -259,6 +260,9 @@ const toggleLanguageDropdown = () => {
 }
 
 const selectLanguage = async (langCode) => {
+  // Close the dropdown immediately
+  isLanguageDropdownOpen.value = false
+  
   // Get the current path without locale prefix
   const currentPath = $route.path
   const currentPathWithoutLocale = currentPath.replace(/^\/(en|tr|ru)/, '') || '/'
@@ -273,8 +277,6 @@ const selectLanguage = async (langCode) => {
   } else if (langCode !== 'tr' && !currentPath.startsWith(`/${langCode}`)) {
     router.push(`/${langCode}${currentPathWithoutLocale}`)
   }
-  
-  isLanguageDropdownOpen.value = false
 }
 
 const getLanguageFlag = (langCode) => {
@@ -469,17 +471,22 @@ const cleanupFooterEffects = () => {
 }
 
 onMounted(() => {  
-  document.addEventListener('click', (e) => {
+  const closeDropdowns = (e) => {
+    // Close language dropdown when clicking outside
     const languageSelector = document.querySelector('.language-selector')
     if (languageSelector && !languageSelector.contains(e.target)) {
       isLanguageDropdownOpen.value = false
     }
     
+    // Close contact info when clicking outside
     const contactInfo = document.querySelector('.contact-info')
     if (contactInfo && !contactInfo.contains(e.target)) {
       isContactInfoOpen.value = false
     }
-  })
+  }
+
+  // Use capture phase to ensure the event is handled before navigation
+  document.addEventListener('click', closeDropdowns, true)
 
   // Initialize footer effects
   nextTick(() => {
