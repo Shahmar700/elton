@@ -107,7 +107,7 @@
               <p class="copyright-text">
               © {{ currentYear }} {{ t('footer.copyright') }}
               </p>
-              <FooterLogo class="scale-[0.9] md:scale-100" />
+              <FooterLogo class="scale-[0.9] md:scale-100 mt-2 md:mt-0" />
             </div>
           </div>
         </div>
@@ -1478,6 +1478,7 @@ onUnmounted(() => {
   font-size: 17px;
   opacity: 0.9;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+  margin-right: 10px;
 }
 
 .footer-links {
@@ -1572,6 +1573,7 @@ onUnmounted(() => {
   
   .copyright-text {
     font-size: 16px;
+    margin-right: 0;
   }
 }
 
