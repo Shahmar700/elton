@@ -727,7 +727,7 @@ onUnmounted(() => {
 }
 
 .modern-sidebar.active .modern-close-btn {
-  animation: spinBounce 0.8s ease-out 2s forwards;
+  animation: spinBounce 0.8s ease-out 0.5s forwards;
 }
 
 @keyframes spinBounce {
@@ -740,11 +740,8 @@ onUnmounted(() => {
   50% {
     transform: rotate(360deg) scale(0.9);
   }
-  75% {
+  100%{
     transform: rotate(540deg) scale(1.1);
-  }
-  100% {
-    transform: rotate(720deg) scale(1);
   }
 }
 
