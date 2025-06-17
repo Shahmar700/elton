@@ -47,20 +47,18 @@
 
     <header class="main-header !py-2 sm:py-4 lg:py-5">
       <div class="container">
-        <div class="logo flex items-center">
-          <NuxtLink to="/" @click="handleLogoClick">
+        <div class="logo flex items-center">          <NuxtLink :to="getLocalizedRoute('/')" @click="handleLogoClick">
             <img src="../public/assets/logo.png" alt="Logo" class="w-[40px] h-[52px] sm:w-[50px] sm:h-[62px]">
           </NuxtLink>
         </div>
-        <nav class="nav-links">
-          <NuxtLink 
-            v-for="link in navLinks" 
-            :key="link.key"
-            :to="link.href"
-            :class="{ active: isLinkActive(link.href) }"
-          >
-            {{ t(link.textKey) }}
-          </NuxtLink>
+        <nav class="nav-links">        <NuxtLink 
+          v-for="link in navLinks" 
+          :key="link.key"
+          :to="getLocalizedRoute(link.href)"
+          :class="{ active: isLinkActive(link.href) }"
+        >
+          {{ t(link.textKey) }}
+        </NuxtLink>
         </nav>
         <button class="mobile-menu-btn" @click="toggleSidebar">
           <Icon name="mdi:menu" size="28" />
@@ -87,17 +85,15 @@
         </div>
         <div class="footer-main">
           <div class="copyright-section">            
-            <div class="logo-section">
-              <NuxtLink to="/" class="footer-logo-link" @click="handleLogoClick">
+            <div class="logo-section">              <NuxtLink :to="getLocalizedRoute('/')" class="footer-logo-link" @click="handleLogoClick">
                 <img src="../public/assets/logo.png" alt="Elton Logo" class="footer-logo">
               </NuxtLink>
               <h3>Elton Teknik Servis</h3>
             </div>
-            <div class="footer-links">
-              <NuxtLink 
+            <div class="footer-links">              <NuxtLink 
                 v-for="link in navLinks" 
                 :key="link.key"
-                :to="link.href"
+                :to="getLocalizedRoute(link.href)"
                 class="footer-link"
               >
                 {{ t(link.textKey) }}
@@ -125,8 +121,7 @@
       
       <!-- Header Section -->
       <div class="sidebar-header">
-        <div class="sidebar-logo-section">
-          <NuxtLink to="/" @click="handleLogoClick" class="sidebar-logo-link">
+        <div class="sidebar-logo-section">          <NuxtLink :to="getLocalizedRoute('/')" @click="handleLogoClick" class="sidebar-logo-link">
             <img src="../public/assets/logo.png" alt="Elton Logo" class="sidebar-logo">
           </NuxtLink>
           <h3 class="sidebar-brand">Elton Teknik Servis</h3>
@@ -137,11 +132,10 @@
       </div>
 
       <!-- Navigation Section -->
-      <nav class="modern-sidebar-nav">
-        <NuxtLink 
+      <nav class="modern-sidebar-nav">        <NuxtLink 
           v-for="(link, index) in navLinks" 
           :key="link.key"
-          :to="link.href"
+          :to="getLocalizedRoute(link.href)"
           :class="{ 'active': isLinkActive(link.href) }"
           @click="closeSidebar"
           class="modern-nav-link"
@@ -216,7 +210,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { gsap } from 'gsap'
 import ServiceVideos from '~/components/ServiceVideos.vue'
 import MapModal from '~/components/MapModal.vue'
@@ -242,11 +236,14 @@ const navLinks = computed(() => [
   { key: 'contact', textKey: 'nav.contact', href: '/iletisim' }
 ])
 
-// Function to check if a link is active
-const isLinkActive = (href) => {
-  const currentPath = $route.path
-  const currentPathWithoutLocale = currentPath.replace(/^\/(en|tr|ru)/, '') || '/'
-  return currentPathWithoutLocale === href
+// Function to get localized route
+const getLocalizedRoute = (path) => {
+  // If we're at the root path '/', no need to modify for localePath
+  if (path === '/') {
+    return `/${locale.value === 'tr' ? '' : locale.value}`
+  }
+  // For other paths, add the locale prefix if not default
+  return locale.value === 'tr' ? path : `/${locale.value}${path}`
 }
 
 const toggleSidebar = () => {
@@ -261,8 +258,22 @@ const toggleLanguageDropdown = () => {
   isLanguageDropdownOpen.value = !isLanguageDropdownOpen.value
 }
 
-const selectLanguage = (langCode) => {
-  setLocale(langCode)
+const selectLanguage = async (langCode) => {
+  // Get the current path without locale prefix
+  const currentPath = $route.path
+  const currentPathWithoutLocale = currentPath.replace(/^\/(en|tr|ru)/, '') || '/'
+  
+  // Set the locale
+  await setLocale(langCode)
+  
+  // Navigate to the same path but with new locale if needed
+  const router = useRouter()
+  if (langCode === 'tr' && currentPath !== currentPathWithoutLocale) {
+    router.push(currentPathWithoutLocale)
+  } else if (langCode !== 'tr' && !currentPath.startsWith(`/${langCode}`)) {
+    router.push(`/${langCode}${currentPathWithoutLocale}`)
+  }
+  
   isLanguageDropdownOpen.value = false
 }
 
@@ -276,6 +287,13 @@ const getLanguageFlag = (langCode) => {
     'Ru': 'ru'
   }
   return flags[langCode] || 'un'
+}
+
+// Function to check if a link is active
+const isLinkActive = (href) => {
+  const currentPath = $route.path
+  const currentPathWithoutLocale = currentPath.replace(/^\/(en|tr|ru)/, '') || '/'
+  return currentPathWithoutLocale === href
 }
 
 const toggleContactInfo = () => {
@@ -295,7 +313,7 @@ const handleLogoClick = (event) => {
       behavior: 'smooth'
     })
   }
-  // Əks halda normal navigation davam etsin
+  // Əks halda normal navigation davam etsin, locale qorunacaq
 }
 
 // Footer Interactive Effects
