@@ -212,6 +212,27 @@
 
     <!-- Map Modal -->
     <MapModal v-model:isOpen="showMap" />
+
+    <!-- Floating Icons -->
+    <div class="floating-icons">
+      <button 
+        v-if="showScrollTop" 
+        class="scroll-top-btn"
+        :class="{ show: !isHiding, hide: isHiding }"
+        @click="scrollToTop"
+      >
+        <div class="chevron-container">
+          <Icon name="mdi:chevron-up" class="icon chevron-1" />
+          <Icon name="mdi:chevron-up" class="icon chevron-2" />
+        </div>
+      </button>
+      <a href="https://wa.me/905524318888" target="_blank" class="icon-link whatsapp">
+        <Icon name="logos:whatsapp-icon" class="icon" />
+      </a>
+      <a href="tel:+905524318888" class="icon-link phone">
+        <Icon name="ph:phone-call" class="icon" />
+      </a>
+    </div>
   </div>
 </template>
 
@@ -223,6 +244,7 @@ import { gsap } from 'gsap'
 import ServiceVideos from '~/components/ServiceVideos.vue'
 import MapModal from '~/components/MapModal.vue'
 
+const showScrollTop = ref(false)  
 const isSidebarOpen = ref(false)
 const isLanguageDropdownOpen = ref(false)
 const isContactInfoOpen = ref(false)
@@ -230,6 +252,36 @@ const showMap = ref(false)
 const footerRef = ref(null)
 const canvasRef = ref(null)
 const particlesRef = ref(null)
+const isHiding = ref(false)
+
+const checkScroll = () => {
+  const shouldShow = window.scrollY > 100
+  
+  if (shouldShow && !showScrollTop.value) {
+    showScrollTop.value = true
+    isHiding.value = false
+  } else if (!shouldShow && showScrollTop.value) {
+    isHiding.value = true
+    setTimeout(() => {
+      showScrollTop.value = false
+    }, 600)
+  }
+}
+
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  })
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', checkScroll)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', checkScroll)
+})
 
 const { locales, locale, setLocale, t } = useI18n()
 const $route = useRoute()
@@ -558,7 +610,22 @@ onUnmounted(() => {
   color: inherit;
 }
 
+.floating-icons {
+  position: fixed;
+  bottom: 35px;
+  right: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 1000;
+  align-items: center;
+}
+
 @media screen and (max-width: 768px) {
+  .floating-icons {
+    bottom: 20px;
+    right: 20px;
+  }
   .mobile-contact-toggle {
     display: flex;
   }
@@ -593,6 +660,209 @@ onUnmounted(() => {
     font-size: 14px;
   }
 }
+
+@media (max-width: 480px)  {
+  .floating-icons {
+    bottom: 15px;
+    right: 15px;
+  }
+}
+
+.scroll-top-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1b52a5;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1000;
+  transform: scale(0);
+  opacity: 0;
+}
+
+.scroll-top-btn.show {
+  animation: scaleIn 0.6s ease-out forwards;
+}
+
+.scroll-top-btn.hide {
+  animation: scaleOut 0.6s ease-out forwards;
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.9);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleOut {
+  0% {
+    transform: scale(0.9);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+.icon-link {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.icon-link::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+}
+
+.whatsapp::before {
+  background-color: #25D366;
+}
+
+.phone::before {
+  background-color: #121D61;
+}
+
+.icon-link:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.whatsapp {
+  background-color: #25D366;
+}
+
+.phone {
+  background-color: #121D61;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  color: white;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  70% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .icon-link {
+    width: 55px;
+    height: 55px;
+  }
+
+  .icon {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .icon-link {
+    width: 50px;
+    height: 50px;
+  }
+
+  .icon {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+.chevron-container {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chevron-container .icon {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.chevron-1 {
+  top: -5px;
+  opacity: 1;
+}
+
+.chevron-2 {
+  top: 5px;
+  opacity: 1;
+}
+
+.scroll-top-btn:hover .chevron-1 {
+  animation: fadeChevron 0.5s ease-in-out forwards;
+}
+
+.scroll-top-btn:hover .chevron-2 {
+  animation: fadeChevron 0.5s ease-in-out 0.25s forwards;
+}
+
+@keyframes fadeChevron {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 /* @media screen and (max-width: 930px) {
   .contact-info {
