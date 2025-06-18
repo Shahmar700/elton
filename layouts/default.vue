@@ -9,10 +9,9 @@
               <span>{{ t('contact.contactInfo') }}</span>
               <Icon :name="isContactInfoOpen ? 'mdi:chevron-up' : 'mdi:chevron-down'" size="20" />
             </div>
-            
-            <!-- Contact info items -->
+              <!-- Contact info items -->
             <div class="contact-items shadow-2xl border border-[#1AA54D] md:border-0 !z-[999] min-w-[280px]" :class="{ 'active': isContactInfoOpen }">
-              <span><Icon name="mdi:phone" size="20" /> +90 552 431 8888</span>
+              <a href="tel:+905524318888" class="phone-link"><Icon name="mdi:phone" size="20" /> +90 552 431 8888</a>
               <div class="address-link" @click="showMap = true">
                 <span><Icon name="mdi:map-legend" size="20" /> Bayrampaşa Demirkapı Cad. 8/10</span>
               </div>
@@ -110,13 +109,14 @@
         </div>
       </div>
       <div class="floating-particles" ref="particlesRef"></div>
-    </footer>    <!-- Modern Sidebar -->
+    </footer>    
+    <!-- Modern Sidebar -->
     <div 
       class="sidebar-overlay modern-overlay" 
       :class="{ 'active': isSidebarOpen }" 
       @click="closeSidebar"
     />
-    <div class="modern-sidebar" :class="{ 'active': isSidebarOpen }">
+    <div class="modern-sidebar pb-10" :class="{ 'active': isSidebarOpen }">
       <!-- Background Pattern -->
       <div class="sidebar-bg-pattern"></div>
       
@@ -133,7 +133,8 @@
       </div>
 
       <!-- Navigation Section -->
-      <nav class="modern-sidebar-nav">        <NuxtLink 
+      <nav class="modern-sidebar-nav">        
+        <NuxtLink 
           v-for="(link, index) in navLinks" 
           :key="link.key"
           :to="getLocalizedRoute(link.href)"
@@ -143,7 +144,7 @@
           :style="{ '--delay': index * 0.1 + 's' }"
         >
           <span class="nav-link-text">{{ t(link.textKey) }}</span>
-          <span class="nav-link-icon">
+          <span class="nav-link-icon flex items-center justify-center border rounded-full">
             <Icon name="mdi:arrow-right" size="20" />
           </span>
         </NuxtLink>
@@ -199,6 +200,12 @@
           </a>
         </div>
       </div>
+        <div class="copyright-content">
+          <p class="copyright-text text-white">
+          © {{ currentYear }} {{ t('footer.copyright') }}
+          </p>
+          <FooterLogo class="scale-[0.9] md:scale-100 mt-2 md:mt-0" />
+        </div>
     </div>
 
     
@@ -533,7 +540,7 @@ onUnmounted(() => {
   gap: 10px;
 }
 
-.contact-items span {
+.contact-items span, .contact-items .phone-link {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -541,9 +548,14 @@ onUnmounted(() => {
   cursor: pointer;
 }
 
-.contact-items span:hover {
+.contact-items span:hover, .contact-items .phone-link:hover {
   color: var(--primary-color);
   transform: scale(1.02);
+}
+
+.contact-items .phone-link {
+  text-decoration: none;
+  color: inherit;
 }
 
 @media screen and (max-width: 768px) {

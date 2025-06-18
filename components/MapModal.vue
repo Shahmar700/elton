@@ -10,7 +10,7 @@
               width="100%" 
               height="450" 
               style="border:0;" 
-              allowfullscreen="" 
+              allowfullscreen="true" 
               loading="lazy" 
               referrerpolicy="no-referrer-when-downgrade">
             </iframe>
@@ -78,7 +78,7 @@ onUnmounted(() => {
 
 .close-button {
   position: absolute;
-  top: 10px;
+  top: 2px;
   right: 10px;
   background: none;
   border: none;
@@ -87,11 +87,28 @@ onUnmounted(() => {
   color: orangered;
   padding: 5px 10px;
   transition: color 0.3s ease;
+  font-weight: 600;
 }
 
 .close-button:hover {
   color: #333;
 }
+
+@media (max-width: 768px) {
+  .modal-content {
+    border-radius: 4px;
+    padding: 20px 10px 10px 10px;
+  }
+  .close-button {
+    top: 2px;
+    right: 5px;
+    font-size: 30px;
+    color: orangered;
+    padding: 5px 10px;
+    transition: color 0.3s ease;
+  }
+}
+
 
 .modal-body {
   margin-top: 20px;
