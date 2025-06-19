@@ -1,7 +1,7 @@
-<template>
+<template>  
   <div>
-    <section v-if="parsedHomeData && parsedHomeData.welcome">
-      <h1 class="gradient-text text-md 400:text-lg sm:text-2xl md:text-3xl mt-2 md:mt-10">
+    <section>
+      <h1 v-if="parsedHomeData?.welcome" class="gradient-text text-md 400:text-lg sm:text-2xl md:text-3xl mt-2 md:mt-10">
         {{ parsedHomeData.welcome }}
       </h1>
       <div class="main-image-container">
@@ -35,9 +35,8 @@
         <p>{{ parsedHomeData.p3 }}</p>
         <p>{{ parsedHomeData.p4 }}</p>
         <p>{{ parsedHomeData.p5 }}</p>
-      </div>
-      <!-- Parts Images -->
-      <div class="parts-container">
+      </div>      <!-- Parts Images -->
+      <div class="parts-container" v-if="partImages.length > 0">
         <div
           v-for="(img, index) in partImages"
           :key="index"
@@ -66,10 +65,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed, watchEffect } from 'vue'
 import ImageModal from '~/components/Modal.vue'
-import yaml from 'js-yaml'
 import { useI18n } from 'vue-i18n'
+
 const { locale } = useI18n()
 const showMap = ref(false)
 const parts = ref(Array(6).fill(null))
@@ -78,57 +77,34 @@ const selectedImage = ref('')
 const currentImageIndex = ref(0)
 const isHiding = ref(false)
 
-const pageStore = await usePagesData()
+// Async data loading with proper waiting
+const pageStore = usePagesData()
+const { pending: pagesPending } = await useAsyncData('pages', () => pageStore.fetchPages())
+const { pending: contentPending } = await useAsyncData('pageContent', () => pageStore.fetchPageContent())
+const { pending: imagePending } = await useAsyncData('pageImage', () => pageStore.fetchPageImage())
 
-const homePageData = computed(() =>
-  pageStore.getPageData('anasayfa', locale.value)
-)
+const homePageData = computed(() => {
+  return pageStore.getPageData('index', locale.value)
+})
 
 const parsedHomeData = computed(() => {
   const data = homePageData.value
-  if (!data || !data.contents || !Array.isArray(data.contents) || !data.contents.length) return {}
+  
+  if (!data || !data.data) {
+    return {}
+  }
 
-  // Always get the block with title "content"
-  const homeContent = data.contents.find(
-    item =>
-      (item.translations && item.translations.az && item.translations.az.title === 'content')
-  )
-  if (!homeContent) return {}
-
-  // Use .translations.az.description directly
-  let descText =
-    (homeContent.translations &&
-      homeContent.translations.az &&
-      homeContent.translations.az.description) ||
-    ''
-
-  const partImages = data.contents
-    .filter(item => item.icon && item.order > 1)
-    .sort((a, b) => a.order - b.order)
-    .map(item => item.icon)
-
-  try {
-    const parsedData = yaml.load(descText)
-    return {
-      ...parsedData,
-      icon: homeContent.icon,
-      order: homeContent.order,
-      id: homeContent.id,
-      partImages
-    }
-  } catch (e) {
-    return {
-      error: true,
-      icon: homeContent.icon,
-      order: homeContent.order,
-      id: homeContent.id,
-      partImages
-    }
+  return {
+    ...data.data, // welcome, h1, p1, mobile, landlinePhone, address, p2, p3, p4, p5
+    partImages: data.partImages || []
   }
 })
 
 const partImages = computed(() => {
-  if (!parsedHomeData.value || !parsedHomeData.value.partImages || !Array.isArray(parsedHomeData.value.partImages)) return []
+  if (!parsedHomeData.value || !parsedHomeData.value.partImages || !Array.isArray(parsedHomeData.value.partImages)) {
+    return []
+  }
+  
   return parsedHomeData.value.partImages
 })
 
