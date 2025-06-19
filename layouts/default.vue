@@ -255,7 +255,7 @@ const particlesRef = ref(null)
 const isHiding = ref(false)
 
 const checkScroll = () => {
-  const shouldShow = window.scrollY > 100
+  const shouldShow = window.scrollY > 500
   
   if (shouldShow && !showScrollTop.value) {
     showScrollTop.value = true

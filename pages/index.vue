@@ -1,77 +1,136 @@
-<template>  
+<template>
   <div>
-    <section>
-      <h1 class="gradient-text text-md 400:text-lg sm:text-2xl md:text-3xl mt-2 md:mt-10">{{ $t('welcomeTitle') }}</h1>
+    <section v-if="parsedHomeData && parsedHomeData.welcome">
+      <h1 class="gradient-text text-md 400:text-lg sm:text-2xl md:text-3xl mt-2 md:mt-10">
+        {{ parsedHomeData.welcome }}
+      </h1>
       <div class="main-image-container">
         <img src="/assets/images/office.jpg" alt="Office" class="main-image">
       </div>
       <div class="info-text">
-        <h2 class="text-base xs:text-lg sm:text-2xl">{{ $t('mainSubtitle') }}</h2>
+        <h2 class="text-base xs:text-lg sm:text-2xl">
+          {{ parsedHomeData.h1 }}
+        </h2>
         <p>
-          {{ $t('mainDescription') }}
+          {{ parsedHomeData.p1 }}
         </p>
       </div>
-      <!-- phone and adress   -->
+      <!-- phone and address -->
       <div class="phone-and-address">
         <div class="phone-numbers">
-          <a href="tel:+905524318888" class="phone-link flex items-center gap-2">
-            <p  >Mobil Tel: 0552 431 8888</p>
+          <a :href="`tel:${parsedHomeData.mobile?.replace(/ /g, '')}`" class="phone-link flex items-center gap-2">
+            <p>Mobil Tel: {{ parsedHomeData.mobile }}</p>
           </a>
-          <a href="tel:+902124318888" class="phone-link">
-            <p  >Sabit Tel: 0212 431 8888</p>
+          <a :href="`tel:${parsedHomeData.landlinePhone?.replace(/ /g, '')}`" class="phone-link">
+            <p>Sabit Tel: {{ parsedHomeData.landlinePhone }}</p>
           </a>
         </div>
         <div class="address-link" @click="showMap = true">
-          <p  >Adres: Yenidogan Mah Demirkapı Cad Özaltın İş Merkezi Bodrum Kat No:10</p>
+          <p>Adres: {{ parsedHomeData.address }}</p>
         </div>
       </div>
-      <!-- customer testimonial  -->
-       <div class="customer-testimonial info-text">
-          <p>Elton Teknik Servis, müşteri memnuniyetini ön planda tutan bir anlayışla çalışmaktadır. Müşterilerin cihazlarının tamir süreci boyunca en iyi hizmeti almasını sağlamak için özveriyle çalışan uzman ekip, hızlı ve etkili çözümler sunmaktadır. Bilgisayarlar, telefonlar ve tabletler gibi teknolojik cihazlar üzerinde her türlü sorunla başa çıkabilen Elton Teknik Servis, arızaları giderirken aynı zamanda veri kurtarma ve yedekleme gibi hizmetler de sunmaktadır.</p>
-          <p>Elton Teknik Servis, müşterilerinin güvenliği ve gizliliği konusunda da hassasiyet göstermektedir. Tamir sürecinde müşteri verilerinin korunmasına özen gösteren servis, bilgilerinizi güvenli bir şekilde saklamakta ve gizlilik politikalarına sıkı sıkıya uymaktadır.</p>
-          <p>
-            İş merkezi içindeki modern ve donanımlı atölyesi sayesinde Elton Teknik Servis, hızlı ve etkili tamirler yapabilmektedir. Kaliteli yedek parçalar kullanarak uzun süreli kullanım sağlayan tamirler gerçekleştiren servis, müşterilerine cihazlarının yeniden sağlıklı bir şekilde kullanılmasını sağlamaktadır.
-          </p>
-          <p>
-            Elton Teknik Servis olarak, müşteri memnuniyetini ve kaliteli hizmeti ön planda tutarak sektörde öne çıkmaktayız. Müşterilerimize en iyi tamir hizmetini sunmanın yanı sıra, rekabetçi fiyatlarla da dikkat çekmekteyiz
-          </p>
-       </div>
-       <!-- Parts Images  --> 
-       <div class="parts-container">
-         <div v-for="(part, index) in parts" 
-              :key="index" 
-              class="part-item"
-              @click="openModal(`/assets/images/parts${index + 1}.png`, index)">
-           <img :src="`/assets/images/parts${index + 1}.png`" :alt="`Part ${index + 1}`" class="part-image">
-         </div>
-       </div>
+      <!-- customer testimonial -->
+      <div class="customer-testimonial info-text">
+        <p>{{ parsedHomeData.p2 }}</p>
+        <p>{{ parsedHomeData.p3 }}</p>
+        <p>{{ parsedHomeData.p4 }}</p>
+        <p>{{ parsedHomeData.p5 }}</p>
+      </div>
+      <!-- Parts Images -->
+      <div class="parts-container">
+        <div
+          v-for="(img, index) in partImages"
+          :key="index"
+          class="part-item"
+          @click="openModal(img, index)"
+        >
+          <img :src="img" :alt="`Part ${index + 1}`" class="part-image" />
+        </div>
+      </div>
     </section>
 
     <MapModal v-model:isOpen="showMap" />
 
-    <ImageModal 
-    :is-open="isModalOpen" 
-    :show-navigation="true"
-    :is-first-image="currentImageIndex === 0"
-    :is-last-image="currentImageIndex === parts.length - 1"
-    @update:is-open="isModalOpen = $event"
-    @prev="prevImage"
-    @next="nextImage">
+    <ImageModal
+      :is-open="isModalOpen"
+      :show-navigation="true"
+      :is-first-image="currentImageIndex === 0"
+      :is-last-image="currentImageIndex === partImages.length - 1"
+      @update:is-open="isModalOpen = $event"
+      @prev="prevImage"
+      @next="nextImage"
+    >
       <img :src="selectedImage" class="modal-image" :alt="'Selected part'">
     </ImageModal>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import ImageModal from '~/components/Modal.vue'
-
+import yaml from 'js-yaml'
+import { useI18n } from 'vue-i18n'
+const { locale } = useI18n()
 const showMap = ref(false)
 const parts = ref(Array(6).fill(null))
 const isModalOpen = ref(false)
 const selectedImage = ref('')
 const currentImageIndex = ref(0)
 const isHiding = ref(false)
+
+const pageStore = await usePagesData()
+
+const homePageData = computed(() =>
+  pageStore.getPageData('anasayfa', locale.value)
+)
+
+const parsedHomeData = computed(() => {
+  const data = homePageData.value
+  if (!data || !data.contents || !Array.isArray(data.contents) || !data.contents.length) return {}
+
+  // Always get the block with title "content"
+  const homeContent = data.contents.find(
+    item =>
+      (item.translations && item.translations.az && item.translations.az.title === 'content')
+  )
+  if (!homeContent) return {}
+
+  // Use .translations.az.description directly
+  let descText =
+    (homeContent.translations &&
+      homeContent.translations.az &&
+      homeContent.translations.az.description) ||
+    ''
+
+  const partImages = data.contents
+    .filter(item => item.icon && item.order > 1)
+    .sort((a, b) => a.order - b.order)
+    .map(item => item.icon)
+
+  try {
+    const parsedData = yaml.load(descText)
+    return {
+      ...parsedData,
+      icon: homeContent.icon,
+      order: homeContent.order,
+      id: homeContent.id,
+      partImages
+    }
+  } catch (e) {
+    return {
+      error: true,
+      icon: homeContent.icon,
+      order: homeContent.order,
+      id: homeContent.id,
+      partImages
+    }
+  }
+})
+
+const partImages = computed(() => {
+  if (!parsedHomeData.value || !parsedHomeData.value.partImages || !Array.isArray(parsedHomeData.value.partImages)) return []
+  return parsedHomeData.value.partImages
+})
 
 const openModal = (imageSrc, index) => {
   selectedImage.value = imageSrc
@@ -82,14 +141,14 @@ const openModal = (imageSrc, index) => {
 const prevImage = () => {
   if (currentImageIndex.value > 0) {
     currentImageIndex.value--
-    selectedImage.value = `/assets/images/parts${currentImageIndex.value + 1}.png`
+    selectedImage.value = partImages.value[currentImageIndex.value]
   }
 }
 
 const nextImage = () => {
-  if (currentImageIndex.value < parts.value.length - 1) {
+  if (currentImageIndex.value < partImages.value.length - 1) {
     currentImageIndex.value++
-    selectedImage.value = `/assets/images/parts${currentImageIndex.value + 1}.png`
+    selectedImage.value = partImages.value[currentImageIndex.value]
   }
 }
 </script>
