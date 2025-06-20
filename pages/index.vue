@@ -1,44 +1,54 @@
 <template>  
   <div>
     <section>
-      <h1 v-if="parsedHomeData?.welcome" class="gradient-text text-md 400:text-lg sm:text-2xl md:text-3xl mt-2 md:mt-10">
-        {{ parsedHomeData.welcome }}
+      <h1 v-if="pageData?.content?.welcome" class="gradient-text text-md 400:text-lg sm:text-2xl md:text-3xl mt-2 md:mt-10">
+        {{ pageData.content.welcome }}
       </h1>
+      
       <div class="main-image-container">
-        <img src="/assets/images/office.jpg" alt="Office" class="main-image">
+        <img 
+          :src="pageData?.mainImage || '/assets/images/office.jpg'" 
+          alt="Office" 
+          class="main-image"
+        >
       </div>
+      
       <div class="info-text">
         <h2 class="text-base xs:text-lg sm:text-2xl">
-          {{ parsedHomeData.h1 }}
+          {{ pageData?.content?.h1 }}
         </h2>
         <p>
-          {{ parsedHomeData.p1 }}
+          {{ pageData?.content?.p1 }}
         </p>
       </div>
+      
       <!-- phone and address -->
       <div class="phone-and-address">
         <div class="phone-numbers">
-          <a :href="`tel:${parsedHomeData.mobile?.replace(/ /g, '')}`" class="phone-link flex items-center gap-2">
-            <p>Mobil Tel: {{ parsedHomeData.mobile }}</p>
+          <a :href="`tel:${pageData?.content?.mobile?.replace(/ /g, '')}`" class="phone-link flex items-center gap-2">
+            <p>Mobil Tel: {{ pageData?.content?.mobile }}</p>
           </a>
-          <a :href="`tel:${parsedHomeData.landlinePhone?.replace(/ /g, '')}`" class="phone-link">
-            <p>Sabit Tel: {{ parsedHomeData.landlinePhone }}</p>
+          <a :href="`tel:${pageData?.content?.landlinePhone?.replace(/ /g, '')}`" class="phone-link">
+            <p>Sabit Tel: {{ pageData?.content?.landlinePhone }}</p>
           </a>
         </div>
         <div class="address-link" @click="showMap = true">
-          <p>Adres: {{ parsedHomeData.address }}</p>
+          <p>Adres: {{ pageData?.content?.address }}</p>
         </div>
       </div>
+      
       <!-- customer testimonial -->
       <div class="customer-testimonial info-text">
-        <p>{{ parsedHomeData.p2 }}</p>
-        <p>{{ parsedHomeData.p3 }}</p>
-        <p>{{ parsedHomeData.p4 }}</p>
-        <p>{{ parsedHomeData.p5 }}</p>
-      </div>      <!-- Parts Images -->
-      <div class="parts-container" v-if="partImages.length > 0">
+        <p>{{ pageData?.content?.p2 }}</p>
+        <p>{{ pageData?.content?.p3 }}</p>
+        <p>{{ pageData?.content?.p4 }}</p>
+        <p>{{ pageData?.content?.p5 }}</p>
+      </div>      
+      
+      <!-- Parts Images -->
+      <div class="parts-container" v-if="pageData?.images?.length > 0">
         <div
-          v-for="(img, index) in partImages"
+          v-for="(img, index) in pageData.images"
           :key="index"
           class="part-item"
           @click="openModal(img, index)"
@@ -48,13 +58,11 @@
       </div>
     </section>
 
-    <MapModal v-model:isOpen="showMap" />
-
-    <ImageModal
+    <MapModal v-model:isOpen="showMap" />    <ImageModal
       :is-open="isModalOpen"
       :show-navigation="true"
       :is-first-image="currentImageIndex === 0"
-      :is-last-image="currentImageIndex === partImages.length - 1"
+      :is-last-image="currentImageIndex === (pageData?.images?.length || 0) - 1"
       @update:is-open="isModalOpen = $event"
       @prev="prevImage"
       @next="nextImage"
@@ -65,47 +73,30 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed, watchEffect } from 'vue'
+import { ref, computed, watch } from 'vue'
 import ImageModal from '~/components/Modal.vue'
 import { useI18n } from 'vue-i18n'
 
 const { locale } = useI18n()
 const showMap = ref(false)
-const parts = ref(Array(6).fill(null))
 const isModalOpen = ref(false)
 const selectedImage = ref('')
 const currentImageIndex = ref(0)
-const isHiding = ref(false)
 
-// Async data loading with proper waiting
+// Nuxt SSR üçün API məlumatlarını server-side yükləyirik
 const pageStore = usePagesData()
-const { pending: pagesPending } = await useAsyncData('pages', () => pageStore.fetchPages())
-const { pending: contentPending } = await useAsyncData('pageContent', () => pageStore.fetchPageContent())
-const { pending: imagePending } = await useAsyncData('pageImage', () => pageStore.fetchPageImage())
 
-const homePageData = computed(() => {
+// Server-side data loading
+await pageStore.loadData()
+
+// Səhifə məlumatları
+const pageData = computed(() => {
   return pageStore.getPageData('index', locale.value)
 })
 
-const parsedHomeData = computed(() => {
-  const data = homePageData.value
-  
-  if (!data || !data.data) {
-    return {}
-  }
-
-  return {
-    ...data.data, // welcome, h1, p1, mobile, landlinePhone, address, p2, p3, p4, p5
-    partImages: data.partImages || []
-  }
-})
-
-const partImages = computed(() => {
-  if (!parsedHomeData.value || !parsedHomeData.value.partImages || !Array.isArray(parsedHomeData.value.partImages)) {
-    return []
-  }
-  
-  return parsedHomeData.value.partImages
+// Dil dəyişdikdə məlumatları yenilə
+watch(() => locale.value, () => {
+  // Məlumatlar artıq yüklənib, sadəcə reactive olaraq yenilənir
 })
 
 const openModal = (imageSrc, index) => {
@@ -117,14 +108,14 @@ const openModal = (imageSrc, index) => {
 const prevImage = () => {
   if (currentImageIndex.value > 0) {
     currentImageIndex.value--
-    selectedImage.value = partImages.value[currentImageIndex.value]
+    selectedImage.value = pageData.value.images[currentImageIndex.value]
   }
 }
 
 const nextImage = () => {
-  if (currentImageIndex.value < partImages.value.length - 1) {
+  if (currentImageIndex.value < pageData.value.images.length - 1) {
     currentImageIndex.value++
-    selectedImage.value = partImages.value[currentImageIndex.value]
+    selectedImage.value = pageData.value.images[currentImageIndex.value]
   }
 }
 </script>
@@ -433,5 +424,4 @@ section:nth-child(even) {
     max-height: 80vh;
   }
 }
-
 </style>
