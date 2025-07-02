@@ -6,7 +6,7 @@
           <div class="contact-info flex items-center">
             <!-- Mobile contact toggle button -->
             <div class="mobile-contact-toggle" @click="toggleContactInfo">
-              <span>{{ t('contact.contactInfo') }}</span>
+              <span class="text-xs sm:text-sm">{{ t('contact.contactInfo') }}</span>
               <Icon :name="isContactInfoOpen ? 'mdi:chevron-up' : 'mdi:chevron-down'" size="20" />
             </div>
               <!-- Contact info items -->
@@ -46,7 +46,8 @@
 
     <header class="main-header !py-2 sm:py-4 lg:py-5">
       <div class="container">
-        <div class="logo flex items-center">          <NuxtLink :to="getLocalizedRoute('/')" @click="handleLogoClick">
+        <div class="logo flex items-center">          
+          <NuxtLink :to="getLocalizedRoute('/')" @click="handleLogoClick">
             <img src="../public/assets/logo.png" alt="Logo" class="w-[40px] h-[52px] sm:w-[50px] sm:h-[62px]">
           </NuxtLink>
         </div>

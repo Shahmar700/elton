@@ -30,12 +30,18 @@ export const usePageStore = defineStore('page', {
         this.pageContents = pageContents
         this.pageImages = pageImages
         
+        // API məlumatlarını konsola yazdır
+        console.log('🔍 API MƏLUMATLARI:')
+        console.log('📄 Pages:', pages)
+        console.log('📝 Page Contents:', pageContents)
+        console.log('🖼️ Page Images:', pageImages)
+        
       } catch (error) {
         this.error = error.message
         console.error('API çağırışında xəta:', error)
         throw error
       }
-    },    // Səhifə ID-sini slug əsasında tapır
+    },// Səhifə ID-sini slug əsasında tapır
     getPageIdBySlug(slug) {
       if (!this.pages?.results) return null
       
@@ -70,9 +76,7 @@ export const usePageStore = defineStore('page', {
       // Səhifə məzmununu filtrlə
       const contents = this.pageContents.results.filter(item => 
         item.page === pageId && item.is_active
-      )
-
-      // Məzmunu təşkil et
+      )      // Məzmunu təşkil et
       const organizedContent = {}
       let mainImage = null
 
@@ -80,31 +84,27 @@ export const usePageStore = defineStore('page', {
         // Əvvəl tələb olunan dildə axtarırıq, sonra fallback dilə keçirik
         const translation = item.translations?.[backendLang] || 
                           item.translations?.[fallbackLang]
-        
-        console.log(`📄 Item translation tapıldı:`, {
-          requestedLang: backendLang,
-          fallbackLang: fallbackLang,
-          availableLangs: Object.keys(item.translations || {}),
-          foundTranslation: !!translation
-        })
-        
-        if (translation?.title && translation?.description) {
-          organizedContent[translation.title] = translation.description
+          // Yeni struktura görə tag_name istifadə edirik
+        if (item.tag_name && translation) {
+          // Əgər title varsa onu istifadə edirik, yoxsa description-u
+          const content = translation.title || translation.description || ''
+          if (content) {
+            organizedContent[item.tag_name] = content
+            console.log(`✅ Tag məlumat əlavə edildi: "${item.tag_name}" = "${content}"`)
+          }
         }
 
         // Ana şəkil (order = 1 olan)
         if (item.icon && item.order === 1) {
           mainImage = item.icon
-        }
-      })
-
-      // Səhifə şəkillərini əlavə et
+        }      })      // Səhifə şəkillərini əlavə et
       const pageImages = this.getPageImages(pageId)
 
-      console.log(`✅ Nəticə:`, {
+      console.log(`✅ Index səhifəsi üçün yekun məlumatlar:`, {
         contentKeys: Object.keys(organizedContent),
         imagesCount: pageImages.length,
-        hasMainImage: !!mainImage
+        hasMainImage: !!mainImage,
+        images: pageImages
       })
 
       return {
@@ -112,16 +112,18 @@ export const usePageStore = defineStore('page', {
         images: pageImages,
         mainImage: mainImage
       }
-    },
-
-    // Səhifə şəkillərini gətirir
+    },    // Səhifə şəkillərini gətirir
     getPageImages(pageId) {
       if (!this.pageImages?.results) return []
       
-      return this.pageImages.results
+      const images = this.pageImages.results
         .filter(img => img.page === pageId)
         .map(img => img.image)
         .filter(Boolean)
+      
+      console.log(`🖼️ Page ${pageId} üçün tapılan şəkillər:`, images)
+      
+      return images
     }
   },
   getters: {

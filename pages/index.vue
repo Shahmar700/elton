@@ -1,8 +1,9 @@
 <template>  
   <div>
     <section>
-      <h1 v-if="pageData?.content?.welcome" class="gradient-text text-md 400:text-lg sm:text-2xl md:text-3xl mt-2 md:mt-10">
-        {{ pageData.content.welcome }}
+      <h1  class="gradient-text text-md 400:text-lg sm:text-2xl md:text-3xl mt-2 md:mt-10">
+        <!-- {{ pageData.content.welcome }} -->
+        {{ $t('welcomeTitle') }}
       </h1>
       
       <div class="main-image-container">
@@ -15,10 +16,10 @@
       
       <div class="info-text">
         <h2 class="text-base xs:text-lg sm:text-2xl">
-          {{ pageData?.content?.h1 }}
+          {{ $t('mainSubtitle') }}
         </h2>
         <p>
-          {{ pageData?.content?.p1 }}
+          {{ $t('mainDescription') }}
         </p>
       </div>
       
@@ -26,26 +27,25 @@
       <div class="phone-and-address">
         <div class="phone-numbers">
           <a :href="`tel:${pageData?.content?.mobile?.replace(/ /g, '')}`" class="phone-link flex items-center gap-2">
-            <p>Mobil Tel: {{ pageData?.content?.mobile }}</p>
+            <p>Mobil Tel: 0552 431 8888</p>
           </a>
           <a :href="`tel:${pageData?.content?.landlinePhone?.replace(/ /g, '')}`" class="phone-link">
-            <p>Sabit Tel: {{ pageData?.content?.landlinePhone }}</p>
+            <p>Sabit Tel: 0212 431 8888</p>
           </a>
         </div>
         <div class="address-link" @click="showMap = true">
-          <p>Adres: {{ pageData?.content?.address }}</p>
+          <p>Adres: Yenidogan Mah Demirkapı Cad Özaltın İş Merkezi Bodrum Kat No:10</p>
         </div>
       </div>
       
       <!-- customer testimonial -->
       <div class="customer-testimonial info-text">
-        <p>{{ pageData?.content?.p2 }}</p>
-        <p>{{ pageData?.content?.p3 }}</p>
-        <p>{{ pageData?.content?.p4 }}</p>
-        <p>{{ pageData?.content?.p5 }}</p>
+        <p>{{ $t('mainDescription2') }}</p>
+        <p>{{ $t('mainDescription3') }}</p>
+        <p>{{ $t('mainDescription4') }}</p>
+        <p>{{ $t('mainDescription5') }}</p>
       </div>      
-      
-      <!-- Parts Images -->
+        <!-- Parts Images -->
       <div class="parts-container" v-if="pageData?.images?.length > 0">
         <div
           v-for="(img, index) in pageData.images"
@@ -56,9 +56,15 @@
           <img :src="img" :alt="`Part ${index + 1}`" class="part-image" />
         </div>
       </div>
+      
+      <!-- Debug: Şəkil yoxdursa -->
+      <!-- <div v-else-if="pageData" class="no-images-debug">
+        <p>🔍 Debug: {{ pageData.images?.length || 0 }} şəkil tapıldı</p>
+      </div> -->
     </section>
 
-    <MapModal v-model:isOpen="showMap" />    <ImageModal
+    <MapModal v-model:isOpen="showMap" />    
+    <ImageModal
       :is-open="isModalOpen"
       :show-navigation="true"
       :is-first-image="currentImageIndex === 0"
@@ -84,20 +90,20 @@ const selectedImage = ref('')
 const currentImageIndex = ref(0)
 
 // Nuxt SSR üçün API məlumatlarını server-side yükləyirik
-const pageStore = usePagesData()
+// const pageStore = usePagesData()
 
 // Server-side data loading
-await pageStore.loadData()
+// await pageStore.loadData()
 
 // Səhifə məlumatları
-const pageData = computed(() => {
-  return pageStore.getPageData('index', locale.value)
-})
+// const pageData = computed(() => {
+//   return pageStore.getPageData('index', locale.value)
+// })
 
 // Dil dəyişdikdə məlumatları yenilə
-watch(() => locale.value, () => {
-  // Məlumatlar artıq yüklənib, sadəcə reactive olaraq yenilənir
-})
+// watch(() => locale.value, () => {
+//   // Məlumatlar artıq yüklənib, sadəcə reactive olaraq yenilənir
+// })
 
 const openModal = (imageSrc, index) => {
   selectedImage.value = imageSrc
@@ -423,5 +429,14 @@ section:nth-child(even) {
   .modal-image {
     max-height: 80vh;
   }
+}
+
+.no-images-debug {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  text-align: center;
+  color: #666;
 }
 </style>
