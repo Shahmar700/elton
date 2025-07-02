@@ -6,7 +6,7 @@
           <div class="contact-info flex items-center">
             <!-- Mobile contact toggle button -->
             <div class="mobile-contact-toggle" @click="toggleContactInfo">
-              <span class="text-xs sm:text-sm">{{ t('contact.contactInfo') }}</span>
+              <span class="contactInfoText text-[15px]">{{ t('contact.contactInfo') }}</span>
               <Icon :name="isContactInfoOpen ? 'mdi:chevron-up' : 'mdi:chevron-down'" size="20" />
             </div>
               <!-- Contact info items -->
@@ -561,6 +561,12 @@ onUnmounted(() => {
 
 <style scoped>
 @import '~/assets/css/main.css';
+
+@media screen and (max-width: 370px) {
+  .contactInfoText {
+    font-size: 12px;
+  }
+}
 
 .contact-and-social{
   display: flex;
