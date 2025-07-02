@@ -1567,7 +1567,6 @@ onUnmounted(() => {
 
 .language-selector {
   position: relative;
-  margin-top: 5px;
 }
 
 .language-btn {
