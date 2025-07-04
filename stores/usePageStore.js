@@ -15,10 +15,11 @@ export const usePageStore = defineStore('page', {
     }
   }),
 
-  actions: {    // API çağırışları
+  actions: {
+    // API çağırışları
     async fetchAllData() {
       this.error = null
-      
+
       try {
         const [pages, pageContents, pageImages] = await Promise.all([
           $fetch('https://ets.200soft.com/api/admin/v1/page/'),
@@ -30,18 +31,14 @@ export const usePageStore = defineStore('page', {
         this.pageContents = pageContents
         this.pageImages = pageImages
         
-        // API məlumatlarını konsola yazdır
-        console.log('🔍 API MƏLUMATLARI:')
-        console.log('📄 Pages:', pages)
-        console.log('📝 Page Contents:', pageContents)
-        console.log('🖼️ Page Images:', pageImages)
-        
       } catch (error) {
         this.error = error.message
         console.error('API çağırışında xəta:', error)
         throw error
       }
-    },// Səhifə ID-sini slug əsasında tapır
+    },
+
+    // Səhifə ID-sini slug əsasında tapır
     getPageIdBySlug(slug) {
       if (!this.pages?.results) return null
       
@@ -52,11 +49,14 @@ export const usePageStore = defineStore('page', {
       const backendLang = this.LANG_MAPPING[this.DEFAULT_LANG] || this.DEFAULT_LANG
       
       const page = this.pages.results.find(page => {
-        return page.translations?.[backendLang]?.slug === slug && page.is_active
+        const pageSlug = page.translations?.[backendLang]?.slug
+        return pageSlug === slug && page.is_active
       })
       
       return page?.id || null
-    },    // Səhifə məlumatlarını təşkil edir
+    },
+
+    // Səhifə məlumatlarını təşkil edir
     getPageData(pageSlug, language = 'tr') {
       const pageId = this.getPageIdBySlug(pageSlug)
       
@@ -72,11 +72,12 @@ export const usePageStore = defineStore('page', {
       const backendLang = this.LANG_MAPPING[language] || language
       const fallbackLang = this.LANG_MAPPING[this.DEFAULT_LANG] || this.DEFAULT_LANG
 
-
       // Səhifə məzmununu filtrlə
       const contents = this.pageContents.results.filter(item => 
         item.page === pageId && item.is_active
-      )      // Məzmunu təşkil et
+      )
+
+      // Məzmunu təşkil et
       const organizedContent = {}
       let mainImage = null
 
@@ -84,35 +85,33 @@ export const usePageStore = defineStore('page', {
         // Əvvəl tələb olunan dildə axtarırıq, sonra fallback dilə keçirik
         const translation = item.translations?.[backendLang] || 
                           item.translations?.[fallbackLang]
-          // Yeni struktura görə tag_name istifadə edirik
+        
+        // Yeni struktura görə tag_name istifadə edirik
         if (item.tag_name && translation) {
           // Əgər title varsa onu istifadə edirik, yoxsa description-u
           const content = translation.title || translation.description || ''
           if (content) {
             organizedContent[item.tag_name] = content
-            console.log(`✅ Tag məlumat əlavə edildi: "${item.tag_name}" = "${content}"`)
           }
         }
 
         // Ana şəkil (order = 1 olan)
         if (item.icon && item.order === 1) {
           mainImage = item.icon
-        }      })      // Səhifə şəkillərini əlavə et
-      const pageImages = this.getPageImages(pageId)
-
-      console.log(`✅ Index səhifəsi üçün yekun məlumatlar:`, {
-        contentKeys: Object.keys(organizedContent),
-        imagesCount: pageImages.length,
-        hasMainImage: !!mainImage,
-        images: pageImages
+        }
       })
+
+      // Səhifə şəkillərini əlavə et
+      const pageImages = this.getPageImages(pageId)
 
       return {
         content: organizedContent,
         images: pageImages,
         mainImage: mainImage
       }
-    },    // Səhifə şəkillərini gətirir
+    },
+
+    // Səhifə şəkillərini gətirir
     getPageImages(pageId) {
       if (!this.pageImages?.results) return []
       
@@ -121,11 +120,10 @@ export const usePageStore = defineStore('page', {
         .map(img => img.image)
         .filter(Boolean)
       
-      console.log(`🖼️ Page ${pageId} üçün tapılan şəkillər:`, images)
-      
       return images
     }
   },
+
   getters: {
     // Index səhifəsi məlumatları
     indexPageData: (state) => (language = 'tr') => {

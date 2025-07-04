@@ -43,7 +43,9 @@ export default defineNuxtConfig({
         }
       ]
     }
-  },  css: [
+  },
+  
+  css: [
     '~/assets/css/main.css',
     'flag-icons/css/flag-icons.min.css'
   ],
