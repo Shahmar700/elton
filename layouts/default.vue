@@ -6,7 +6,7 @@
           <div class="contact-info flex items-center">
             <!-- Mobile contact toggle button -->
             <div class="mobile-contact-toggle" @click="toggleContactInfo">
-              <span>{{ t('contact.contactInfo') }}</span>
+              <span class="contactInfoText text-[15px]">{{ t('contact.contactInfo') }}</span>
               <Icon :name="isContactInfoOpen ? 'mdi:chevron-up' : 'mdi:chevron-down'" size="20" />
             </div>
               <!-- Contact info items -->
@@ -21,7 +21,8 @@
         <div class="social-links">
           <a href="https://www.facebook.com/eltonteknikservis" target="_blank"><Icon name="mdi:facebook" size="22" /></a>
           <a href="https://www.instagram.com/eltonteknikservis" target="_blank" ><Icon name="mdi:instagram" size="22" /></a>
-          <a href="https://wa.me/905524318888" target="_blank" ><Icon name="mdi:whatsapp" size="22" /></a>          <div class="language-selector">
+          <a href="https://wa.me/905524318888" target="_blank" ><Icon name="mdi:whatsapp" size="22" /></a>          
+          <div class="language-selector">
             <button class="language-btn" @click="toggleLanguageDropdown">
               <span :class="`fi fi-${getLanguageFlag(locale)}`" class="header-flag"></span>
               <!-- {{ locale }}  -->
@@ -46,19 +47,20 @@
 
     <header class="main-header !py-2 sm:py-4 lg:py-5">
       <div class="container">
-        <div class="logo flex items-center">          <NuxtLink :to="getLocalizedRoute('/')" @click="handleLogoClick">
+        <div class="logo flex items-center">          
+          <NuxtLink :to="getLocalizedRoute('/')" @click="handleLogoClick">
             <img src="../public/assets/logo.png" alt="Logo" class="w-[40px] h-[52px] sm:w-[50px] sm:h-[62px]">
           </NuxtLink>
         </div>
-        <nav class="nav-links">        
-        <NuxtLink 
-          v-for="link in navLinks" 
-          :key="link.key"
-          :to="getLocalizedRoute(link.href)"
-          :class="{ active: isLinkActive(link.href) }"
-        >
-          {{ t(link.textKey) }}
-        </NuxtLink>
+        <nav class="nav-links" v-if="navLinks.length > 0">         
+          <NuxtLink 
+            v-for="link in navLinks" 
+            :key="link.key"
+            :to="getLocalizedRoute(link.href)"
+            :class="{ active: isLinkActive(link.href) }"
+          >
+            {{ getDisplayName(link.name) }}
+          </NuxtLink>
         </nav>
         <button class="mobile-menu-btn" @click="toggleSidebar">
           <Icon name="mdi:menu" size="28" />
@@ -85,18 +87,20 @@
         </div>
         <div class="footer-main">
           <div class="copyright-section">            
-            <div class="logo-section">              <NuxtLink :to="getLocalizedRoute('/')" class="footer-logo-link" @click="handleLogoClick">
+            <div class="logo-section">              
+              <NuxtLink :to="getLocalizedRoute('/')" class="footer-logo-link" @click="handleLogoClick">
                 <img src="../public/assets/logo.png" alt="Elton Logo" class="footer-logo">
               </NuxtLink>
               <h3>Elton Teknik Servis</h3>
             </div>
-            <div class="footer-links">              <NuxtLink 
+            <div class="footer-links" v-if="navLinks.length > 0">              
+              <NuxtLink 
                 v-for="link in navLinks" 
                 :key="link.key"
                 :to="getLocalizedRoute(link.href)"
                 class="footer-link"
               >
-                {{ t(link.textKey) }}
+                {{ getDisplayName(link.name) }}
               </NuxtLink>
             </div>
             <div class="copyright-content">
@@ -122,7 +126,8 @@
       
       <!-- Header Section -->
       <div class="sidebar-header">
-        <div class="sidebar-logo-section">          <NuxtLink :to="getLocalizedRoute('/')" @click="handleLogoClick" class="sidebar-logo-link">
+        <div class="sidebar-logo-section">          
+          <NuxtLink :to="getLocalizedRoute('/')" @click="handleLogoClick" class="sidebar-logo-link">
             <img src="../public/assets/logo.png" alt="Elton Logo" class="sidebar-logo">
           </NuxtLink>
           <h3 class="sidebar-brand">Elton Teknik Servis</h3>
@@ -133,17 +138,17 @@
       </div>
 
       <!-- Navigation Section -->
-      <nav class="modern-sidebar-nav">        
+      <nav class="modern-sidebar-nav" v-if="navLinks.length > 0">        
         <NuxtLink 
           v-for="(link, index) in navLinks" 
           :key="link.key"
           :to="getLocalizedRoute(link.href)"
           :class="{ 'active': isLinkActive(link.href) }"
-          @click="closeSidebar"
+          @click="closeSidebar()"
           class="modern-nav-link"
           :style="{ '--delay': index * 0.1 + 's' }"
         >
-          <span class="nav-link-text">{{ t(link.textKey) }}</span>
+          <span class="nav-link-text">{{ getDisplayName(link.name) }}</span>
           <span class="nav-link-icon flex items-center justify-center border rounded-full">
             <Icon name="mdi:arrow-right" size="20" />
           </span>
@@ -153,7 +158,8 @@
       <!-- Language Selector Section -->
       <div class="sidebar-language-section">
         <h4 class="language-title">{{ t('common.language') || 'Dil' }}</h4>
-        <div class="sidebar-language-selector">          <div 
+        <div class="sidebar-language-selector">          
+          <div 
             v-for="lang in locales" 
             :key="lang.code"
             :class="{ 'active': locale === lang.code }"
@@ -243,6 +249,15 @@ import { useRoute, useRouter } from 'vue-router'
 import { gsap } from 'gsap'
 import ServiceVideos from '~/components/ServiceVideos.vue'
 import MapModal from '~/components/MapModal.vue'
+import { usePagesData } from '~/composables/usePagesData'
+import { usePageStore } from '~/stores/usePageStore';
+
+const { pages, loadData } = usePagesData()
+const pageStore = usePageStore() // Store-u birbaşa istifadə edirik
+const localePath = useLocalePath() // Nuxt i18n-dən import edirik
+
+// Proqram başlayanda bütün məlumatları yükləyirik
+await loadData()
 
 const showScrollTop = ref(false)  
 const isSidebarOpen = ref(false)
@@ -288,23 +303,86 @@ const $route = useRoute()
 
 const currentYear = new Date().getFullYear()
 
-const navLinks = computed(() => [
-  { key: 'home', textKey: 'nav.home', href: '/' },
-  { key: 'brands', textKey: 'nav.brands', href: '/markalar' },
-  { key: 'services', textKey: 'nav.services', href: '/hizmetler' },
-  { key: 'faq', textKey: 'nav.faq', href: '/sik-sorulan-sorular' },
-  { key: 'contact', textKey: 'nav.contact', href: '/iletisim' }
-])
-
-// Function to get localized route
-const getLocalizedRoute = (path) => {
-  // If we're at the root path '/', no need to modify for localePath
-  if (path === '/') {
-    return `/${locale.value === 'tr' ? '' : locale.value}`
+const navLinks = computed(() => {
+  // Əgər səhifə məlumatları hələ yüklənməyibsə, boş massiv qaytar
+  if (!pages.value?.results) {
+    return []
   }
+
+  // Backend-də istifadə olunan dil kodunu alırıq (məsələn, 'tr' -> 'az')
+  const backendLang = pageStore.LANG_MAPPING[locale.value] || locale.value
+
+  const result = pages.value.results
+    // Yalnız aktiv olan səhifələri göstər
+    .filter(page => page.is_active)
+    // API-dən gələn 'order' dəyərinə görə sırala
+    .sort((a, b) => a.order - b.order)
+    // Naviqasiya üçün lazım olan formata sal
+    .map(page => {
+      const translation = page.translations[backendLang]
+      if (!translation) return null // Əgər tərcümə yoxdursa, bu səhifəni ötür
+
+      // Ana səhifə üçün slug-ı '/' olaraq təyin edirik
+      const href = page.id === 3 ? '/' : `/${translation.slug}`
+
+      return {
+        key: page.id,
+        name: translation.name, // API-dən gələn səhifə adı
+        href: href // API-dən gələn slug
+      }
+    })
+    .filter(Boolean) // null olan elementləri massivdən təmizlə
+  
+  return result;
+})
+
+// Function to get localized route with proper URL handling
+const getLocalizedRoute = (path) => {
+  // If we're at the root path '/', handle locale prefix
+  if (path === '/') {
+    return locale.value === 'tr' ? '/' : `/${locale.value}/`
+  }
+  
   // For other paths, add the locale prefix if not default
   return locale.value === 'tr' ? path : `/${locale.value}${path}`
 }
+
+// Function to get display name for navigation links
+const getDisplayName = (linkName) => {
+  // "Sik Sorulan Sorular" üçün xüsusi qısaltmalar
+  if (linkName) {
+    const lowerName = linkName.toLowerCase()
+    // Müxtəlif dillər üçün yoxlama
+    if (lowerName.includes('sik sorulan sorular') || 
+        lowerName.includes('frequently asked questions') || 
+        lowerName.includes('частые вопросы') ||
+        lowerName.includes('часто задаваемые вопросы') ||
+        lowerName.includes('sık sorulan sorular')) {
+      switch (locale.value) {
+        case 'tr':
+          return 'S.S.S'
+        case 'en':
+          return 'F.A.Q'
+        case 'ru':
+          return 'ЧЗВ'
+        default:
+          return 'S.S.S'
+      }
+    }
+  }
+  
+  // Digər linklər üçün orijinal adı qaytar
+  return linkName
+}
+
+const getLanguageFlag = (langCode) => {
+  const flagMap = {
+    en: 'gb',
+    tr: 'tr',
+    ru: 'ru',
+  };
+  return flagMap[langCode] || 'us'; // Fallback to a default flag
+};
 
 const toggleSidebar = () => {
   isSidebarOpen.value = !isSidebarOpen.value
@@ -318,44 +396,93 @@ const toggleLanguageDropdown = () => {
   isLanguageDropdownOpen.value = !isLanguageDropdownOpen.value
 }
 
-const selectLanguage = async (langCode) => {
-  // Close the dropdown immediately
-  isLanguageDropdownOpen.value = false
-  
-  // Get the current path without locale prefix
-  const currentPath = $route.path
-  const currentPathWithoutLocale = currentPath.replace(/^\/(en|tr|ru)/, '') || '/'
-  
-  // Set the locale
-  await setLocale(langCode)
-  
-  // Navigate to the same path but with new locale if needed
-  const router = useRouter()
-  if (langCode === 'tr' && currentPath !== currentPathWithoutLocale) {
-    router.push(currentPathWithoutLocale)
-  } else if (langCode !== 'tr' && !currentPath.startsWith(`/${langCode}`)) {
-    router.push(`/${langCode}${currentPathWithoutLocale}`)
+const selectLanguage = async (newLocale) => {
+  // Prevent changing to the same language
+  if (newLocale === locale.value) {
+    isLanguageDropdownOpen.value = false;
+    return;
   }
-}
 
-const getLanguageFlag = (langCode) => {
-  const flags = {
-    'tr': 'tr',
-    'Tr': 'tr',
-    'en': 'gb',
-    'En': 'gb', 
-    'ru': 'ru',
-    'Ru': 'ru'
+  const currentPath = $route.path;
+  const currentPathWithoutLocale = currentPath.replace(/^\/(en|ru)/, '') || '/';
+  const currentSlug = currentPathWithoutLocale.startsWith('/') ? currentPathWithoutLocale.substring(1) : currentPathWithoutLocale;
+
+  let targetPage = null;
+
+  // Handle homepage separately
+  if (currentPathWithoutLocale === '/') {
+    // Find the homepage object (assuming it has a specific ID, like 3)
+    targetPage = pages.value?.results?.find(p => p.id === 3);
+  } else {
+    // Find the current page by matching the slug in any language
+    targetPage = pages.value?.results?.find(p =>
+      Object.values(p.translations).some(t => t.slug === currentSlug)
+    );
   }
-  return flags[langCode] || 'un'
-}
 
-// Function to check if a link is active
-const isLinkActive = (href) => {
-  const currentPath = $route.path
-  const currentPathWithoutLocale = currentPath.replace(/^\/(en|tr|ru)/, '') || '/'
-  return currentPathWithoutLocale === href
-}
+  const backendNewLang = pageStore.LANG_MAPPING[newLocale] || newLocale;
+  let newPath = '';
+
+  if (targetPage && targetPage.translations[backendNewLang]) {
+    const newSlug = targetPage.translations[backendNewLang].slug;
+    // Handle homepage case where slug might be empty or special
+    if (targetPage.id === 3) {
+      newPath = newLocale === 'tr' ? '/' : `/${newLocale}`;
+    } else {
+      newPath = newLocale === 'tr' ? `/${newSlug}` : `/${newLocale}/${newSlug}`;
+    }
+  }
+
+  // Fallback if no specific page match is found
+  if (!newPath) {
+    const switchPath = useSwitchLocalePath();
+    newPath = switchPath(newLocale);
+  }
+  
+  isLanguageDropdownOpen.value = false;
+  await navigateTo(newPath);
+};
+
+const isLinkActive = computed(() => {
+  return (href) => {
+    const currentPath = $route.path
+    const currentPathWithoutLocale = currentPath.replace(/^\/(en|tr|ru)/, '') || '/'
+    
+    // Special handling for homepage
+    if (href === '/' && currentPathWithoutLocale === '/') {
+      return true
+    }
+    
+    // For other pages, check if current page matches the link's page by ID
+    if (pages.value?.results && href !== '/') {
+      const currentSlug = currentPathWithoutLocale.replace(/^\//, '')
+      const linkSlug = href.replace(/^\//, '')
+      
+      const backendLang = pageStore.LANG_MAPPING[locale.value] || locale.value
+      
+      // Find current page by checking all language translations
+      const currentPage = pages.value.results.find(page => {
+        return Object.values(page.translations).some(translation => 
+          translation.slug === currentSlug
+        )
+      })
+      
+      // Find link page by checking the current language translation
+      const linkPage = pages.value.results.find(page => {
+        const translation = page.translations[backendLang]
+        return translation && translation.slug === linkSlug
+      })
+      
+      // If both pages exist and have same ID, then link is active
+      if (currentPage && linkPage) {
+        return currentPage.id === linkPage.id
+      }
+    }
+    
+    // Fallback to simple path comparison
+    return currentPathWithoutLocale === href
+  }
+})
 
 const toggleContactInfo = () => {
   isContactInfoOpen.value = !isContactInfoOpen.value
@@ -560,6 +687,12 @@ onUnmounted(() => {
 
 <style scoped>
 @import '~/assets/css/main.css';
+
+@media screen and (max-width: 370px) {
+  .contactInfoText {
+    font-size: 12px;
+  }
+}
 
 .contact-and-social{
   display: flex;
@@ -1400,7 +1533,7 @@ onUnmounted(() => {
 
 .nav-links a,
 .modern-nav-link {
-  padding: 4px 14px; 
+  padding: 4px 10px; 
   transition: all 0.3s ease;
   position: relative;
 }
@@ -1560,7 +1693,6 @@ onUnmounted(() => {
 
 .language-selector {
   position: relative;
-  margin-top: 5px;
 }
 
 .language-btn {
