@@ -2,21 +2,23 @@
   <div>
     <section>
       <div class="info-text">
-        <h2 class="text-lg sm:text-2xl md:text-[27px] !leading-relaxed sm:mt-8">Elton Teknik Servis: Bilgisayar, Telefon ve Tablet Tamiri Alanında Tüm Markaları Kapsayan Eşsiz Hizmet</h2>
+        <h2 class="text-lg sm:text-2xl md:text-[27px] !leading-relaxed sm:mt-8">
+          {{ pageData?.content?.title }}
+        </h2>
         <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
-          Elton Teknik Servis, bilgisayar, telefon ve tablet tamiri konusunda uzmanlaşmış bir teknik servis merkezidir. Sunduğumuz eşsiz hizmet anlayışıyla, müşterilerimize tüm markaları kapsayan tamir imkanı sunuyoruz. Teknolojik cihazlarınızda yaşadığınız her türlü sorun için Elton Teknik Servis'e güvenebilirsiniz. Popüler markanın tamirini başarıyla gerçekleştiriyoruz. Ekran değişimi, batarya değişimi, donanım tamiri, yazılım sorunları gibi birçok hizmeti kapsayan geniş bir yelpazede hizmet sunuyoruz.
+          {{ pageData?.content?.info1 }}
         </p>
         <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
-          Bilgisayar, telefon ve tablet tamiri konusunda deneyimli ve dıplomalı uzmanlarımız, en son teknik bilgi ve ekipmanlarla donatılmış tamir atölyemizde çalışmaktadır. Her markanın spesifik gereksinimlerine uygun olarak, yüksek kalitede ve güvenilir tamir hizmetleri sunmaktayız. Müşteri memnuniyetini ön planda tutarak, hızlı ve etkili çözümler sunmayı hedefliyoruz.
+          {{ pageData?.content?.info2 }}
         </p>
         <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
-          Elton Teknik Servis olarak, müşterilerimize en iyi hizmeti sunabilmek için sürekli olarak kendimizi güncelliyor ve geliştiriyoruz. Teknoloji dünyasındaki yenilikleri yakından takip ediyor, tamir süreçlerimizi optimize ediyor ve müşterilerimizin cihazlarını daha kısa sürede geri almalarını sağlıyoruz.
+          {{ pageData?.content?.info3 }}
         </p>
         <p class="text-gray-700 text-base sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
-          Müşterilerimizin güvenini kazanmak ve onların tamir ihtiyaçlarını en iyi şekilde karşılamak için kaliteli hizmet anlayışımızı her zaman sürdürüyoruz. Elton Teknik Servis'e gelerek, cihazlarınızı güvenilir ellere teslim edebilir ve tamir süreci hakkında ayrıntılı bilgi alabilirsiniz.
+          {{ pageData?.content?.info4 }}
         </p>
         <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
-          Sorunlu cihazlarınızı güvenilir ve uzman ellere teslim etmek için Elton Teknik Servis'e başvurun. Tüm markaları kapsayan geniş hizmet yelpazemizle, sizlere en iyi tamir deneyimini sunmak için sabırsızlıkla bekliyoruz.
+          {{ pageData?.content?.info5 }}
         </p>
       </div>
     </section>
@@ -24,7 +26,27 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
+import { usePagesData } from '~/composables/usePagesData'
 
+const { locale } = useI18n()
+
+// Pages data store-u çağırırıq
+const pageStore = usePagesData()
+
+// Server-side data loading
+await pageStore.loadData()
+
+// Səhifə məlumatları - Markalar səhifəsi üçün page ID = 4
+const pageData = computed(() => {
+  const data = pageStore.getPageData(4, locale.value)
+  return data
+})
+
+// Dil dəyişdikdə məlumatları yenilə
+watch(() => locale.value, (newLocale) => {
+  // Məlumatlar artıq reactive olaraq yenilənir
+})
 </script>
 
 <style scoped>

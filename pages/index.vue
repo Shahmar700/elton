@@ -1,45 +1,54 @@
-<template>
+<template>  
   <div>
-    <section v-if="parsedHomeData && parsedHomeData.welcome">
-      <h1 class="gradient-text text-md 400:text-lg sm:text-2xl md:text-3xl mt-2 md:mt-10">
-        {{ parsedHomeData.welcome }}
+    <section>
+      <h1  class="gradient-text text-md 400:text-lg sm:text-2xl md:text-3xl mt-2 md:mt-10">
+        <!-- {{ pageData.content.welcome }} -->
+        {{ pageData?.content?.Welcome || $t('welcomeTitle') }}
       </h1>
+      
       <div class="main-image-container">
-        <img src="/assets/images/office.jpg" alt="Office" class="main-image">
+        <img 
+          :src="pageData?.mainImage || '/assets/images/office.jpg'" 
+          alt="Office" 
+          class="main-image"
+        >
       </div>
+      
       <div class="info-text">
         <h2 class="text-base xs:text-lg sm:text-2xl">
-          {{ parsedHomeData.h1 }}
+          {{ pageData?.content?.homeTitle || $t('mainSubtitle') }}
         </h2>
         <p>
-          {{ parsedHomeData.p1 }}
+          {{ pageData?.content?.info1 || $t('mainDescription') }}
         </p>
       </div>
+      
       <!-- phone and address -->
       <div class="phone-and-address">
         <div class="phone-numbers">
-          <a :href="`tel:${parsedHomeData.mobile?.replace(/ /g, '')}`" class="phone-link flex items-center gap-2">
-            <p>Mobil Tel: {{ parsedHomeData.mobile }}</p>
+          <a :href="`tel:${pageData?.content?.mobilePhone?.replace(/ /g, '')}`" class="phone-link flex items-center gap-2">
+            <p>Mobil Tel: {{ pageData?.content?.mobilePhone || '0552 431 8888' }}</p>
           </a>
-          <a :href="`tel:${parsedHomeData.landlinePhone?.replace(/ /g, '')}`" class="phone-link">
-            <p>Sabit Tel: {{ parsedHomeData.landlinePhone }}</p>
+          <a :href="`tel:${pageData?.content?.landlinePhone?.replace(/ /g, '')}`" class="phone-link">
+            <p>Sabit Tel: {{ pageData?.content?.landlinePhone || '0212 431 8888' }}</p>
           </a>
         </div>
         <div class="address-link" @click="showMap = true">
-          <p>Adres: {{ parsedHomeData.address }}</p>
+          <p>{{ pageData?.content?.address || 'Adres: Yenidogan Mah Demirkapı Cad Özaltın İş Merkezi Bodrum Kat No:10' }}</p>
         </div>
       </div>
+      
       <!-- customer testimonial -->
       <div class="customer-testimonial info-text">
-        <p>{{ parsedHomeData.p2 }}</p>
-        <p>{{ parsedHomeData.p3 }}</p>
-        <p>{{ parsedHomeData.p4 }}</p>
-        <p>{{ parsedHomeData.p5 }}</p>
-      </div>
-      <!-- Parts Images -->
-      <div class="parts-container">
+        <p>{{ pageData?.content?.info2 || $t('mainDescription2') }}</p>
+        <p>{{ pageData?.content?.info3 || $t('mainDescription3') }}</p>
+        <p>{{ pageData?.content?.info4 || $t('mainDescription4') }}</p>
+        <p>{{ pageData?.content?.info5  }}</p>
+      </div>      
+        <!-- Parts Images -->
+      <div class="parts-container" v-if="pageData?.images?.length > 0">
         <div
-          v-for="(img, index) in partImages"
+          v-for="(img, index) in pageData.images"
           :key="index"
           class="part-item"
           @click="openModal(img, index)"
@@ -47,15 +56,15 @@
           <img :src="img" :alt="`Part ${index + 1}`" class="part-image" />
         </div>
       </div>
+      
     </section>
 
-    <MapModal v-model:isOpen="showMap" />
-
+    <MapModal v-model:isOpen="showMap" />    
     <ImageModal
       :is-open="isModalOpen"
       :show-navigation="true"
       :is-first-image="currentImageIndex === 0"
-      :is-last-image="currentImageIndex === partImages.length - 1"
+      :is-last-image="currentImageIndex === (pageData?.images?.length || 0) - 1"
       @update:is-open="isModalOpen = $event"
       @prev="prevImage"
       @next="nextImage"
@@ -66,70 +75,34 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import ImageModal from '~/components/Modal.vue'
-import yaml from 'js-yaml'
 import { useI18n } from 'vue-i18n'
+import { usePagesData } from '~/composables/usePagesData'
+
 const { locale } = useI18n()
 const showMap = ref(false)
-const parts = ref(Array(6).fill(null))
 const isModalOpen = ref(false)
 const selectedImage = ref('')
 const currentImageIndex = ref(0)
-const isHiding = ref(false)
 
-const pageStore = await usePagesData()
 
-const homePageData = computed(() =>
-  pageStore.getPageData('anasayfa', locale.value)
-)
+// Pages data store-u çağırırıq
+const pageStore = usePagesData()
 
-const parsedHomeData = computed(() => {
-  const data = homePageData.value
-  if (!data || !data.contents || !Array.isArray(data.contents) || !data.contents.length) return {}
+// Server-side data loading
+await pageStore.loadData()
 
-  // Always get the block with title "content"
-  const homeContent = data.contents.find(
-    item =>
-      (item.translations && item.translations.az && item.translations.az.title === 'content')
-  )
-  if (!homeContent) return {}
-
-  // Use .translations.az.description directly
-  let descText =
-    (homeContent.translations &&
-      homeContent.translations.az &&
-      homeContent.translations.az.description) ||
-    ''
-
-  const partImages = data.contents
-    .filter(item => item.icon && item.order > 1)
-    .sort((a, b) => a.order - b.order)
-    .map(item => item.icon)
-
-  try {
-    const parsedData = yaml.load(descText)
-    return {
-      ...parsedData,
-      icon: homeContent.icon,
-      order: homeContent.order,
-      id: homeContent.id,
-      partImages
-    }
-  } catch (e) {
-    return {
-      error: true,
-      icon: homeContent.icon,
-      order: homeContent.order,
-      id: homeContent.id,
-      partImages
-    }
-  }
+// Səhifə məlumatları - Ana səhifə üçün page ID = 3
+const pageData = computed(() => {
+  const data = pageStore.getPageData(3, locale.value)
+  return data
 })
 
-const partImages = computed(() => {
-  if (!parsedHomeData.value || !parsedHomeData.value.partImages || !Array.isArray(parsedHomeData.value.partImages)) return []
-  return parsedHomeData.value.partImages
+
+// Dil dəyişdikdə məlumatları yenilə
+watch(() => locale.value, (newLocale) => {
+  // Məlumatlar artıq reactive olaraq yenilənir
 })
 
 const openModal = (imageSrc, index) => {
@@ -141,14 +114,14 @@ const openModal = (imageSrc, index) => {
 const prevImage = () => {
   if (currentImageIndex.value > 0) {
     currentImageIndex.value--
-    selectedImage.value = partImages.value[currentImageIndex.value]
+    selectedImage.value = pageData.value.images[currentImageIndex.value]
   }
 }
 
 const nextImage = () => {
-  if (currentImageIndex.value < partImages.value.length - 1) {
+  if (currentImageIndex.value < pageData.value.images.length - 1) {
     currentImageIndex.value++
-    selectedImage.value = partImages.value[currentImageIndex.value]
+    selectedImage.value = pageData.value.images[currentImageIndex.value]
   }
 }
 </script>
@@ -458,4 +431,12 @@ section:nth-child(even) {
   }
 }
 
+.no-images-debug {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  text-align: center;
+  color: #666;
+}
 </style>
