@@ -127,7 +127,7 @@
       <!-- Header Section -->
       <div class="sidebar-header">
         <div class="sidebar-logo-section">          
-          <NuxtLink :to="getLocalizedRoute('/')" @click="handleLogoClick(); closeSidebar()" class="sidebar-logo-link">
+          <NuxtLink :to="getLocalizedRoute('/')" @click="closeSidebar(); handleLogoClick()" class="sidebar-logo-link">
             <img src="../public/assets/logo.png" alt="Elton Logo" class="sidebar-logo">
           </NuxtLink>
           <h3 class="sidebar-brand">Elton Teknik Servis</h3>
