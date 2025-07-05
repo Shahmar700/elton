@@ -2,37 +2,55 @@
   <div>
     <section>
       <div class="info-text" >
-        <h2 class="text-lg sm:text-2xl md:text-[27px] !leading-relaxed sm:mt-8">Elton Teknik Servis: Bilgisayar, Telefon ve Tablet Tamiri Hizmetleri</h2>
+        <h2 class="text-lg sm:text-2xl md:text-[27px] !leading-relaxed sm:mt-8">
+          <!-- Elton Teknik Servis: Bilgisayar, Telefon ve Tablet Tamiri Hizmetleri -->
+          {{ pageData?.content?.title }}
+        </h2>
         <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
-          Elton Teknik Servis olarak, bilgisayar, telefon ve tablet tamiri konusunda uzmanlaşmış bir ekip olarak müşterilerimize eşsiz hizmetler sunuyoruz. Geniş marka yelpazemiz ve kapsamlı arıza türleriyle her türlü cihaz sorununu çözme konusunda deneyimliyiz.
+          {{ pageData?.content?.info1 }}
         </p>
       </div>
       <!-- pc and phone repair  -->
        <div style="width: 100%">
-         <div class="pc-repair-container"  >
+         <div class="pc-repair-container">
              <div class="pc-repair-icon">
                 <Icon name="hugeicons:settings-02" class="icon settings-icon" />
                 <img src="/public/assets/icons/laptop.png" alt="phone" class="icon laptop-icon">
                 <!-- <Icon name="material-symbols:laptop-mac-outline-sharp" class="icon laptop-icon" />  -->
              </div>
-            <h3 class="text-xl 500:text-2xl md:text-3xl text-[#1AA54D] font-bold">Bilgisayar Tamiri</h3>
+            <h3 class="text-xl 500:text-2xl md:text-3xl text-[#1AA54D] font-bold">
+              <!-- Bilgisayar Tamiri -->
+              {{ pageData?.content?.pcHeader }}
+            </h3>
          </div>
          <!-- Laptop Repair  -->
           <div class="info-text">
               <div class="repair-heading">
                 <Icon name="hugeicons:repair" class="icon repair-icon" />  
-                <h4 class="text-md 500:text-lg sm:text-2xl md:text-3xl font-bold">Laptop Tamiri</h4>
+                <h4 class="text-md 500:text-lg sm:text-2xl md:text-3xl font-bold">
+                  <!-- Laptop Tamiri -->
+                  {{ pageData?.content?.laptopRepairHeader }}
+                </h4>
               </div>
-              <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">Pek çok markanın laptop tamirini gerçekleştiriyoruz. Ekran değişimi, klavye tamiri, batarya değişimi, anakart onarımı ve yazılım sorunları gibi birçok hizmeti sunuyoruz.</p>
+              <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
+                <!-- Pek çok markanın laptop tamirini gerçekleştiriyoruz. Ekran değişimi, klavye tamiri, batarya değişimi, anakart onarımı ve yazılım sorunları gibi birçok hizmeti sunuyoruz. -->
+                {{ pageData?.content?.laptopRepairContent }}
+              </p>
           </div>
 
           <!-- Desktop Repair  -->
           <div class="info-text">
               <div class="repair-heading">
                 <Icon name="hugeicons:repair" class="icon repair-icon" />  
-                <h4 class="text-md 500:text-lg sm:text-2xl md:text-3xl font-bold">Masaüstü Bilgisayarlar Tamiri</h4>
+                <h4 class="text-md 500:text-lg sm:text-2xl md:text-3xl font-bold">
+                  <!-- Masaüstü Bilgisayarlar Tamiri -->
+                  {{ pageData?.content?.desktopRepairHeader }}
+                </h4>
               </div>
-              <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">Tüm markaların modellerin masaüstü bilgisayarlarının tamirini yapıyoruz. Güç kaynağı değişimi, donanım yükseltme, veri kurtarma ve virüs temizleme gibi hizmetlerle cihazlarınızı yeniden çalışır duruma getiriyoruz.</p>
+              <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
+                <!-- Tüm markaların modellerin masaüstü bilgisayarlarının tamirini yapıyoruz. Güç kaynağı değişimi, donanım yükseltme, veri kurtarma ve virüs temizleme gibi hizmetlerle cihazlarınızı yeniden çalışır duruma getiriyoruz. -->
+                {{ pageData?.content?.desktopRepairContent }}
+              </p>
           </div>
 
           <div class="pc-repair-container" >
@@ -40,29 +58,47 @@
                 <Icon name="hugeicons:settings-02" class="icon settings-icon" />
                  <img src="/public/assets/icons/phone.png" alt="phone" class="icon laptop-icon">
              </div>
-            <h3 class="text-xl 500:text-2xl md:text-3xl text-[#1AA54D] font-bold">Telefon Tamiri</h3>
+            <h3 class="text-xl 500:text-2xl md:text-3xl text-[#1AA54D] font-bold">
+              <!-- Telefon Tamiri -->
+              {{ pageData?.content?.phoneRepairHeader }}
+            </h3>
          </div>
 
          <!-- phone repair  -->
          <div class="info-text" >
               <div class="repair-heading">
                 <Icon name="hugeicons:repair" class="icon repair-icon" />  
-                <h4 class="text-md 500:text-lg sm:text-2xl md:text-3xl font-bold">Telefon Tamiri</h4>
+                <h4 class="text-md 500:text-lg sm:text-2xl md:text-3xl font-bold">
+                  <!-- Telefon Tamiri -->
+                  {{ pageData?.content?.phoneRepairHeader }}
+                </h4>
               </div>
-              <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">Tüm telefon modellerinin ekran değişimi, batarya değişimi, arka kamera tamiri, şarj portu onarımı gibi hizmetleri sunuyoruz. Tüm marka modellerin tamirini gerçekleştiriyoruz.</p>
+              <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
+                <!-- Tüm telefon modellerinin ekran değişimi, batarya değişimi, arka kamera tamiri, şarj portu onarımı gibi hizmetleri sunuyoruz. Tüm marka modellerin tamirini gerçekleştiriyoruz. -->
+                {{ pageData?.content?.phoneRepairContent }}
+              </p>
           </div>
 
           <!-- tablet repair  -->
           <div class="info-text" >
               <div class="repair-heading">
                 <Icon name="hugeicons:repair" class="icon repair-icon" />  
-                <h4 class="text-md 500:text-lg sm:text-2xl md:text-3xl font-bold">Tablet Tamiri</h4>
+                <h4 class="text-md 500:text-lg sm:text-2xl md:text-3xl font-bold">
+                  <!-- Tablet Tamiri -->
+                  {{ pageData?.content?.tabletRepairHeader }}
+                </h4>
               </div>
-              <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">Tüm marka modellerinin ekran değişimi, batarya değişimi, güç düğmesi tamiri, WiFi sorunları gibi hizmetlerini sunuyoruz.</p>
+              <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
+                <!-- Tüm marka modellerinin ekran değişimi, batarya değişimi, güç düğmesi tamiri, WiFi sorunları gibi hizmetlerini sunuyoruz. -->
+                {{ pageData?.content?.tabletRepairContent }}
+              </p>
           </div>
 
           <div class="info-text" >
-            <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">Bu sadece bir örnek olup, daha fazla marka ve arıza türü için bizimle iletişime geçebilirsiniz. Elton Teknik Servis olarak, uzman teknisyenlerimizle en kaliteli hizmeti sunmayı hedefliyoruz. Her türlü tamir ihtiyacınız için bize güvenebilirsiniz.</p>
+            <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
+              <!-- Bu sadece bir örnek olup, daha fazla marka ve arıza türü için bizimle iletişime geçebilirsiniz. Elton Teknik Servis olarak, uzman teknisyenlerimizle en kaliteli hizmeti sunmayı hedefliyoruz. Her türlü tamir ihtiyacınız için bize güvenebilirsiniz. -->
+              {{ pageData?.content?.info2 }}
+            </p>
           </div>
        </div>
     </section>
@@ -70,7 +106,34 @@
 </template>
 
 <script setup>
+import { computed, watch, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { usePagesData } from '~/composables/usePagesData'
 
+const { locale } = useI18n()
+
+// Pages data store-u çağırırıq
+const pageStore = usePagesData()
+
+// Server-side data loading
+await pageStore.loadData()
+
+// Səhifə məlumatları - Hizmetler səhifəsi üçün page ID = 5
+const pageData = computed(() => {
+  const data = pageStore.getPageData(5, locale.value)
+  console.log('Hizmetler Page Data (server-side ola bilər):', data) // Bu, terminalda görünə bilər
+  return data
+})
+
+// Bu, yalnız brauzerdə işləyəcək
+onMounted(() => {
+  console.log('Hizmetler Page Data (client-side):', pageData.value)
+})
+
+// Dil dəyişdikdə məlumatları yenilə
+watch(() => locale.value, (newLocale) => {
+  // Məlumatlar artıq computed property vasitəsilə reaktiv olaraq yenilənir
+})
 </script>
 
 <style scoped>
