@@ -249,15 +249,11 @@ import { useRoute, useRouter } from 'vue-router'
 import { gsap } from 'gsap'
 import ServiceVideos from '~/components/ServiceVideos.vue'
 import MapModal from '~/components/MapModal.vue'
-import { usePagesData } from '~/composables/usePagesData'
 import { usePageStore } from '~/stores/usePageStore';
+import { storeToRefs } from 'pinia';
 
-const { pages, loadData } = usePagesData()
-const pageStore = usePageStore() // Store-u birbaşa istifadə edirik
-const localePath = useLocalePath() // Nuxt i18n-dən import edirik
-
-// Proqram başlayanda bütün məlumatları yükləyirik
-await loadData()
+const pageStore = usePageStore()
+const { pages } = storeToRefs(pageStore)
 
 const showScrollTop = ref(false)  
 const isSidebarOpen = ref(false)
