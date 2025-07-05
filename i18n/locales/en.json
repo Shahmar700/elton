@@ -3,7 +3,8 @@
     "tr": "Turkish",
     "ru": "Russian"
   },
-  "nav": {
+  "nav": 
+  {
     "home": "Home",
     "brands": "Brands",
     "services": "Services", 
@@ -17,10 +18,12 @@
   {
     "contactInfo": "Contact Info"
   },
-  "common": {
+  "common": 
+  {
     "language": "Language"
   },
-  "footer": {
+  "footer": 
+  {
     "copyright": "Elton Technical Service. All Rights Reserved."
   },
   "welcomeTitle": "Welcome to Elton Technical Service",

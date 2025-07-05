@@ -29,7 +29,7 @@
         <div class="phone-and-address">
           <div class="phone-numbers">
             <a href="tel:+902124318888" class="phone-link">
-              <p >Sabit Tel: <span>{{ pageData?.content?.landlinePhone }}</span></p>
+              <p>{{ $t('landlinePhone') }} <span>{{ pageData?.content?.landlinePhone }}</span></p>
             </a>
           </div>
         </div>
@@ -42,7 +42,7 @@
       <div class="address">
         <div class="phone-and-address">
           <div class="address-link" @click="showMap = true">
-            <p >Adres: <span>{{ pageData?.content?.adress }}</span></p>
+            <p>{{ $t('address') }}<span>{{ pageData?.content?.adress }}</span></p>
           </div>
         </div>
         <div class="info-text" >

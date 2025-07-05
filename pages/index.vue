@@ -27,23 +27,23 @@
       <div class="phone-and-address">
         <div class="phone-numbers">
           <a :href="`tel:${pageData?.content?.mobilePhone?.replace(/ /g, '')}`" class="phone-link flex items-center gap-2">
-            <p>Mobil Tel: {{ pageData?.content?.mobilePhone || '0552 431 8888' }}</p>
+            <p> {{ $t('mobilePhone') }}  <span>{{ pageData?.content?.mobilePhone }}</span></p>
           </a>
           <a :href="`tel:${pageData?.content?.landlinePhone?.replace(/ /g, '')}`" class="phone-link">
-            <p>Sabit Tel: {{ pageData?.content?.landlinePhone || '0212 431 8888' }}</p>
+            <p>{{ $t('landlinePhone') }} <span>{{ pageData?.content?.landlinePhone }}</span></p>
           </a>
         </div>
         <div class="address-link" @click="showMap = true">
-          <p>{{ pageData?.content?.address || 'Adres: Yenidogan Mah Demirkapı Cad Özaltın İş Merkezi Bodrum Kat No:10' }}</p>
+          <p>{{ $t('address') }}<span>{{ pageData?.content?.adress }}</span></p>
         </div>
       </div>
       
       <!-- customer testimonial -->
       <div class="customer-testimonial info-text">
-        <p>{{ pageData?.content?.info2 || $t('mainDescription2') }}</p>
-        <p>{{ pageData?.content?.info3 || $t('mainDescription3') }}</p>
-        <p>{{ pageData?.content?.info4 || $t('mainDescription4') }}</p>
-        <p>{{ pageData?.content?.info5  }}</p>
+        <p>{{ pageData?.content?.info2 }}</p>
+        <p>{{ pageData?.content?.info3 }}</p>
+        <p>{{ pageData?.content?.info4 }}</p>
+        <p>{{ pageData?.content?.info5 }}</p>
       </div>      
         <!-- Parts Images -->
       <div class="parts-container" v-if="pageData?.images?.length > 0">

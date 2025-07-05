@@ -3,7 +3,8 @@
       "tr": "Турецкий",
       "ru": "Русский"
     },
-    "nav": {
+    "nav": 
+    {
         "home": "Главная",
         "brands": "Бренды",
         "services": "Услуги",
@@ -13,10 +14,12 @@
     "mobilePhone": "Мобильный Тел:",
     "landlinePhone": "Стационарный Тел:",
     "address": "Адрес:",
-    "contact": {
-        "contactInfo": "Контактная информация"
+    "contact": 
+    {
+        "contactInfo": "Контактная"
     },
-    "common": {
+    "common": 
+    {
         "language": "Язык"
     },
     "footer": {
