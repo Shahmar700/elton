@@ -57,8 +57,8 @@ const pageComponent = computed(() => {
     case 3: return IndexPage
     case 4: return MarkalarPage
     case 5: return HizmetlerPage
-    case 6: return IletisimPage
-    case 7: return SSSPage
+    case 7: return IletisimPage
+    case 6: return SSSPage
     default: return null
   }
 })
