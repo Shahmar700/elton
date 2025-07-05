@@ -1,8 +1,8 @@
 <template>
   <div>
       <div class="info-text">
-        <h2 class="text-lg sm:text-2xl md:text-[27px] !leading-relaxed sm:mt-8">Elton Teknik Servis: Bilgisayar, Telefon ve Tablet Tamiri Hizmetleri</h2>
-        <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">Elton Teknik Servis olarak, müşterilerimizin sıkça sorduğu soruları bir araya getirdik ve cevaplarını detaylı bir şekilde açıkladık. İşte en sık karşılaşılan sorular ve bunlara verdiğimiz yanıtlar:</p>
+        <h2 class="text-lg sm:text-2xl md:text-[27px] !leading-relaxed sm:mt-8">{{ pageData?.content?.title }}</h2>
+        <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">{{ pageData?.content?.subTitle }}</p>
       </div>
       <!-- S.S.S  -->
       <div class="faq-container">
@@ -19,13 +19,28 @@
       </div>
       <!-- S.S.S END  -->
        <div class="info-text">
-          <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">Elton Teknik Servis olarak, müşteri memnuniyetine büyük önem veriyoruz. Ayrıca, tamir süreci ve hizmet kalitesi hakkında herhangi bir sorunuz veya geri bildiriminiz varsa, müşteri hizmetlerimizle iletişime geçebilirsiniz. Sizin için en iyi hizmeti sunabilmek için her zaman geri bildirimlerinizi dikkate alıyoruz.</p>
+          <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">{{ pageData?.content?.info1 }}</p>
        </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { usePagesData } from '~/composables/usePagesData'
+
+const { locale } = useI18n()
+const pageStore = usePagesData()
+
+// Server-side data loading
+await pageStore.loadData()
+
+// Səhifə məlumatları - SSS səhifəsi üçün page ID = 6
+const pageData = computed(() => {
+  const data = pageStore.getPageData(6, locale.value)
+  console.log('SSS Page Data:', data) // Məlumatları konsola çıxarırıq
+  return data
+})
 
 const activeFaqs = ref([])
 const showTouchAnimation = ref(false)
@@ -39,33 +54,20 @@ onMounted(() => {
   }, 1000)
 })
 
-const questions = [
-  {
-    id: 1,
-    question: "Hangi markaların tamirini yapıyorsunuz?",
-    answer: "Tüm marka modellerin tamirini başarıyla gerçekleştiriyoruz. Tamir hizmetlerimiz geniş bir marka yelpazesini kapsamaktadır."
-  },
-  {
-    id: 2,
-    question: "Tamir süreci ne kadar sürer?",
-    answer: "Tamir süresi, sorunun karmaşıklığına ve cihazın durumuna bağlı olarak değişebilir. Genellikle basit tamirler aynı gün içinde tamamlanırken, daha karmaşık sorunlar 1gün sürebilir. Tamir süreci hakkında daha ayrıntılı bilgi almak için lütfen bize ulaşın."
-  },
-  {
-    id: 3,
-    question: "Tamir fiyatları nasıl belirlenir?",
-    answer: "Tamir fiyatları, sorunun türü, cihazın markası ve modeli gibi faktörlere bağlı olarak belirlenir. Tamir ihtiyacınızı bize bildirdiğinizde, size bir fiyat teklifi sunulacaktır. Adil ve rekabetçi fiyatlarla çalışıyoruz ve müşteri memnuniyetini ön planda tutuyoruz."
-  },
-  {
-    id: 4,
-    question: "Tamir sürecinde garanti sağlıyor musunuz?",
-    answer: "Evet, sunduğumuz tamir hizmetlerine garanti sağlıyoruz. Tamir edilen parçalar için belirli bir garanti süresi sunuyoruz. Detaylı garanti koşulları ve süresi hakkında bilgi almak için lütfen bize başvurun."
-  },
-  {
-    id: 5,
-    question: "Kırık ekran değişimi yapılıyor mu?",
-    answer: "Evet, kırık ekran değişimi hizmeti sunuyoruz. Birçok marka ve model için ekran değişimi yapabiliyoruz. Ekran değişimi işleminin maliyeti, cihazın markası ve modeline bağlı olarak değişiklik gösterebilir. Detaylı bilgi ve fiyat teklifi için bize ulaşın."
+const questions = computed(() => {
+  if (!pageData.value?.content) {
+    return []
   }
-]
+  const faqs = []
+  for (let i = 1; i <= 5; i++) {
+    const question = pageData.value.content[`soru${i}`]
+    const answer = pageData.value.content[`cevap${i}`]
+    if (question && answer) {
+      faqs.push({ id: i, question, answer })
+    }
+  }
+  return faqs
+})
 
 const toggleFaq = (index) => {
   const currentIndex = activeFaqs.value.indexOf(index)
@@ -245,4 +247,4 @@ const toggleFaq = (index) => {
     transform: translateY(-50%) scale(0.8);
   }
 }
-</style>    
+</style>

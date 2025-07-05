@@ -106,7 +106,7 @@
 </template>
 
 <script setup>
-import { computed, watch, onMounted } from 'vue'
+import { computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { usePagesData } from '~/composables/usePagesData'
 
@@ -121,13 +121,8 @@ await pageStore.loadData()
 // Səhifə məlumatları - Hizmetler səhifəsi üçün page ID = 5
 const pageData = computed(() => {
   const data = pageStore.getPageData(5, locale.value)
-  console.log('Hizmetler Page Data (server-side ola bilər):', data) // Bu, terminalda görünə bilər
+  // console.log('Hizmetler Page Data (server-side ola bilər):', data) // Bu, terminalda görünə bilər
   return data
-})
-
-// Bu, yalnız brauzerdə işləyəcək
-onMounted(() => {
-  console.log('Hizmetler Page Data (client-side):', pageData.value)
 })
 
 // Dil dəyişdikdə məlumatları yenilə

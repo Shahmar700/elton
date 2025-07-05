@@ -9,7 +9,12 @@
     "services": "Services", 
     "faq": "F.A.Q",
     "contact": "Contact"
-  },  "contact": {
+  },
+  "mobilePhone": "Mobile Phone:",
+  "landlinePhone": "Landline Phone:",
+  "address": "Address:",  
+  "contact": 
+  {
     "contactInfo": "Contact Info"
   },
   "common": {

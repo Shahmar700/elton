@@ -1,8 +1,12 @@
-{    "languageName": {
+{   
+    "languageName": {
         "en": "İngilis",
         "tr": "Türkçe",
         "ru": "Rusça" 
     },
+    "mobilePhone": "Mobil Tel:",
+    "landlinePhone": "Sabit Tel:",
+    "address": "Adres:",
     "nav": {
         "home": "Anasayfa",
         "brands": "Markalar", 

@@ -2,11 +2,11 @@
   <div>
     <section>
       <div class="info-text" >
-        <h2 class="text-lg sm:text-2xl md:text-[27px] !leading-relaxed sm:mt-8">Elton Teknik Servis İletişim Hattı:</h2>
+        <h2 class="text-lg sm:text-2xl md:text-[27px] !leading-relaxed sm:mt-8">{{ pageData?.content?.title }}</h2>
       </div>
       <div class="info-text" >
         <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
-          Elton Teknik Servis, müşterilerine sorunsuz iletişim imkanı sağlamak için geniş bir iletişim ağı sunmaktadır. İster mobil telefon, ister sabit hat üzerinden olsun, Elton Teknik Servis’e kolayca ulaşabilir ve cihazlarınızın tamir süreci hakkında detaylı bilgi alabilirsiniz.
+          {{ pageData?.content?.info1 }}
         </p>
       </div>
       <!-- Mobile Phone  -->
@@ -14,13 +14,13 @@
         <div class="phone-and-address">
           <div class="phone-numbers">
             <a href="tel:+905524318888" class="phone-link flex items-center gap-2">
-              <p >Mobil Tel: 0552 431 8888</p>
+              <p> {{ $t('mobilePhone') }}  <span>{{ pageData?.content?.mobilePhone }}</span></p>
             </a>
           </div>
         </div>
         <div class="info-text" >
           <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
-            Elton Teknik Servis, mobil telefon üzerinden ulaşılabilirlik konusunda büyük bir önem vermektedir. Bu nedenle, müşterilerine hızlı ve etkili bir iletişim kanalı sunmaktadır. Mobil telefon hattımız üzerinden ulaşarak, cihazlarınızın tamiri, hizmetlerimiz hakkında bilgi alma veya sorularınızı yanıtlama konusunda bize ulaşabilirsiniz. Müşteri memnuniyeti odaklı yaklaşımımızla, en iyi hizmeti sunmak için sabırsızlıkla bekliyoruz.
+            {{ pageData?.content?.info2 }}
           </p>
         </div>
       </div>
@@ -29,12 +29,12 @@
         <div class="phone-and-address">
           <div class="phone-numbers">
             <a href="tel:+902124318888" class="phone-link">
-              <p >Sabit Tel: 0212 431 8888</p>
+              <p >Sabit Tel: <span>{{ pageData?.content?.landlinePhone }}</span></p>
             </a>
           </div>
         </div>
         <div class="info-text" >
-          <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">Elton Teknik Servis ayrıca sabit hat üzerinden de müşterilerine hizmet sunmaktadır. Sabit telefon hattımızı kullanarak, detaylı bilgi alabilir, randevu oluşturabilir veya teknik destek taleplerinizi iletebilirsiniz. Alanında uzmanlaşmış müşteri temsilcilerimiz, sizlere en iyi şekilde yardımcı olmak için hazır beklemektedir.
+          <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">{{ pageData?.content?.info3 }}
           </p>
         </div>
       </div>
@@ -42,18 +42,18 @@
       <div class="address">
         <div class="phone-and-address">
           <div class="address-link" @click="showMap = true">
-            <p >Adres: Yenidogan Mah Demirkapı Cad Özaltın İş Merkezi Bodrum Kat No:10</p>
+            <p >Adres: <span>{{ pageData?.content?.adress }}</span></p>
           </div>
         </div>
         <div class="info-text" >
-            <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">Elton Teknik Servis, Yenidogan Mah Demirkapı Cad Özaltın İş Merkezi’nin Bodrum Katı’nda bulunmaktadır. Bu merkezi konum, müşterilerimize kolay erişim imkanı sağlamaktadır. Cihazlarınızın tamiri için bizi ziyaret etmek veya sorularınızı iletmek için adresimize bekliyoruz.
+            <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">{{ pageData?.content?.info4 }}
             </p>
         </div>
       </div>
 
       <div class="info-text">
         <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
-          Elton Teknik Servis, siz değerli müşterilerimize kolay ve güvenilir bir iletişim deneyimi sunmayı hedeflemektedir. İletişim kanallarımız üzerinden her türlü sorunuz için bizimle iletişime geçebilir, kaliteli ve profesyonel hizmetlerimizden yararlanabilirsiniz.
+          {{ pageData?.content?.info5 }}
         </p>
       </div>
 
@@ -63,8 +63,23 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { usePagesData } from '~/composables/usePagesData'
 import MapModal from '~/components/MapModal.vue'
+
+const { locale } = useI18n()
+const pageStore = usePagesData()
+
+// Server-side data loading
+await pageStore.loadData()
+
+// Səhifə məlumatları - İletişim səhifəsi üçün page ID = 7
+const pageData = computed(() => {
+  const data = pageStore.getPageData(7, locale.value)
+  console.log('İletişim Page Data:', data) // Məlumatları konsola çıxarırıq
+  return data
+})
 
 const showMap = ref(false)
 
@@ -162,4 +177,4 @@ section {
     width: 100%;
     max-width: 100%;
   }
-</style>    
+</style>

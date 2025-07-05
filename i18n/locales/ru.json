@@ -9,7 +9,11 @@
         "services": "Услуги",
         "faq": "Ч.З.В",
         "contact": "Контакты"
-    },    "contact": {
+    },    
+    "mobilePhone": "Мобильный Тел:",
+    "landlinePhone": "Стационарный Тел:",
+    "address": "Адрес:",
+    "contact": {
         "contactInfo": "Контактная информация"
     },
     "common": {
