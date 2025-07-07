@@ -10,6 +10,26 @@
           {{ pageData?.content?.info1 }}
         </p>
       </div>
+                                                                       
+      <!-- Web Development -->
+      <div class="info-text">
+          <div class="">
+            <div class="coding-container mb-4">
+              <Icon name="hugeicons:website" class="icon repair-icon" />  
+              <img src="/public/assets/icons/programming.png" alt="phone" class="icon laptop-icon mr-[10px]">
+              <h4 class="text-md sm:text-2xl text-xl 500:text-2xl md:text-3xl text-[#1AA54D] font-bold">
+                Web Sitesi Geliştirme
+              </h4>
+            </div>
+            <div class="logo-wrapper">
+              <FooterLogo />
+            </div>
+          </div>
+          <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
+            İşletmenizin veya kişisel markanızın dijital dünyadaki yüzü olan modern, hızlı ve mobil uyumlu web siteleri tasarlıyor ve geliştiriyoruz. Kurumsal sitelerden e-ticaret platformlarına, bloglardan portfolyo sitelerine kadar her türlü ihtiyacınıza yönelik profesyonel çözümler sunuyoruz.
+          </p>
+      </div>
+
       <!-- pc and phone repair  -->
        <div style="width: 100%">
          <div class="pc-repair-container">
@@ -109,6 +129,7 @@
 import { computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { usePagesData } from '~/composables/usePagesData'
+import FooterLogo from '~/components/FooterLogo.vue'
 
 const { locale } = useI18n()
 
@@ -132,6 +153,12 @@ watch(() => locale.value, (newLocale) => {
 </script>
 
 <style scoped>
+.logo-wrapper {
+  transform: scale(1.5);
+  /* Ehtiyac olarsa, mərkəzləşdirmək üçün istifadə edə bilərsiniz */
+  /* display: flex; */
+  /* justify-content: center; */
+}
 section {
   /* padding: 2rem; */
   display: flex;
@@ -141,6 +168,12 @@ section {
 }
 
 .pc-repair-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+}
+.coding-container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -285,4 +318,4 @@ section {
     line-height: 1.5;
   }
 } */
-</style>    
+</style>
