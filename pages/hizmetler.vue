@@ -3,7 +3,7 @@
     <section>
       <div class="info-text" >
         <h2 class="text-lg sm:text-2xl md:text-[27px] !leading-relaxed sm:mt-8">
-          <!-- Elton Teknik Servis: Bilgisayar, Telefon ve Tablet Tamiri Hizmetleri -->
+          <!-- Elton Teknik Servis: Bilgisayar, Telefon ve Tablet Tamiri -->
           {{ pageData?.content?.title }}
         </h2>
         <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
@@ -16,17 +16,27 @@
           <div class="">
             <div class="coding-container mb-4">
               <Icon name="hugeicons:website" class="icon repair-icon" />  
-              <img src="/public/assets/icons/programming.png" alt="phone" class="icon laptop-icon mr-[10px]">
-              <h4 class="text-md sm:text-2xl text-xl 500:text-2xl md:text-3xl text-[#1AA54D] font-bold">
+              <img src="/public/assets/icons/programming.png" alt="phone" class="icon coding-icon mr-[10px]">
+              <HeaderScramble 
+                v-if="pageData?.content?.developmentHeader" 
+                :text="pageData?.content?.developmentHeader" 
+                class="text-md sm:text-2xl text-xl 500:text-2xl md:text-3xl text-[#1AA54D] font-bold" 
+              />
+              <h3 
+                v-else 
+                class="text-md sm:text-2xl text-xl 500:text-2xl md:text-3xl text-[#1AA54D] font-bold"
+              >
                 Web Sitesi Geliştirme
-              </h4>
+              </h3>
             </div>
             <div class="logo-wrapper">
               <FooterLogo />
             </div>
           </div>
-          <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
-            İşletmenizin veya kişisel markanızın dijital dünyadaki yüzü olan modern, hızlı ve mobil uyumlu web siteleri tasarlıyor ve geliştiriyoruz. Kurumsal sitelerden e-ticaret platformlarına, bloglardan portfolyo sitelerine kadar her türlü ihtiyacınıza yönelik profesyonel çözümler sunuyoruz.
+          <p 
+            class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0"
+            v-html="pageData?.content?.developmentContent"
+          >
           </p>
       </div>
 
@@ -130,6 +140,7 @@ import { computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { usePagesData } from '~/composables/usePagesData'
 import FooterLogo from '~/components/FooterLogo.vue'
+import HeaderScramble from '~/components/HeaderScramble.vue'
 
 const { locale } = useI18n()
 
@@ -197,6 +208,12 @@ section {
 }
 .laptop-icon {
   color: #1AA54D;
+  width: 50px;
+  height: 50px;
+  z-index: 2;
+}
+
+.coding-icon {
   width: 50px;
   height: 50px;
   z-index: 2;
