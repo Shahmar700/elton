@@ -15,7 +15,6 @@
       <div class="info-text">
           <div class="">
             <div class="coding-container mb-4">
-              <Icon name="hugeicons:website" class="icon repair-icon" />  
               <img src="/public/assets/icons/programming.png" alt="phone" class="icon coding-icon mr-[10px]">
               <HeaderScramble 
                 v-if="pageData?.content?.developmentHeader" 
@@ -166,9 +165,11 @@ watch(() => locale.value, (newLocale) => {
 <style scoped>
 .logo-wrapper {
   transform: scale(1.5);
-  /* Ehtiyac olarsa, mərkəzləşdirmək üçün istifadə edə bilərsiniz */
-  /* display: flex; */
-  /* justify-content: center; */
+}
+@media screen and (max-width: 768px) {
+  .logo-wrapper {
+    transform: scale(1.2);
+  }
 }
 section {
   /* padding: 2rem; */
@@ -188,7 +189,7 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
 .icon {
   font-size: 3rem;
