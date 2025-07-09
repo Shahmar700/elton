@@ -13,13 +13,14 @@
           class="main-image"
         >
       </div>
-      
       <div class="info-text">
-        <h2 class="text-base xs:text-lg sm:text-2xl">
-          {{ pageData?.content?.homeTitle || $t('mainSubtitle') }}
+        <h2 class="text-base xs:text-lg sm:text-2xl !leading-normal"
+        v-html="pageData?.content?.homeTitle"
+        >
         </h2>
-        <p>
-          {{ pageData?.content?.info1 || $t('mainDescription') }}
+        <p
+        v-html="pageData?.content?.info1"
+        >
         </p>
       </div>
       

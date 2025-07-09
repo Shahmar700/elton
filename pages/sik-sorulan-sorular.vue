@@ -59,12 +59,15 @@ const questions = computed(() => {
     return []
   }
   const faqs = []
-  for (let i = 1; i <= 5; i++) {
-    const question = pageData.value.content[`soru${i}`]
-    const answer = pageData.value.content[`cevap${i}`]
-    if (question && answer) {
-      faqs.push({ id: i, question, answer })
-    }
+  let i = 1
+  // 'soru' mövcud olduğu müddətcə dövr davam edəcək
+  while (pageData.value.content[`soru${i}`] && pageData.value.content[`cevap${i}`]) {
+    faqs.push({
+      id: i,
+      question: pageData.value.content[`soru${i}`],
+      answer: pageData.value.content[`cevap${i}`]
+    })
+    i++
   }
   return faqs
 })

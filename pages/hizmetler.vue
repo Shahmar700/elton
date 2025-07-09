@@ -114,7 +114,7 @@
           </div>
        </div>
                                                                        
-      <!-- =============== 200 Soft Development SIDE =============== -->
+      <!-- ========================= 200 Soft Development SIDE ========================= -->
       <div class="info-text">
           <div class="">
             <div class="coding-container mb-4">
@@ -125,16 +125,9 @@
                 class="icon coding-icon mr-[10px]"
               >
               <HeaderScramble 
-                v-if="pageData?.content?.developmentHeader" 
                 :text="pageData?.content?.developmentHeader" 
                 class="text-md sm:text-2xl text-xl 500:text-2xl md:text-3xl text-[#1AA54D] font-bold" 
               />
-              <h3 
-                v-else 
-                class="text-md sm:text-2xl text-xl 500:text-2xl md:text-3xl text-[#1AA54D] font-bold"
-              >
-                Web Sitesi Geliştirme
-              </h3>
             </div>
             <div class="logo-wrapper">
               <FooterLogo />
