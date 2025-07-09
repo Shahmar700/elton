@@ -31,6 +31,19 @@ export function usePagesData() {
       if (translation) {
         content[item.name] = translation.content
       }
+
+      // Əgər elementin `icon`u varsa, onu `content` obyektinə əlavə edirik.
+      // Bu, məzmunu boş olan, ancaq ikona malik elementlər üçün (məsələn, developmentIcon) lazımdır.
+      if (item.icon) {
+        content[item.name] = item.icon
+      }
+
+      // Əgər tərcümədə məzmun varsa, onu `content` obyektinə əlavə edirik.
+      // Bu, `icon`u olan elementin məzmununu (əgər varsa) yazacaq,
+      // ancaq adətən ikon elementlərinin məzmunu boş olur.
+      if (translation && translation.content) {
+        content[item.name] = translation.content
+      }
       
       // Ana şəkil (order = 1 olan Welcome item-indən)
       if (item.name === 'Welcome' && item.icon) {

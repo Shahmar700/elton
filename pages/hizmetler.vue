@@ -6,16 +6,124 @@
           <!-- Elton Teknik Servis: Bilgisayar, Telefon ve Tablet Tamiri -->
           {{ pageData?.content?.title }}
         </h2>
-        <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
-          {{ pageData?.content?.info1 }}
+        <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0"
+        v-html="pageData?.content?.info1"
+        >
         </p>
       </div>
+
+      <!-- pc and phone repair  -->
+       <div style="width: 100%">
+         <div class="pc-repair-container">
+             <div class="pc-repair-icon">
+                <Icon name="hugeicons:settings-02" class="icon settings-icon" />
+                <img 
+                  v-if="pageData?.content?.laptopIcon"
+                  :src="pageData?.content?.laptopIcon" 
+                  alt="laptop icon" 
+                  class="icon laptop-icon"
+                >
+                <!-- <Icon name="material-symbols:laptop-mac-outline-sharp" class="icon laptop-icon" />  -->
+             </div>
+            <h3 class="text-xl 500:text-2xl md:text-3xl text-[#1AA54D] font-bold">
+              <!-- Bilgisayar Tamiri -->
+              {{ pageData?.content?.pcHeader }}
+            </h3>
+         </div>
+         <!-- Laptop Repair  -->
+          <div class="info-text">
+              <div class="repair-heading">
+                <Icon name="hugeicons:repair" class="icon repair-icon" />  
+                <h4 class="text-md 500:text-lg sm:text-2xl font-bold">
+                  <!-- Laptop Tamiri -->
+                  {{ pageData?.content?.laptopRepairHeader }}
+                </h4>
+              </div>
+              <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
+                <!-- Pek çok markanın laptop tamirini gerçekleştiriyoruz. Ekran değişimi, klavye tamiri, batarya değişimi, anakart onarımı ve yazılım sorunları gibi birçok hizmeti sunuyoruz. -->
+                {{ pageData?.content?.laptopRepairContent }}
+              </p>
+          </div>
+
+          <!-- Desktop Repair  -->
+          <div class="info-text">
+              <div class="repair-heading">
+                <Icon name="hugeicons:repair" class="icon repair-icon" />  
+                <h4 class="text-md 500:text-lg sm:text-2xl font-bold">
+                  <!-- Masaüstü Bilgisayarlar Tamiri -->
+                  {{ pageData?.content?.desktopRepairHeader }}
+                </h4>
+              </div>
+              <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
+                <!-- Tüm markaların modellerin masaüstü bilgisayarlarının tamirini yapıyoruz. Güç kaynağı değişimi, donanım yükseltme, veri kurtarma ve virüs temizleme gibi hizmetlerle cihazlarınızı yeniden çalışır duruma getiriyoruz. -->
+                {{ pageData?.content?.desktopRepairContent }}
+              </p>
+          </div>
+
+          <div class="pc-repair-container" >
+             <div class="pc-repair-icon">
+                <Icon name="hugeicons:settings-02" class="icon settings-icon" />
+                <img 
+                  v-if="pageData?.content?.phoneIcon"
+                  :src="pageData?.content?.phoneIcon" 
+                  alt="phone icon" 
+                  class="icon laptop-icon"
+                >
+             </div>
+            <h3 class="text-xl 500:text-2xl md:text-3xl text-[#1AA54D] font-bold">
+              <!-- Telefon Tamiri -->
+              {{ pageData?.content?.phoneRepairHeader }}
+            </h3>
+         </div>
+
+         <!-- phone repair  -->
+         <div class="info-text" >
+              <div class="repair-heading">
+                <Icon name="hugeicons:repair" class="icon repair-icon" />  
+                <h4 class="text-md 500:text-lg sm:text-2xl font-bold">
+                  <!-- Telefon Tamiri -->
+                  {{ pageData?.content?.phoneRepairHeader }}
+                </h4>
+              </div>
+              <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
+                <!-- Tüm telefon modellerinin ekran değişimi, batarya değişimi, arka kamera tamiri, şarj portu onarımı gibi hizmetleri sunuyoruz. Tüm marka modellerin tamirini gerçekleştiriyoruz. -->
+                {{ pageData?.content?.phoneRepairContent }}
+              </p>
+          </div>
+
+          <!-- tablet repair  -->
+          <div class="info-text" >
+              <div class="repair-heading">
+                <Icon name="hugeicons:repair" class="icon repair-icon" />  
+                <h4 class="text-md 500:text-lg sm:text-2xl font-bold">
+                  <!-- Tablet Tamiri -->
+                  {{ pageData?.content?.tabletRepairHeader }}
+                </h4>
+              </div>
+              <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
+                <!-- Tüm marka modellerinin ekran değişimi, batarya değişimi, güç düğmesi tamiri, WiFi sorunları gibi hizmetlerini sunuyoruz. -->
+                {{ pageData?.content?.tabletRepairContent }}
+              </p>
+          </div>
+
+          <div class="info-text" >
+            <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
+              <!-- Bu sadece bir örnek olup, daha fazla marka ve arıza türü için bizimle iletişime geçebilirsiniz. Elton Teknik Servis olarak, uzman teknisyenlerimizle en kaliteli hizmeti sunmayı hedefliyoruz. Her türlü tamir ihtiyacınız için bize güvenebilirsiniz. -->
+              {{ pageData?.content?.info2 }}
+            </p>
+          </div>
+       </div>
                                                                        
-      <!-- Web Development -->
+      <!-- =============== 200 Soft Development SIDE =============== -->
       <div class="info-text">
           <div class="">
             <div class="coding-container mb-4">
-              <img src="/public/assets/icons/programming.png" alt="phone" class="icon coding-icon mr-[10px]">
+              <img 
+                v-if="pageData?.content?.developmentIcon"
+                :src="pageData?.content?.developmentIcon" 
+                alt="development icon" 
+                class="icon coding-icon mr-[10px]"
+              >
               <HeaderScramble 
                 v-if="pageData?.content?.developmentHeader" 
                 :text="pageData?.content?.developmentHeader" 
@@ -37,99 +145,52 @@
             v-html="pageData?.content?.developmentContent"
           >
           </p>
+
+          <!-- =============== Web Development ===============  -->
+          <div class="dev-heading mt-4">
+                <Icon name="mdi:web-check" class="icon dev-icon" />  
+                <h4 class="text-md 500:text-lg sm:text-2xl font-bold">
+                  <!-- Laptop Tamiri -->
+                  {{ pageData?.content?.webDevHeader }}
+                </h4>
+          </div>
+          <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
+              {{ pageData?.content?.webDevContent }}
+          </p>
+
+          <!-- =============== Mobile Development ===============  -->
+          <div class="dev-heading mt-4">
+                <Icon name="material-symbols:app-registration" class="icon dev-icon" />  
+                <h4 class="text-md 500:text-lg sm:text-2xl font-bold">
+                  <!-- Laptop Tamiri -->
+                  {{ pageData?.content?.mobileDevHeader }}
+                </h4>
+          </div>
+          <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
+              {{ pageData?.content?.mobileDevContent  }}
+          </p>
+
+          <!-- =============== ERP ve Özel Yazılım Çözümleri ===============  -->
+          <div class="dev-heading mt-4">
+                <Icon name="hugeicons:peer-to-peer-02" class="icon dev-icon" />  
+                <h4 class="text-md 500:text-lg sm:text-2xl font-bold">
+                  <!-- Laptop Tamiri -->
+                  {{ pageData?.content?.erpHeader }}
+                </h4>
+          </div>
+          <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
+              {{ pageData?.content?.erpContent  }}
+          </p>
+
+          <div class="info-text">
+            <p 
+            class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0"
+            v-html="pageData?.content?.lastDevText"
+            >
+          </p>
+          </div>
       </div>
 
-      <!-- pc and phone repair  -->
-       <div style="width: 100%">
-         <div class="pc-repair-container">
-             <div class="pc-repair-icon">
-                <Icon name="hugeicons:settings-02" class="icon settings-icon" />
-                <img src="/public/assets/icons/laptop.png" alt="phone" class="icon laptop-icon">
-                <!-- <Icon name="material-symbols:laptop-mac-outline-sharp" class="icon laptop-icon" />  -->
-             </div>
-            <h3 class="text-xl 500:text-2xl md:text-3xl text-[#1AA54D] font-bold">
-              <!-- Bilgisayar Tamiri -->
-              {{ pageData?.content?.pcHeader }}
-            </h3>
-         </div>
-         <!-- Laptop Repair  -->
-          <div class="info-text">
-              <div class="repair-heading">
-                <Icon name="hugeicons:repair" class="icon repair-icon" />  
-                <h4 class="text-md 500:text-lg sm:text-2xl md:text-3xl font-bold">
-                  <!-- Laptop Tamiri -->
-                  {{ pageData?.content?.laptopRepairHeader }}
-                </h4>
-              </div>
-              <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
-                <!-- Pek çok markanın laptop tamirini gerçekleştiriyoruz. Ekran değişimi, klavye tamiri, batarya değişimi, anakart onarımı ve yazılım sorunları gibi birçok hizmeti sunuyoruz. -->
-                {{ pageData?.content?.laptopRepairContent }}
-              </p>
-          </div>
-
-          <!-- Desktop Repair  -->
-          <div class="info-text">
-              <div class="repair-heading">
-                <Icon name="hugeicons:repair" class="icon repair-icon" />  
-                <h4 class="text-md 500:text-lg sm:text-2xl md:text-3xl font-bold">
-                  <!-- Masaüstü Bilgisayarlar Tamiri -->
-                  {{ pageData?.content?.desktopRepairHeader }}
-                </h4>
-              </div>
-              <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
-                <!-- Tüm markaların modellerin masaüstü bilgisayarlarının tamirini yapıyoruz. Güç kaynağı değişimi, donanım yükseltme, veri kurtarma ve virüs temizleme gibi hizmetlerle cihazlarınızı yeniden çalışır duruma getiriyoruz. -->
-                {{ pageData?.content?.desktopRepairContent }}
-              </p>
-          </div>
-
-          <div class="pc-repair-container" >
-             <div class="pc-repair-icon">
-                <Icon name="hugeicons:settings-02" class="icon settings-icon" />
-                 <img src="/public/assets/icons/phone.png" alt="phone" class="icon laptop-icon">
-             </div>
-            <h3 class="text-xl 500:text-2xl md:text-3xl text-[#1AA54D] font-bold">
-              <!-- Telefon Tamiri -->
-              {{ pageData?.content?.phoneRepairHeader }}
-            </h3>
-         </div>
-
-         <!-- phone repair  -->
-         <div class="info-text" >
-              <div class="repair-heading">
-                <Icon name="hugeicons:repair" class="icon repair-icon" />  
-                <h4 class="text-md 500:text-lg sm:text-2xl md:text-3xl font-bold">
-                  <!-- Telefon Tamiri -->
-                  {{ pageData?.content?.phoneRepairHeader }}
-                </h4>
-              </div>
-              <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
-                <!-- Tüm telefon modellerinin ekran değişimi, batarya değişimi, arka kamera tamiri, şarj portu onarımı gibi hizmetleri sunuyoruz. Tüm marka modellerin tamirini gerçekleştiriyoruz. -->
-                {{ pageData?.content?.phoneRepairContent }}
-              </p>
-          </div>
-
-          <!-- tablet repair  -->
-          <div class="info-text" >
-              <div class="repair-heading">
-                <Icon name="hugeicons:repair" class="icon repair-icon" />  
-                <h4 class="text-md 500:text-lg sm:text-2xl md:text-3xl font-bold">
-                  <!-- Tablet Tamiri -->
-                  {{ pageData?.content?.tabletRepairHeader }}
-                </h4>
-              </div>
-              <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
-                <!-- Tüm marka modellerinin ekran değişimi, batarya değişimi, güç düğmesi tamiri, WiFi sorunları gibi hizmetlerini sunuyoruz. -->
-                {{ pageData?.content?.tabletRepairContent }}
-              </p>
-          </div>
-
-          <div class="info-text" >
-            <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
-              <!-- Bu sadece bir örnek olup, daha fazla marka ve arıza türü için bizimle iletişime geçebilirsiniz. Elton Teknik Servis olarak, uzman teknisyenlerimizle en kaliteli hizmeti sunmayı hedefliyoruz. Her türlü tamir ihtiyacınız için bize güvenebilirsiniz. -->
-              {{ pageData?.content?.info2 }}
-            </p>
-          </div>
-       </div>
     </section>
   </div>
 </template>
@@ -228,7 +289,7 @@ section {
     transform: rotate(360deg);
   }
 }
-.repair-heading {
+.repair-heading, .dev-heading {
   width: fit-content;
   display: flex;
   align-items: center;
@@ -238,7 +299,7 @@ section {
   background: linear-gradient(45deg, #1AA54D, #121D61);
   color: white;
 }
-.repair-icon {
+.repair-icon, .dev-icon {
   font-size: 2rem;
   color: #fff;
   margin-right: 10px;
