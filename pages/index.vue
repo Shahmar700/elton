@@ -18,10 +18,7 @@
         v-html="pageData?.content?.homeTitle"
         >
         </h2>
-        <p
-        v-html="pageData?.content?.info1"
-        >
-        </p>
+        <p v-html="pageData?.content?.info1"></p>
       </div>
       
       <!-- phone and address -->
@@ -439,5 +436,27 @@ section:nth-child(even) {
   border-radius: 8px;
   text-align: center;
   color: #666;
+}
+
+
+.no-images-debug {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  text-align: center;
+  color: #666;
+}
+
+.info-text p :deep(strong) {
+  color: #390b9a;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.info-text p :deep(strong:hover) {
+  color: #1fd12e; 
+  cursor: pointer; 
+  text-shadow: 0 0 4px rgba(1, 131, 66, 0.212); 
 }
 </style>
