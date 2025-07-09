@@ -31,8 +31,8 @@ const { pages } = storeToRefs(pageStore)
 // Slug-dan pageId tapın
 const pageId = computed(() => {
   const fullPath = route.path
-  // URL-dən cari slug-u təmiz şəkildə alın
-  const currentSlug = fullPath.replace(/^\/(en|ru)/, '').replace(/^\//, '')
+  // URL-dən cari slug-u təmiz şəkildə alın və decode et
+  const currentSlug = decodeURIComponent(fullPath.replace(/^\/(en|ru)/, '').replace(/^\//, ''))
 
   // Ana səhifənin slug-u boş olur
   if (currentSlug === '' || fullPath === '/en' || fullPath === '/ru') {

@@ -451,9 +451,9 @@ const isLinkActive = computed(() => {
     
     // For other pages, check if current page matches the link's page by ID
     if (pages.value?.results && href !== '/') {
-      const currentSlug = currentPathWithoutLocale.replace(/^\//, '')
-      const linkSlug = href.replace(/^\//, '')
-      
+      // Slug-ları decode edirik ki, URL-dəki encoded simvollar düzgün müqayisə olunsun
+      const currentSlug = decodeURIComponent(currentPathWithoutLocale.replace(/^\//, ''))
+      const linkSlug = decodeURIComponent(href.replace(/^\//, ''))
       const backendLang = pageStore.LANG_MAPPING[locale.value] || locale.value
       
       // Find current page by checking all language translations
@@ -476,7 +476,7 @@ const isLinkActive = computed(() => {
     }
     
     // Fallback to simple path comparison
-    return currentPathWithoutLocale === href
+    return decodeURIComponent(currentPathWithoutLocale) === decodeURIComponent(href)
   }
 })
 
