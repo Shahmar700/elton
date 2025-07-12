@@ -218,10 +218,10 @@ useHead(computed(() => {
         pageTitle = 'İletişim | Elton Teknik Servis'
         break
       case 'en':
-        pageTitle = 'Contact | Elton Teknik Servis'
+        pageTitle = 'Communication | Elton Teknik Servis'
         break
       case 'ru':
-        pageTitle = 'Контакты | Elton Teknik Servis'
+        pageTitle = 'Коммуникация | Elton Teknik Servis'
         break
       default:
         pageTitle = 'İletişim | Elton Teknik Servis'

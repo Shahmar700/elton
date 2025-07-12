@@ -54,7 +54,8 @@ useHead({
   ],
   link: [
     { rel: 'canonical', href: 'https://eltonteknikservis.com' },
-    { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
+    // { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
   ]
 })
 </script>

@@ -345,6 +345,11 @@ const getLocalizedRoute = (path) => {
 
 // Function to get display name for navigation links
 const getDisplayName = (linkName) => {
+  // "İletisim" sözünü "İletişim" olaraq düzəltmək - yalnız tr dili üçün (backend-də az dili)
+  if (linkName && locale.value === 'tr' && linkName === 'İletisim') {
+    return 'İletişim'
+  }
+  
   // "Sik Sorulan Sorular" üçün xüsusi qısaltmalar
   if (linkName) {
     const lowerName = linkName.toLowerCase()

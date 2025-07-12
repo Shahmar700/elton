@@ -45,7 +45,18 @@ export default defineNuxtConfig({
         {
           rel: 'stylesheet',
           href: 'https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap'
-        }
+        },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '32x32',
+          href: '/favicon-32x32.png'
+        },
+        // {
+        //   rel: 'icon',
+        //   type: 'image/x-icon',
+        //   href: '/favicon.ico'
+        // }
       ]
     }
   },
