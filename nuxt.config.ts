@@ -29,7 +29,10 @@ export default defineNuxtConfig({
     dirs: ['composables/**']
   },
   app: {
-    pageTransition: { name: 'page', mode: 'out-in' },
+    pageTransition: { 
+      name: 'page', 
+      mode: 'out-in'
+    },
     head: {
       title: 'Elton Teknik Servis',
       meta: [

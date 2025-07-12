@@ -1,7 +1,10 @@
 <template>
   <div>
-    <!-- Komponent varsa göstər, yoxdursa xəta mesajı ver -->
-    <component :is="pageComponent" v-if="pageComponent" />
+    <component 
+      :is="currentComponent" 
+      v-if="currentComponent" 
+      :key="componentKey"
+    />
     <div v-else class="not-found-container">
       <h1>{{ $t('error.pageNotFound') || 'Səhifə tapılmadı' }}</h1>
       <p>{{ $t('error.pageNotFoundDesc') || 'Axtardığınız səhifə mövcud deyil.' }}</p>
@@ -10,33 +13,62 @@
 </template>
 
 <script setup>
-import { computed, defineAsyncComponent } from 'vue'
+import { computed, defineAsyncComponent, ref, watch, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { usePageStore } from '~/stores/usePageStore'
 import { storeToRefs } from 'pinia'
 
 // Komponentləri asinxron yükləyərək ilkin paket həcmini azaldın
-const IndexPage = defineAsyncComponent(() => import('~/pages/index.vue'))
-const MarkalarPage = defineAsyncComponent(() => import('~/pages/markalar.vue'))
-const HizmetlerPage = defineAsyncComponent(() => import('~/pages/hizmetler.vue'))
-const IletisimPage = defineAsyncComponent(() => import('~/pages/iletisim.vue'))
-const SSSPage = defineAsyncComponent(() => import('~/pages/sik-sorulan-sorular.vue'))
+const IndexPage = defineAsyncComponent({
+  loader: () => import('~/pages/index.vue'),
+  loadingComponent: null,
+  delay: 0,
+  timeout: 3000
+})
+const MarkalarPage = defineAsyncComponent({
+  loader: () => import('~/pages/markalar.vue'),
+  loadingComponent: null,
+  delay: 0,
+  timeout: 3000
+})
+const HizmetlerPage = defineAsyncComponent({
+  loader: () => import('~/pages/hizmetler.vue'),
+  loadingComponent: null,
+  delay: 0,
+  timeout: 3000
+})
+const IletisimPage = defineAsyncComponent({
+  loader: () => import('~/pages/iletisim.vue'),
+  loadingComponent: null,
+  delay: 0,
+  timeout: 3000
+})
+const SSSPage = defineAsyncComponent({
+  loader: () => import('~/pages/sik-sorulan-sorular.vue'),
+  loadingComponent: null,
+  delay: 0,
+  timeout: 3000
+})
 
 const route = useRoute()
 const { locale, t } = useI18n()
 const pageStore = usePageStore()
 const { pages } = storeToRefs(pageStore)
 
-// Slug-dan pageId tapın
-const pageId = computed(() => {
-  const fullPath = route.path
+// Komponent cache-i və key-i
+const componentCache = new Map()
+const componentKey = ref(0)
+const currentPageId = ref(null)
+
+// Slug-dan pageId tapın - memoized
+const getPageId = (path) => {
   // URL-dən cari slug-u təmiz şəkildə alın və decode et
-  const currentSlug = decodeURIComponent(fullPath.replace(/^\/(en|ru)/, '').replace(/^\//, ''))
+  const currentSlug = decodeURIComponent(path.replace(/^\/(en|ru)/, '').replace(/^\//, ''))
 
   // Ana səhifənin slug-u boş olur
-  if (currentSlug === '' || fullPath === '/en' || fullPath === '/ru') {
-      return 3 // Ana səhifənin ID-si
+  if (currentSlug === '' || path === '/en' || path === '/ru') {
+    return 3 // Ana səhifənin ID-si
   }
 
   if (!pages.value?.results) {
@@ -49,27 +81,76 @@ const pageId = computed(() => {
   )
   
   return foundPage?.id || null
+}
+
+// Page ID-yə görə component seçin - memoized
+const getComponentByPageId = (pageId) => {
+  if (componentCache.has(pageId)) {
+    return componentCache.get(pageId)
+  }
+
+  let component = null
+  switch (pageId) {
+    case 3: 
+      component = IndexPage
+      break
+    case 4: 
+      component = MarkalarPage
+      break
+    case 5: 
+      component = HizmetlerPage
+      break
+    case 7: 
+      component = IletisimPage
+      break
+    case 6: 
+      component = SSSPage
+      break
+    default: 
+      component = null
+  }
+
+  componentCache.set(pageId, component)
+  return component
+}
+
+// Cari komponenti hesabla
+const currentComponent = computed(() => {
+  const pageId = getPageId(route.path)
+  
+  // Əgər page ID dəyişibsə, key-i yenilə
+  if (pageId !== currentPageId.value) {
+    currentPageId.value = pageId
+    componentKey.value++
+  }
+  
+  return getComponentByPageId(pageId)
 })
 
-// Page ID-yə görə component seçin
-const pageComponent = computed(() => {
-  switch (pageId.value) {
-    case 3: return IndexPage
-    case 4: return MarkalarPage
-    case 5: return HizmetlerPage
-    case 7: return IletisimPage
-    case 6: return SSSPage
-    default: return null
-  }
-})
+// Component key-i locale dəyişikliyi üçün də yenilə
+watch(locale, () => {
+  componentKey.value++
+}, { flush: 'post' })
+
+// Route dəyişikliklərini izlə
+watch(
+  () => route.path,
+  () => {
+    // Route dəyişdikdə key-i yenilə
+    componentKey.value++
+  },
+  { immediate: false, flush: 'post' }
+)
 
 // SEO və meta məlumatları
 useHead(computed(() => {
-  if (!pageId.value || !pages.value?.results) {
+  const pageId = getPageId(route.path)
+  
+  if (!pageId || !pages.value?.results) {
     return { title: t('error.pageNotFound') }
   }
   
-  const page = pages.value.results.find(p => p.id === pageId.value)
+  const page = pages.value.results.find(p => p.id === pageId)
   if (!page) return { title: t('error.pageNotFound') }
 
   const backendLang = pageStore.LANG_MAPPING[locale.value] || locale.value
