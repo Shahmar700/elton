@@ -81,6 +81,13 @@ const pageData = computed(() => {
   return data
 })
 
+// Title təyin etmək - yalnız tr dili üçün
+if (locale.value === 'tr') {
+  useHead({
+    title: 'İletişim | Elton Teknik Servis'
+  })
+}
+
 const showMap = ref(false)
 
 </script>

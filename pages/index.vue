@@ -97,6 +97,24 @@ const pageData = computed(() => {
   return data
 })
 
+// Title təyin etmək
+const pageTitle = computed(() => {
+  switch (locale.value) {
+    case 'tr':
+      return 'Anasayfa | Elton Teknik Servis'
+    case 'en':
+      return 'Home Page | Elton Teknik Servis'
+    case 'ru':
+      return 'Главная Страница | Elton Teknik Servis'
+    default:
+      return 'Anasayfa | Elton Teknik Servis'
+  }
+})
+
+// Head məlumatlarını təyin etmək
+useHead({
+  title: pageTitle
+})
 
 // Dil dəyişdikdə məlumatları yenilə
 watch(() => locale.value, (newLocale) => {

@@ -210,6 +210,13 @@ const pageData = computed(() => {
   return data
 })
 
+// Title təyin etmək - yalnız tr dili üçün
+if (locale.value === 'tr') {
+  useHead({
+    title: 'Hizmetler | Elton Teknik Servis'
+  })
+}
+
 // Dil dəyişdikdə məlumatları yenilə
 watch(() => locale.value, (newLocale) => {
   // Məlumatlar artıq computed property vasitəsilə reaktiv olaraq yenilənir

@@ -156,8 +156,84 @@ useHead(computed(() => {
   const backendLang = pageStore.LANG_MAPPING[locale.value] || locale.value
   const translation = page.translations[backendLang] || Object.values(page.translations)[0]
 
+  // Title-ları dilə görə təyin etmək
+  let pageTitle = ''
+  
+  // Ana səhifə (ID: 3) - index.vue tərəfindən idarə olunur
+  if (pageId === 3) {
+    return {} // Ana səhifə üçün title index.vue-da təyin olunur
+  }
+  // Markalar səhifəsi (ID: 4)
+  else if (pageId === 4) {
+    switch (locale.value) {
+      case 'tr':
+        pageTitle = 'Markalar | Elton Teknik Servis'
+        break
+      case 'en':
+        pageTitle = 'Brands | Elton Teknik Servis'
+        break
+      case 'ru':
+        pageTitle = 'Бренды | Elton Teknik Servis'
+        break
+      default:
+        pageTitle = 'Markalar | Elton Teknik Servis'
+    }
+  }
+  // Hizmetler səhifəsi (ID: 5)
+  else if (pageId === 5) {
+    switch (locale.value) {
+      case 'tr':
+        pageTitle = 'Hizmetler | Elton Teknik Servis'
+        break
+      case 'en':
+        pageTitle = 'Services | Elton Teknik Servis'
+        break
+      case 'ru':
+        pageTitle = 'Услуги | Elton Teknik Servis'
+        break
+      default:
+        pageTitle = 'Hizmetler | Elton Teknik Servis'
+    }
+  }
+  // SSS səhifəsi (ID: 6)
+  else if (pageId === 6) {
+    switch (locale.value) {
+      case 'tr':
+        pageTitle = 'Sık Sorulan Sorular | Elton Teknik Servis'
+        break
+      case 'en':
+        pageTitle = 'Frequently Asked Questions | Elton Teknik Servis'
+        break
+      case 'ru':
+        pageTitle = 'Часто Задаваемые Вопросы | Elton Teknik Servis'
+        break
+      default:
+        pageTitle = 'Sık Sorulan Sorular | Elton Teknik Servis'
+    }
+  }
+  // İletişim səhifəsi (ID: 7)
+  else if (pageId === 7) {
+    switch (locale.value) {
+      case 'tr':
+        pageTitle = 'İletişim | Elton Teknik Servis'
+        break
+      case 'en':
+        pageTitle = 'Contact | Elton Teknik Servis'
+        break
+      case 'ru':
+        pageTitle = 'Контакты | Elton Teknik Servis'
+        break
+      default:
+        pageTitle = 'İletişim | Elton Teknik Servis'
+    }
+  }
+  // Digər səhifələr üçün fallback
+  else {
+    pageTitle = translation.meta_title || page.name || 'Elton Teknik Servis'
+  }
+
   return {
-    title: translation.meta_title || page.name,
+    title: pageTitle,
     meta: [
       { name: 'description', content: translation.meta_description },
       { name: 'keywords', content: translation.meta_keywords }

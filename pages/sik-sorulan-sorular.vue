@@ -42,6 +42,13 @@ const pageData = computed(() => {
   return data
 })
 
+// Title təyin etmək - yalnız tr dili üçün
+if (locale.value === 'tr') {
+  useHead({
+    title: 'Sık Sorulan Sorular | Elton Teknik Servis'
+  })
+}
+
 const activeFaqs = ref([])
 const showTouchAnimation = ref(false)
 
