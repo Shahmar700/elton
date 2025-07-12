@@ -113,7 +113,17 @@ const pageTitle = computed(() => {
 
 // Head məlumatlarını təyin etmək
 useHead({
-  title: pageTitle
+  title: pageTitle,
+  meta: [
+    { name: 'description', content: 'Elton Teknik Servis: Bilgisayar, telefon ve tablet tamiri konusunda uzman kadrosuyla hizmet vermektedir. 200soft ile işbirliği ile web sitesi geliştirme, ERP sistemleri, mobil uygulama geliştirme ve yazılım çözümleri sunuyoruz.' },
+    { name: 'keywords', content: 'bilgisayar tamiri, laptop tamiri, telefon tamiri, tablet tamiri, teknik servis, bilgisayar servisi, telefon servisi, tablet servisi, web sitesi geliştirme, ERP sistemleri, mobil uygulama, 200soft, yazılım çözümleri, web tasarım, mobil app geliştirme' },
+    { property: 'og:title', content: pageTitle },
+    { property: 'og:description', content: 'Elton Teknik Servis: Bilgisayar, telefon ve tablet tamiri. 200soft ile işbirliği ile web sitesi geliştirme, ERP sistemleri ve mobil uygulama geliştirme hizmetleri.' },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:url', content: 'https://eltonteknikservis.com' },
+    { name: 'twitter:title', content: pageTitle },
+    { name: 'twitter:description', content: 'Elton Teknik Servis: Bilgisayar, telefon ve tablet tamiri. 200soft ile işbirliği ile web sitesi geliştirme, ERP sistemleri ve mobil uygulama geliştirme hizmetleri.' }
+  ]
 })
 
 // Dil dəyişdikdə məlumatları yenilə

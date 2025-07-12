@@ -84,7 +84,16 @@ const pageData = computed(() => {
 // Title təyin etmək - yalnız tr dili üçün
 if (locale.value === 'tr') {
   useHead({
-    title: 'İletişim | Elton Teknik Servis'
+    title: 'İletişim | Elton Teknik Servis',
+    meta: [
+      { name: 'description', content: 'Elton Teknik Servis ile iletişim. Adres: Bayrampaşa Demirkapı Cad. 8/10. Telefon: +90 552 431 8888. Bilgisayar, telefon ve tablet tamiri. 200soft ile işbirliği ile yazılım çözümleri için bize ulaşın.' },
+      { name: 'keywords', content: 'elton teknik servis iletişim, teknik servis telefon, bilgisayar tamiri adres, telefon tamiri adres, tablet tamiri adres, 200soft, yazılım çözümleri, web sitesi geliştirme, ERP sistemleri, mobil uygulama' },
+      { property: 'og:title', content: 'İletişim | Elton Teknik Servis' },
+      { property: 'og:description', content: 'Elton Teknik Servis ile iletişim. Adres: Bayrampaşa Demirkapı Cad. 8/10. Telefon: +90 552 431 8888. 200soft ile işbirliği ile yazılım çözümleri.' },
+      { property: 'og:type', content: 'website' },
+      { name: 'twitter:title', content: 'İletişim | Elton Teknik Servis' },
+      { name: 'twitter:description', content: 'Elton Teknik Servis ile iletişim. Bilgisayar, telefon ve tablet tamiri. 200soft ile işbirliği ile yazılım çözümleri için bize ulaşın.' }
+    ]
   })
 }
 

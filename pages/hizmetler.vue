@@ -213,7 +213,16 @@ const pageData = computed(() => {
 // Title təyin etmək - yalnız tr dili üçün
 if (locale.value === 'tr') {
   useHead({
-    title: 'Hizmetler | Elton Teknik Servis'
+    title: 'Hizmetler | Elton Teknik Servis',
+    meta: [
+      { name: 'description', content: 'Elton Teknik Servis: Bilgisayar, telefon ve tablet tamiri hizmetleri. 200soft ile işbirliği ile web sitesi geliştirme, ERP sistemleri, mobil uygulama geliştirme, özel yazılım çözümleri ve dijital dönüşüm hizmetleri sunuyoruz.' },
+      { name: 'keywords', content: 'bilgisayar tamiri, laptop tamiri, telefon tamiri, tablet tamiri, teknik servis, yazılım geliştirme, web tasarım, mobil uygulama, ERP sistemleri, 200soft, özel yazılım, dijital dönüşüm, web sitesi geliştirme, mobil app geliştirme, yazılım çözümleri' },
+      { property: 'og:title', content: 'Hizmetler | Elton Teknik Servis' },
+      { property: 'og:description', content: 'Elton Teknik Servis: Bilgisayar, telefon ve tablet tamiri hizmetleri. 200soft ile işbirliği ile web sitesi geliştirme, ERP sistemleri, mobil uygulama geliştirme ve özel yazılım çözümleri.' },
+      { property: 'og:type', content: 'website' },
+      { name: 'twitter:title', content: 'Hizmetler | Elton Teknik Servis' },
+      { name: 'twitter:description', content: 'Elton Teknik Servis: Bilgisayar, telefon ve tablet tamiri hizmetleri. 200soft ile işbirliği ile yazılım çözümleri.' }
+    ]
   })
 }
 

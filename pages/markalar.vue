@@ -46,7 +46,16 @@ const pageData = computed(() => {
 // Title təyin etmək - yalnız tr dili üçün
 if (locale.value === 'tr') {
   useHead({
-    title: 'Markalar | Elton Teknik Servis'
+    title: 'Markalar | Elton Teknik Servis',
+    meta: [
+      { name: 'description', content: 'Elton Teknik Servis: Apple, Samsung, HP, Dell, Lenovo, Asus, Acer ve diğer tüm markaların bilgisayar, telefon ve tablet tamiri. 200soft ile işbirliği ile yazılım çözümleri. Güvenilir teknik servis hizmeti.' },
+      { name: 'keywords', content: 'apple tamiri, samsung tamiri, hp tamiri, dell tamiri, lenovo tamiri, asus tamiri, acer tamiri, bilgisayar markaları, telefon markaları, 200soft, yazılım çözümleri, web sitesi geliştirme, ERP sistemleri, mobil uygulama' },
+      { property: 'og:title', content: 'Markalar | Elton Teknik Servis' },
+      { property: 'og:description', content: 'Elton Teknik Servis: Apple, Samsung, HP, Dell, Lenovo, Asus, Acer ve diğer tüm markaların bilgisayar, telefon ve tablet tamiri. 200soft ile işbirliği ile yazılım çözümleri.' },
+      { property: 'og:type', content: 'website' },
+      { name: 'twitter:title', content: 'Markalar | Elton Teknik Servis' },
+      { name: 'twitter:description', content: 'Elton Teknik Servis: Tüm markaların bilgisayar, telefon ve tablet tamiri. 200soft ile işbirliği ile yazılım çözümleri.' }
+    ]
   })
 }
 

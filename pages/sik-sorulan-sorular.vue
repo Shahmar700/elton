@@ -45,7 +45,16 @@ const pageData = computed(() => {
 // Title təyin etmək - yalnız tr dili üçün
 if (locale.value === 'tr') {
   useHead({
-    title: 'Sık Sorulan Sorular | Elton Teknik Servis'
+    title: 'Sık Sorulan Sorular | Elton Teknik Servis',
+    meta: [
+      { name: 'description', content: 'Elton Teknik Servis sık sorulan sorular. Bilgisayar tamiri, telefon tamiri, tablet tamiri ve 200soft ile işbirliği ile yazılım çözümleri hakkında merak edilen sorular ve cevapları. Teknik servis SSS.' },
+      { name: 'keywords', content: 'teknik servis sık sorulan sorular, bilgisayar tamiri soruları, telefon tamiri soruları, tablet tamiri soruları, teknik servis SSS, 200soft, yazılım çözümleri, web sitesi geliştirme, ERP sistemleri, mobil uygulama' },
+      { property: 'og:title', content: 'Sık Sorulan Sorular | Elton Teknik Servis' },
+      { property: 'og:description', content: 'Elton Teknik Servis sık sorulan sorular. Bilgisayar tamiri, telefon tamiri, tablet tamiri ve 200soft ile işbirliği ile yazılım çözümleri hakkında merak edilen sorular ve cevapları.' },
+      { property: 'og:type', content: 'website' },
+      { name: 'twitter:title', content: 'Sık Sorulan Sorular | Elton Teknik Servis' },
+      { name: 'twitter:description', content: 'Elton Teknik Servis sık sorulan sorular. Teknik servis SSS. 200soft ile işbirliği ile yazılım çözümleri.' }
+    ]
   })
 }
 
