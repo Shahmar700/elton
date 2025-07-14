@@ -42,7 +42,7 @@
       <div class="address">
         <div class="phone-and-address">
           <div class="address-link" @click="showMap = true">
-            <p>{{ $t('address') }}<span>{{ pageData?.content?.adress }}</span></p>
+            <p class="!border-2 !px-4 !text-[17px] md:!text-lg">{{ $t('address') }} <span>{{ pageData?.content?.adress }}</span></p>
           </div>
         </div>
         <div class="info-text" >
