@@ -14,7 +14,7 @@
         >
       </div>
       <div class="info-text">
-        <h2 class="text-base xs:text-lg sm:text-2xl !leading-normal"
+        <h2 class="text-md 400:text-lg sm:text-2xl md:text-3xl !leading-normal"
         v-html="pageData?.content?.homeTitle"
         >
         </h2>
@@ -32,7 +32,7 @@
           </a>
         </div>
         <div class="address-link" @click="showMap = true">
-          <p>{{ $t('address') }}<span>{{ pageData?.content?.adress }}</span></p>
+          <p class="md:!px-4">{{ $t('address') }}<span>{{ pageData?.content?.adress }}</span></p>
         </div>
       </div>
       
@@ -182,6 +182,17 @@ section:nth-child(even) {
   object-fit: cover;
   object-position: center;
 }
+  .address-link p {
+    font-size: 1.2rem;
+    line-height: 1.4;
+    word-break: break-all;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    padding: 8px 0;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+  }
 
 @media screen and (max-width: 768px) {
   .main-image-container {
@@ -349,7 +360,6 @@ section:nth-child(even) {
 @media screen and (min-width: 600px) {
   .info-text h2 {
     color: var(--secondary-color);
-    font-size: 1.8rem;
     margin-bottom: 1.5rem;
     font-weight: 600;
     text-align: center;

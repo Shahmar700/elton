@@ -1063,7 +1063,8 @@ onUnmounted(() => {
   background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #1AA54D 100%);
   z-index: 9999;
   transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  overflow-y: auto;
+    overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   opacity: 1;

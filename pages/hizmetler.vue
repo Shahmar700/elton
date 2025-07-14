@@ -34,7 +34,7 @@
           <div class="info-text">
               <div class="repair-heading">
                 <Icon name="hugeicons:repair" class="icon repair-icon" />  
-                <h4 class="text-md 500:text-lg sm:text-2xl font-bold">
+                <h4 class="text-sm 500:text-lg sm:text-2xl font-bold">
                   <!-- Laptop Tamiri -->
                   {{ pageData?.content?.laptopRepairHeader }}
                 </h4>
@@ -49,7 +49,7 @@
           <div class="info-text">
               <div class="repair-heading">
                 <Icon name="hugeicons:repair" class="icon repair-icon" />  
-                <h4 class="text-md 500:text-lg sm:text-2xl font-bold">
+                <h4 class="text-sm 500:text-lg sm:text-2xl font-bold">
                   <!-- Masaüstü Bilgisayarlar Tamiri -->
                   {{ pageData?.content?.desktopRepairHeader }}
                 </h4>
@@ -80,7 +80,7 @@
          <div class="info-text" >
               <div class="repair-heading">
                 <Icon name="hugeicons:repair" class="icon repair-icon" />  
-                <h4 class="text-md 500:text-lg sm:text-2xl font-bold">
+                <h4 class="text-sm 500:text-lg sm:text-2xl font-bold">
                   <!-- Telefon Tamiri -->
                   {{ pageData?.content?.phoneRepairHeader }}
                 </h4>
@@ -95,7 +95,7 @@
           <div class="info-text" >
               <div class="repair-heading">
                 <Icon name="hugeicons:repair" class="icon repair-icon" />  
-                <h4 class="text-md 500:text-lg sm:text-2xl font-bold">
+                <h4 class="text-sm 500:text-lg sm:text-2xl font-bold">
                   <!-- Tablet Tamiri -->
                   {{ pageData?.content?.tabletRepairHeader }}
                 </h4>
@@ -117,16 +117,16 @@
       <!-- ========================= 200 Soft Development SIDE ========================= -->
       <div class="info-text">
           <div class="">
-            <div class="coding-container mb-4">
+            <div class="coding-container flex flex-col 500:flex-row mb-4">
               <img 
                 v-if="pageData?.content?.developmentIcon"
                 :src="pageData?.content?.developmentIcon" 
                 alt="development icon" 
-                class="icon coding-icon mr-[10px]"
+                class="icon coding-icon 500:mr-[10px]"
               >
               <HeaderScramble 
                 :text="pageData?.content?.developmentHeader" 
-                class="text-md sm:text-2xl text-xl 500:text-2xl md:text-3xl text-[#1AA54D] font-bold" 
+                class="text-md sm:text-2xl text-xl 500:text-2xl md:text-3xl text-[#1AA54D] font-bold mt-2 500:mt-0" 
               />
             </div>
             <div class="logo-wrapper">
@@ -142,7 +142,7 @@
           <!-- =============== Web Development ===============  -->
           <div class="dev-heading mt-4">
                 <Icon name="mdi:web-check" class="icon dev-icon" />  
-                <h4 class="text-md 500:text-lg sm:text-2xl font-bold">
+                <h4 class="text-sm 500:text-lg sm:text-2xl font-bold">
                   <!-- Laptop Tamiri -->
                   {{ pageData?.content?.webDevHeader }}
                 </h4>
@@ -154,7 +154,7 @@
           <!-- =============== Mobile Development ===============  -->
           <div class="dev-heading mt-4">
                 <Icon name="material-symbols:app-registration" class="icon dev-icon" />  
-                <h4 class="text-md 500:text-lg sm:text-2xl font-bold">
+                <h4 class="text-sm 500:text-lg sm:text-2xl font-bold">
                   <!-- Laptop Tamiri -->
                   {{ pageData?.content?.mobileDevHeader }}
                 </h4>
@@ -166,7 +166,7 @@
           <!-- =============== ERP ve Özel Yazılım Çözümleri ===============  -->
           <div class="dev-heading mt-4">
                 <Icon name="hugeicons:peer-to-peer-02" class="icon dev-icon" />  
-                <h4 class="text-md 500:text-lg sm:text-2xl font-bold">
+                <h4 class="text-sm 500:text-lg sm:text-2xl font-bold">
                   <!-- Laptop Tamiri -->
                   {{ pageData?.content?.erpHeader }}
                 </h4>
@@ -233,14 +233,14 @@ watch(() => locale.value, (newLocale) => {
 </script>
 
 <style scoped>
-.logo-wrapper {
+/* .logo-wrapper {
   transform: scale(1.5);
 }
 @media screen and (max-width: 768px) {
   .logo-wrapper {
     transform: scale(1.2);
   }
-}
+} */
 section {
   /* padding: 2rem; */
   display: flex;
@@ -253,7 +253,7 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
 .coding-container {
   display: flex;
@@ -303,7 +303,7 @@ section {
   display: flex;
   align-items: center;
   border: 1px solid #1AA54D;
-  padding: 5px 15px;
+  padding: 2px 10px;
   border-radius: 10px;
   background: linear-gradient(45deg, #1AA54D, #121D61);
   color: white;
