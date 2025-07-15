@@ -14,7 +14,7 @@
         <div class="phone-and-address">
           <div class="phone-numbers">
             <a href="tel:+905524318888" class="phone-link flex items-center gap-2">
-              <p> {{ $t('mobilePhone') }}  <span>{{ pageData?.content?.mobilePhone }}</span></p>
+              <p class="text-sm sm:text-base md:text-lg lg:text-xl"> {{ $t('mobilePhone') }}  <span>{{ pageData?.content?.mobilePhone }}</span></p>
             </a>
           </div>
         </div>
@@ -29,7 +29,7 @@
         <div class="phone-and-address">
           <div class="phone-numbers">
             <a href="tel:+902124318888" class="phone-link">
-              <p>{{ $t('landlinePhone') }} <span>{{ pageData?.content?.landlinePhone }}</span></p>
+              <p class="text-sm sm:text-base md:text-lg lg:text-xl">{{ $t('landlinePhone') }} <span>{{ pageData?.content?.landlinePhone }}</span></p>
             </a>
           </div>
         </div>
@@ -41,13 +41,18 @@
       <!-- Adress  -->
       <div class="address">
         <div class="phone-and-address">
-          <div class="address-link" @click="showMap = true">
-            <p class="!border-2 !px-4 !text-[17px] md:!text-lg">{{ $t('address') }} <span>{{ pageData?.content?.adress }}</span></p>
+          <div class="address-container">
+            <div class="address-content" @click="showMap = true">
+              <p class="text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed cursor-pointer hover:scale-105 transition-colors duration-200 break-words md:break-normal">
+                {{ $t('address') }}: {{ pageData?.content?.adress }}
+              </p>
+            </div>
           </div>
         </div>
-        <div class="info-text" >
-            <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">{{ pageData?.content?.info4 }}
-            </p>
+        <div class="info-text">
+          <p class="text-gray-700 text-sm sm:text-xl leading-relaxed text-justify mt-5 px-1 sm:px-0">
+            {{ pageData?.content?.info4 }}
+          </p>
         </div>
       </div>
 
@@ -129,7 +134,6 @@ section {
 
 .info-text p {
   color: #333;
-  /* font-size: 1.3rem; */
   line-height: 1.8;
   text-align: justify;
   max-width: 100%;
@@ -171,6 +175,37 @@ section {
   }
 }
 
+  /* Telefon və adres üçün spesifik stillər */
+.phone-link p,
+.address-content p {
+  font-size: 0.875rem; /* text-sm */
+  line-height: 1.625; /* leading-relaxed */
+  margin-top: 0;
+  padding: 5px 10px;
+  text-align: left;
+}
+
+/* Responsive font ölçüləri */
+@media (min-width: 640px) {
+  .phone-link p,
+  .address-content p {
+    font-size: 1rem; /* sm:text-base */
+  }
+}
+
+@media (min-width: 768px) {
+  .phone-link p,
+  .address-content p {
+    font-size: 1.125rem; /* md:text-lg */
+  }
+}
+
+@media (min-width: 1024px) {
+  .phone-link p,
+  .address-content p {
+    font-size: 1.25rem; /* lg:text-xl */
+  }
+}
 
   .address-link {
     width: 100%;
@@ -183,7 +218,6 @@ section {
   }
   
   .address-link p {
-    font-size: 0.9rem;
     line-height: 1.4;
     word-break: break-all;
     white-space: normal;
@@ -193,4 +227,36 @@ section {
     width: 100%;
     max-width: 100%;
   }
+  .address-content {
+  width: 100%;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+.address-content p {
+  width: 100%;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  white-space: normal;
+  hyphens: auto;
+}
+
+/* 768px-dən kiçik ekranlar üçün */
+@media (max-width: 768px) {
+  .address-content {
+    padding: 8px 12px;
+  }
+  
+  .address-content p {
+    line-height: 1.5;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    white-space: normal;
+    max-width: 100%;
+  }
+}
 </style>
